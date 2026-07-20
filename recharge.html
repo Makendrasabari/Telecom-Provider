@@ -39,7 +39,7 @@
       </nav>
 
       <div class="nav-actions" id="profile-dropdown-wrapper">
-        <a href="login.html" class="btn btn-secondary" id="loginBtnNav"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>
+        <a href="login.html" class="btn btn-nav-login" id="loginBtnNav"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>
       </div>
 
       <button class="hamburger" aria-label="Toggle navigation menu" id="hamburgerBtn">
@@ -494,30 +494,8 @@
         submitBtn.disabled = true;
 
         setTimeout(() => {
-          const txnId = "TXN" + Math.floor(10000 + Math.random() * 90000);
-          const today = new Date().toISOString().split("T")[0];
-          const session = JSON.parse(localStorage.getItem("stackly_session") || "null");
-
-          // Save transaction to DB
-          const txns = JSON.parse(localStorage.getItem("stackly_transactions") || "[]");
-          const newTxn = {
-            id: txnId,
-            email: session ? session.email : "guest@gmail.com",
-            amount: activePlan.price,
-            planName: activePlan.name,
-            date: today,
-            status: "success",
-            paymentMethod: payMethod.value
-          };
-          txns.unshift(newTxn);
-          localStorage.setItem("stackly_transactions", JSON.stringify(txns));
-
-          // If customer logged in
-          if (session && session.role === "customer") {
-            const users = JSON.parse(localStorage.getItem("stackly_users") || "[]");
-            const updatedUsers = users.map(u => {
-              if (u.email === session.email) {
-                u.plan = activePlan.name;
+          window.location.href = "404.html";
+        }, 600);
                 return u;
               }
               return u;

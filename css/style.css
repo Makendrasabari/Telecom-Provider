@@ -121,14 +121,14 @@ ul {
 }
 
 .logo-img {
-  height: 85px;
+  height: 115px;
   width: auto;
   object-fit: contain;
   transition: var(--transition-smooth);
 }
 
 .navbar-header.scrolled .logo-img {
-  height: 72px;
+  height: 95px;
 }
 
 .nav-menu {
@@ -314,6 +314,41 @@ ul {
   color: var(--bg-white);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(230, 0, 18, 0.15);
+}
+
+/* Custom Red Navbar Login Button (Red default, White on hover) */
+#loginBtnNav,
+.btn-nav-login {
+  background-color: var(--primary-red) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--primary-red) !important;
+  font-weight: 600;
+  transition: var(--transition-smooth);
+}
+
+#loginBtnNav i,
+.btn-nav-login i {
+  color: #ffffff !important;
+  transition: var(--transition-smooth);
+}
+
+#loginBtnNav:hover,
+.btn-nav-login:hover {
+  background-color: #ffffff !important;
+  color: var(--primary-red) !important;
+  border-color: var(--primary-red) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(230, 0, 18, 0.25);
+}
+
+#loginBtnNav:hover i,
+.btn-nav-login:hover i {
+  color: var(--primary-red) !important;
+}
+
+.forgot-password-link:hover {
+  text-decoration: underline;
+  color: var(--secondary-red) !important;
 }
 
 /* --- Common Hero Section (Subpages) --- */
@@ -2204,15 +2239,15 @@ textarea.form-input {
   }
 
   .logo-img {
-    height: 68px;
+    height: 90px;
   }
 
   .navbar-header.scrolled .logo-img {
-    height: 58px;
+    height: 78px;
   }
 
   .footer-logo-img {
-    height: 70px;
+    height: 85px;
   }
 
   /* ── Contact page ── */
@@ -2331,11 +2366,11 @@ textarea.form-input {
   }
   
   .logo-img {
-    height: 48px;
+    height: 75px;
   }
 
   .footer-logo-img {
-    height: 60px;
+    height: 75px;
   }
 
   .auth-card {
@@ -2356,10 +2391,10 @@ textarea.form-input {
     font-size: 1.65rem;
   }
   .logo-img {
-    height: 42px;
+    height: 65px;
   }
   .footer-logo-img {
-    height: 50px;
+    height: 65px;
   }
 }
 
@@ -2395,7 +2430,7 @@ textarea.form-input {
 }
 
 .footer-logo-img {
-  height: 58px;
+  height: 80px;
   width: auto;
   object-fit: contain;
   margin-left: -4px;

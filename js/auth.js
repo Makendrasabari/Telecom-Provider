@@ -290,8 +290,8 @@ function renderProfileDropdown() {
   if (!wrapper) return;
 
   if (!session) {
-    // If not logged in, show login links (for public headers with this slot)
-    wrapper.innerHTML = `<a href="login.html" class="btn btn-secondary" id="loginBtnNav"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>`;
+    // If not logged in, show login link
+    wrapper.innerHTML = `<a href="login.html" class="btn btn-nav-login" id="loginBtnNav"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>`;
     return;
   }
 

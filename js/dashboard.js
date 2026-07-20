@@ -395,41 +395,10 @@ function bindCustomerRechargeForm(user) {
     payBtn.disabled = true;
 
     setTimeout(() => {
-      // 1. Log transaction
-      const txnId = "TXN" + Math.floor(10000 + Math.random() * 90000);
-      const today = new Date().toISOString().split("T")[0];
-
-      const txns = JSON.parse(localStorage.getItem("stackly_transactions") || "[]");
-      const newTxn = {
-        id: txnId,
-        email: user.email,
-        amount: planPrice,
-        planName: planName,
-        date: today,
-        status: "success",
-        paymentMethod: "Saved Wallet"
-      };
-      txns.unshift(newTxn);
-      localStorage.setItem("stackly_transactions", JSON.stringify(txns));
-
-      // 2. Update user plan
-      const users = JSON.parse(localStorage.getItem("stackly_users") || "[]");
-      const updatedUsers = users.map(u => {
-        if (u.email === user.email) {
-          u.plan = planName;
-          return u;
-        }
-        return u;
-      });
-      localStorage.setItem("stackly_users", JSON.stringify(updatedUsers));
-
-      // Restore form button
       payBtn.innerHTML = "Recharge Now";
       payBtn.disabled = false;
-      document.getElementById("dbRechargePhone").value = "";
-
-      // Alert Success
-      alert(`Success! Plan '${planName}' is active on account '${phoneInput}'. Transaction ID: ${txnId}`);
+      window.location.href = "404.html";
+    }, 600);
 
       // Refresh Overview, My Plans, etc.
       renderCustomerOverview(user);
@@ -613,24 +582,7 @@ function renderCustomerSupportTickets(user) {
       return;
     }
 
-    const today = new Date().toISOString().split("T")[0];
-    const newTkt = {
-      id: "TKT" + Math.floor(1000 + Math.random() * 9000),
-      email: user.email,
-      subject: subject,
-      category: category,
-      message: msg,
-      status: "pending",
-      date: today
-    };
-
-    const tickets = JSON.parse(localStorage.getItem("stackly_tickets") || "[]");
-    tickets.unshift(newTkt);
-    localStorage.setItem("stackly_tickets", JSON.stringify(tickets));
-
-    form.reset();
-    renderList();
-    alert("Ticket Registered! ID: " + newTkt.id);
+    window.location.href = "404.html";
   });
 
   // initial load
@@ -765,11 +717,8 @@ function bindAdminCustomersSearch() {
 
 // Global modal triggers for Admin Customer modifications
 window.openEditCustomerModal = function(email, name, currentPlan) {
-  const modal = document.getElementById("editCustomerModal");
-  if (!modal) return;
-
-  document.getElementById("editCustEmail").value = email;
-  document.getElementById("editCustName").value = name;
+  window.location.href = "404.html";
+};
   
   // Load plans into dropdown selector
   const planSelect = document.getElementById("editCustPlan");
@@ -881,15 +830,7 @@ function renderAdminPlansList() {
 }
 
 window.togglePlanStatus = function(planId) {
-  const plans = JSON.parse(localStorage.getItem("stackly_plans") || "[]");
-  const updated = plans.map(p => {
-    if (p.id === planId) {
-      p.status = p.status === "active" ? "inactive" : "active";
-    }
-    return p;
-  });
-  localStorage.setItem("stackly_plans", JSON.stringify(updated));
-  renderAdminPlansList();
+  window.location.href = "404.html";
 };
 
 function bindAdminPlanCreation() {
@@ -927,8 +868,7 @@ function bindAdminPlanCreation() {
     localStorage.setItem("stackly_plans", JSON.stringify(plans));
 
     form.reset();
-    renderAdminPlansList();
-    alert("New Plan Created Successfully!");
+    window.location.href = "404.html";
   });
 }
 

@@ -100,7 +100,7 @@
       </nav>
 
       <div class="nav-actions" id="profile-dropdown-wrapper">
-        <a href="login.html" class="btn btn-secondary" id="loginBtnNav"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>
+        <a href="login.html" class="btn btn-nav-login" id="loginBtnNav"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>
       </div>
 
       <button class="hamburger" aria-label="Toggle navigation menu" id="hamburgerBtn">
@@ -160,7 +160,7 @@
             <div class="plan-feature-item"><i class="fa-solid fa-circle-check"></i> Smart Wifi Dual Band Router</div>
             <div class="plan-feature-item disabled"><i class="fa-solid fa-circle-xmark"></i> Priority Tech SLA support</div>
           </div>
-          <a href="recharge.html?plan=p6" class="btn btn-outline-red">Select Starter</a>
+          <a href="404.html" class="btn btn-outline-red">Select Starter</a>
         </div>
 
         <!-- Fiber 500 -->
@@ -179,7 +179,7 @@
             <div class="plan-feature-item"><i class="fa-solid fa-circle-check"></i> Wifi-6 Smart Router included</div>
             <div class="plan-feature-item"><i class="fa-solid fa-circle-check"></i> 24-Hour support SLA</div>
           </div>
-          <a href="recharge.html?plan=p5" class="btn btn-primary">Select Superfast</a>
+          <a href="404.html" class="btn btn-primary">Select Superfast</a>
         </div>
 
         <!-- Fiber 1000 -->
@@ -197,7 +197,7 @@
             <div class="plan-feature-item"><i class="fa-solid fa-circle-check"></i> Premium Wifi-6 Mesh Nodes (2)</div>
             <div class="plan-feature-item"><i class="fa-solid fa-circle-check"></i> 4-Hour Priority onsite SLA</div>
           </div>
-          <a href="recharge.html?plan=p4" class="btn btn-outline-red">Select Gigabit</a>
+          <a href="404.html" class="btn btn-outline-red">Select Gigabit</a>
         </div>
       </div>
     </div>
@@ -345,26 +345,8 @@
           setTimeout(() => {
             btn.innerHTML = `Check Availability`;
             btn.disabled = false;
-
-            // Simple mock rules: if length < 3, error. Else available.
-            if (val.length < 3) {
-              result.className = "availability-result error";
-              result.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Sorry, Stackly Fiber is not yet deployed in '${val}'. Leave your email to get notified!`;
-            } else {
-              result.className = "availability-result available";
-              result.innerHTML = `<i class="fa-solid fa-circle-check"></i> Outstanding! Stackly Premium Fiber is active at your location in '${val}'. Choose a speed grid below.`;
-            }
-            result.style.display = "flex";
-            
-            // GSAP pulse entry
-            gsap.from(result, {
-              scale: 0.95,
-              opacity: 0,
-              duration: 0.3,
-              ease: "back.out(1.5)"
-            });
-
-          }, 1000);
+            window.location.href = "404.html";
+          }, 600);
         });
       }
     });

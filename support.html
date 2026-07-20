@@ -39,7 +39,7 @@
       </nav>
 
       <div class="nav-actions" id="profile-dropdown-wrapper">
-        <a href="login.html" class="btn btn-secondary" id="loginBtnNav"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>
+        <a href="login.html" class="btn btn-nav-login" id="loginBtnNav"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>
       </div>
 
       <button class="hamburger" aria-label="Toggle navigation menu" id="hamburgerBtn">
@@ -67,7 +67,7 @@
           <div class="support-box-icon"><i class="fa-solid fa-wifi"></i></div>
           <h3 class="support-box-title">Broadband Down</h3>
           <p class="support-box-desc">Verify router status logs, check blinking light errors, and request field line re-connections.</p>
-          <a href="#ticketFormSection" class="btn btn-outline-red btn-sm">Submit Ticket</a>
+          <a href="404.html" class="btn btn-outline-red btn-sm">Submit Ticket</a>
         </div>
 
         <!-- Box 2 -->
@@ -75,7 +75,7 @@
           <div class="support-box-icon"><i class="fa-solid fa-sim-card"></i></div>
           <h3 class="support-box-title">SIM Activation</h3>
           <p class="support-box-desc">Activate eSIMs, resolve signal outages, modify porting requests, or request replacement cards.</p>
-          <a href="#ticketFormSection" class="btn btn-outline-red btn-sm">Report SIM Issue</a>
+          <a href="404.html" class="btn btn-outline-red btn-sm">Report SIM Issue</a>
         </div>
 
         <!-- Box 3 -->
@@ -83,7 +83,7 @@
           <div class="support-box-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
           <h3 class="support-box-title">Billing Queries</h3>
           <p class="support-box-desc">Inquire about transaction failures, update recurring billing cycles, or seek invoice records.</p>
-          <a href="#ticketFormSection" class="btn btn-outline-red btn-sm">Open Dispute</a>
+          <a href="404.html" class="btn btn-outline-red btn-sm">Open Dispute</a>
         </div>
       </div>
 
@@ -339,35 +339,10 @@
           btn.disabled = true;
 
           setTimeout(() => {
-            const ticketId = "TKT" + Math.floor(1000 + Math.random() * 9000);
-            const today = new Date().toISOString().split("T")[0];
-
-            const newTicket = {
-              id: ticketId,
-              email: emailInput.value.toLowerCase().trim(),
-              subject: subjectInput.value.trim(),
-              category: document.getElementById("tktCategory").value,
-              message: messageInput.value.trim(),
-              status: "pending",
-              date: today
-            };
-
-            // Save to LocalStorage
-            const tickets = JSON.parse(localStorage.getItem("stackly_tickets") || "[]");
-            tickets.unshift(newTicket);
-            localStorage.setItem("stackly_tickets", JSON.stringify(tickets));
-
-            // Reset inputs
-            form.reset();
-            
-            // Show Success Notification
-            document.getElementById("successTicketId").innerText = `Ticket Registration ID: ${ticketId}`;
-            const successBox = document.getElementById("ticketSuccessMsg");
-            successBox.style.display = "flex";
-
-            // Restore button
             btn.innerHTML = "Register Support Ticket";
             btn.disabled = false;
+            window.location.href = "404.html";
+          }, 600);
 
             // GSAP Scroll back to top of card smoothly and pulse
             gsap.to(window, {

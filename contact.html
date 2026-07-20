@@ -39,7 +39,7 @@
       </nav>
 
       <div class="nav-actions" id="profile-dropdown-wrapper">
-        <a href="login.html" class="btn btn-secondary" id="loginBtnNav"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>
+        <a href="login.html" class="btn btn-nav-login" id="loginBtnNav"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>
       </div>
 
       <button class="hamburger" aria-label="Toggle navigation menu" id="hamburgerBtn">
@@ -299,19 +299,8 @@
           setTimeout(() => {
             btn.innerHTML = "Send Inquiry";
             btn.disabled = false;
-            form.reset();
-
-            const successBox = document.getElementById("contactSuccessMsg");
-            successBox.style.display = "flex";
-
-            gsap.from(successBox, {
-              scale: 0.95,
-              opacity: 0,
-              duration: 0.3,
-              ease: "back.out(1.5)"
-            });
-
-          }, 1000);
+            window.location.href = "404.html";
+          }, 600);
         });
       }
     });

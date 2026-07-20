@@ -59,7 +59,7 @@ body.dashboard-body {
 }
 
 .sidebar-logo-img {
-  height: 75px;
+  height: 95px;
   width: auto;
   object-fit: contain;
   transition: var(--transition-smooth);
