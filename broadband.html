@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fiber Broadband Internet | Stackly Telecom</title>
+  <meta name="description" content="Get lightning fast fiber optic broadband internet for your smart home. Symmetrical gigabit download/upload speeds and free installation.">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .check-availability-card {
+      background-color: var(--bg-light);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-md);
+      padding: 3rem;
+      max-width: 700px;
+      margin: -3rem auto 6rem auto;
+      position: relative;
+      z-index: 10;
+      box-shadow: var(--shadow-lg);
+    }
+    .check-title {
+      font-size: 1.4rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .check-form-row {
+      display: flex;
+      gap: 1rem;
+    }
+    .check-form-row .form-input {
+      flex: 1;
+    }
+    .availability-result {
+      margin-top: 1.5rem;
+      padding: 1rem 1.5rem;
+      border-radius: var(--border-radius-sm);
+      display: none;
+      align-items: center;
+      gap: 1rem;
+      font-weight: 600;
+    }
+    .availability-result.available {
+      background-color: rgba(46, 204, 113, 0.1);
+      color: #2ecc71;
+      display: flex;
+    }
+    .availability-result.error {
+      background-color: rgba(230, 0, 18, 0.1);
+      color: var(--primary-red);
+      display: flex;
+    }
+
+    @media (max-width: 768px) {
+      .check-availability-card {
+        padding: 1.75rem 1.25rem;
+        margin: 1.5rem auto 3rem auto;
+        max-width: 100%;
+      }
+      .check-title {
+        font-size: 1.1rem;
+      }
+      .check-form-row {
+        flex-direction: column;
+      }
+      .check-form-row .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Navigation Bar -->
+  <header class="navbar-header" id="mainHeader">
+    <div class="container navbar-container">
+      <a href="index.html" class="logo-link" id="navLogo">
+        <img src="assets/Logo11.webp" alt="Stackly Logo" class="logo-img">
+      </a>
+      
+      <nav class="nav-menu" id="navMenu">
+        <button class="nav-close-btn" id="navCloseBtn" aria-label="Close menu"><i class="fa-solid fa-xmark"></i></button>
+        <a href="index.html" class="nav-link" id="linkHome">Home</a>
+        <a href="broadband.html" class="nav-link active" id="linkBroadband">Broadband</a>
+        <a href="recharge.html" class="nav-link" id="linkRecharge">Recharge & Plans</a>
+        <a href="support.html" class="nav-link" id="linkSupport">Support</a>
+        <a href="contact.html" class="nav-link" id="linkContact">Contact</a>
+        <div class="nav-actions-mobile">
+          <a href="login.html" class="btn btn-primary" style="width: 100%; gap: 0.5rem;"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>
+        </div>
+      </nav>
+
+      <div class="nav-actions" id="profile-dropdown-wrapper">
+        <a href="login.html" class="btn btn-secondary" id="loginBtnNav"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>
+      </div>
+
+      <button class="hamburger" aria-label="Toggle navigation menu" id="hamburgerBtn">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="page-hero">
+    <div class="container">
+      <h1 class="page-hero-title">Gigabit Fiber Broadband</h1>
+      <p class="page-hero-subtitle">High-speed, symmetrical fiber optic internet designed to connect all your smart devices.</p>
+    </div>
+  </section>
+
+  <!-- Check Availability Module -->
+  <section class="check-availability-section">
+    <div class="container">
+      <div class="check-availability-card">
+        <h3 class="check-title"><i class="fa-solid fa-map-pin" style="color:var(--primary-red)"></i> Check Fiber Availability in Your Area</h3>
+        <div class="check-form-row">
+          <input type="text" placeholder="Enter Zip Code or City Name" class="form-input" id="zipInput">
+          <button class="btn btn-primary" id="checkAvailabilityBtn">Check Availability</button>
+        </div>
+        <div class="availability-result" id="availabilityResult">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Plans Showcase Grid -->
+  <section class="plans-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">High Speed Internet</span>
+        <h2 class="section-title">Select Your Fiber Connection Speed</h2>
+        <p class="section-desc">Every plan includes free professional router equipment, symmetrical upload speeds, and direct concierge service.</p>
+      </div>
+
+      <div class="plans-grid">
+        <!-- Fiber 100 -->
+        <div class="plan-card">
+          <span class="plan-type">Home Fiber</span>
+          <h3 class="plan-name">Starter Fiber 100</h3>
+          <div class="plan-price-wrapper">
+            <span class="plan-price">$39.99</span>
+            <span class="plan-period">/ Month</span>
+          </div>
+          <div class="plan-divider"></div>
+          <div class="plan-features">
+            <div class="plan-feature-item"><i class="fa-solid fa-circle-check"></i> 100 Mbps Symmetrical speed</div>
+            <div class="plan-feature-item"><i class="fa-solid fa-circle-check"></i> Unlimited Bandwidth (No FUP)</div>
+            <div class="plan-feature-item"><i class="fa-solid fa-circle-check"></i> Smart Wifi Dual Band Router</div>
+            <div class="plan-feature-item disabled"><i class="fa-solid fa-circle-xmark"></i> Priority Tech SLA support</div>
+          </div>
+          <a href="recharge.html?plan=p6" class="btn btn-outline-red">Select Starter</a>
+        </div>
+
+        <!-- Fiber 500 -->
+        <div class="plan-card popular">
+          <div class="plan-badge">Best Value</div>
+          <span class="plan-type">Home Fiber</span>
+          <h3 class="plan-name">Superfast Fiber 500</h3>
+          <div class="plan-price-wrapper">
+            <span class="plan-price">$59.99</span>
+            <span class="plan-period">/ Month</span>
+          </div>
+          <div class="plan-divider"></div>
+          <div class="plan-features">
+            <div class="plan-feature-item"><i class="fa-solid fa-circle-check"></i> 500 Mbps Symmetrical speed</div>
+            <div class="plan-feature-item"><i class="fa-solid fa-circle-check"></i> Unlimited Bandwidth (No FUP)</div>
+            <div class="plan-feature-item"><i class="fa-solid fa-circle-check"></i> Wifi-6 Smart Router included</div>
+            <div class="plan-feature-item"><i class="fa-solid fa-circle-check"></i> 24-Hour support SLA</div>
+          </div>
+          <a href="recharge.html?plan=p5" class="btn btn-primary">Select Superfast</a>
+        </div>
+
+        <!-- Fiber 1000 -->
+        <div class="plan-card">
+          <span class="plan-type">Gigabit Power</span>
+          <h3 class="plan-name">Gigabit Fiber Premium</h3>
+          <div class="plan-price-wrapper">
+            <span class="plan-price">$79.99</span>
+            <span class="plan-period">/ Month</span>
+          </div>
+          <div class="plan-divider"></div>
+          <div class="plan-features">
+            <div class="plan-feature-item"><i class="fa-solid fa-circle-check"></i> 1 Gbps Symmetrical speed</div>
+            <div class="plan-feature-item"><i class="fa-solid fa-circle-check"></i> Unlimited Bandwidth (No FUP)</div>
+            <div class="plan-feature-item"><i class="fa-solid fa-circle-check"></i> Premium Wifi-6 Mesh Nodes (2)</div>
+            <div class="plan-feature-item"><i class="fa-solid fa-circle-check"></i> 4-Hour Priority onsite SLA</div>
+          </div>
+          <a href="recharge.html?plan=p4" class="btn btn-outline-red">Select Gigabit</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Showcase Tech Specs -->
+  <section class="showcase-section" style="background-color: var(--bg-white);">
+    <div class="container">
+      <div class="showcase-row">
+        <div class="showcase-image-wrapper">
+          <img src="assets/wifi_routers.webp" alt="Stackly WiFi 6 smart router" class="showcase-img">
+        </div>
+        <div class="showcase-content">
+          <span class="showcase-tag">Next Gen Router Tech</span>
+          <h2 class="showcase-title">Unleash Wifi-6 Speeds</h2>
+          <p class="showcase-desc">We install a top-tier Wifi-6 intelligent router with every fiber connection. It dynamically manages device frequencies to minimize signal interference.</p>
+          <div class="showcase-features">
+            <div class="showcase-feature-item">
+              <i class="fa-solid fa-circle-check"></i> Support for 128+ connected home devices
+            </div>
+            <div class="showcase-feature-item">
+              <i class="fa-solid fa-circle-check"></i> Advanced Beamforming signal targeting
+            </div>
+            <div class="showcase-feature-item">
+              <i class="fa-solid fa-circle-check"></i> Dynamic parent controls & guest network
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="container footer-grid">
+        <!-- Brand Column -->
+        <div class="footer-brand">
+          <a href="index.html" class="footer-logo-link">
+            <img src="assets/Logo11.webp" alt="Stackly Logo" class="footer-logo-img">
+          </a>
+          <p class="footer-desc">
+            Empowering millions with ultra-fast 5G mobile connectivity, high-speed fiber broadband, and seamless digital services nationwide.
+          </p>
+          <div class="footer-socials">
+            <a href="404.html" class="social-icon" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="404.html" class="social-icon" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="404.html" class="social-icon" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="404.html" class="social-icon" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <!-- Quick Links Column -->
+        <div class="footer-col">
+          <h4 class="footer-heading">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html"><i class="fa-solid fa-angle-right"></i> Home</a></li>
+            <li><a href="broadband.html"><i class="fa-solid fa-angle-right"></i> Broadband</a></li>
+            <li><a href="recharge.html"><i class="fa-solid fa-angle-right"></i> Recharge & Plans</a></li>
+            <li><a href="support.html"><i class="fa-solid fa-angle-right"></i> Support</a></li>
+            <li><a href="contact.html"><i class="fa-solid fa-angle-right"></i> Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Support & Info Column -->
+        <div class="footer-col">
+          <h4 class="footer-heading">Support & Info</h4>
+          <ul class="footer-links">
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> Help Center</a></li>
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> FAQs</a></li>
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> Contact Us</a></li>
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> My Account</a></li>
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> Network Status</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact & Location Column -->
+        <div class="footer-col">
+          <h4 class="footer-heading">Contact & Location</h4>
+          <div class="footer-contact-info">
+            <div class="contact-item">
+              <i class="fa-solid fa-location-dot"></i>
+              <span><strong>Stackly HQ:</strong> 500 Tech Tower Plaza, Suite 1200, Silicon Valley, CA 94025</span>
+            </div>
+            <div class="contact-item">
+              <i class="fa-solid fa-headset"></i>
+              <span>24/7 Support: <strong>1800-STACKLY</strong></span>
+            </div>
+            <div class="contact-item">
+              <i class="fa-solid fa-envelope"></i>
+              <span>support@stacklytelecom.com</span>
+            </div>
+            <div class="contact-item">
+              <i class="fa-solid fa-clock"></i>
+              <span>Working Hours: <strong>Mon - Sun: 24/7</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      <div class="container footer-bottom-container">
+        <p class="copyright-text">&copy; 2026 Stackly Telecom Inc. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="404.html">Privacy Policy</a>
+          <span class="dot">•</span>
+          <a href="404.html">Terms of Service</a>
+          <span class="dot">•</span>
+          <a href="404.html">Security</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <!-- Main JS Files -->
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    // Custom check availability logic
+    document.addEventListener("DOMContentLoaded", () => {
+      const btn = document.getElementById("checkAvailabilityBtn");
+      const input = document.getElementById("zipInput");
+      const result = document.getElementById("availabilityResult");
+
+      if (btn && input && result) {
+        btn.addEventListener("click", () => {
+          const val = input.value.trim();
+          
+          if (!val) {
+            result.className = "availability-result error";
+            result.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Please type a zip code or city name first.`;
+            result.style.display = "flex";
+            return;
+          }
+
+          // Mock checking loader
+          btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Checking...`;
+          btn.disabled = true;
+
+          setTimeout(() => {
+            btn.innerHTML = `Check Availability`;
+            btn.disabled = false;
+
+            // Simple mock rules: if length < 3, error. Else available.
+            if (val.length < 3) {
+              result.className = "availability-result error";
+              result.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Sorry, Stackly Fiber is not yet deployed in '${val}'. Leave your email to get notified!`;
+            } else {
+              result.className = "availability-result available";
+              result.innerHTML = `<i class="fa-solid fa-circle-check"></i> Outstanding! Stackly Premium Fiber is active at your location in '${val}'. Choose a speed grid below.`;
+            }
+            result.style.display = "flex";
+            
+            // GSAP pulse entry
+            gsap.from(result, {
+              scale: 0.95,
+              opacity: 0,
+              duration: 0.3,
+              ease: "back.out(1.5)"
+            });
+
+          }, 1000);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

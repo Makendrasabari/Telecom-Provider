@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | Stackly Telecom Portal</title>
+  <meta name="description" content="Manage customer subscriptions, review financial sales metrics, create billing plans, and monitor network tickets.">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <style>
+    /* Admin Edit Customer Modal Overlay */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(31, 41, 55, 0.5);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .modal-card {
+      background-color: var(--bg-white);
+      border-radius: var(--card-border-radius);
+      border: 1px solid var(--border-color);
+      width: 100%;
+      max-width: 480px;
+      padding: 2.5rem;
+      box-shadow: var(--shadow-xl);
+    }
+    .modal-header-db {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+  </style>
+</head>
+<body class="dashboard-body">
+
+  <div class="dashboard-wrapper">
+    
+    <!-- Mobile Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="dashboardSidebar">
+      <div class="sidebar-logo">
+        <a href="index.html">
+          <img src="assets/Logo11.webp" alt="Stackly Logo" class="sidebar-logo-img">
+        </a>
+        <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close Sidebar">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      
+      <ul class="sidebar-menu">
+        <li class="sidebar-item">
+          <a href="#" class="sidebar-link active" data-section="adminOverview" id="sbLinkAdminOverview">
+            <i class="fa-solid fa-chart-line"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="#" class="sidebar-link" data-section="adminCustomers" id="sbLinkAdminCustomers">
+            <i class="fa-solid fa-users"></i>
+            <span>Customers</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="#" class="sidebar-link" data-section="adminRecharge" id="sbLinkAdminRecharge">
+            <i class="fa-solid fa-credit-card"></i>
+            <span>Recharge</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="#" class="sidebar-link" data-section="adminPlans" id="sbLinkAdminPlans">
+            <i class="fa-solid fa-receipt"></i>
+            <span>Plans</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="#" class="sidebar-link" data-section="reports" id="sbLinkReports">
+            <i class="fa-solid fa-chart-pie"></i>
+            <span>Reports</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <button class="sidebar-logout-btn" id="sidebarLogoutBtn">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          <span>Sign Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <div class="main-panel" id="dashboardMainPanel">
+      
+      <!-- Top header -->
+      <header class="dashboard-header">
+        <div class="header-left">
+          <button class="sidebar-toggle" id="sidebarToggleBtn" aria-label="Toggle Sidebar Menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <h2 class="page-title-dashboard">Admin Portal</h2>
+        </div>
+        
+        <div class="header-right">
+          <div class="profile-dropdown-wrapper">
+            <div class="user-profile-badge" id="userProfileBadge" tabindex="0">
+              <div class="user-avatar-icon">
+                <i class="fa-solid fa-user-shield"></i>
+              </div>
+              <div class="user-details-header">
+                <span class="user-name-header" id="headerUserName">Admin User</span>
+                <span class="user-email-header" id="headerUserEmail">admin@stackly.com</span>
+              </div>
+              <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+            </div>
+
+            <!-- Profile Dropdown Menu -->
+            <div class="profile-dropdown-menu" id="profileDropdownMenu">
+              <div class="dropdown-user-info">
+                <div class="dropdown-avatar">
+                  <i class="fa-solid fa-shield-halved" style="color:#0F172A;"></i>
+                </div>
+                <div class="dropdown-user-text">
+                  <div class="dropdown-user-name" id="dropdownUserName">System Administrator</div>
+                  <div class="dropdown-user-email" id="dropdownUserEmail">admin@stackly.com</div>
+                  <span class="dropdown-role-badge admin-role" id="dropdownUserRole">Administrator</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Scrollable Panels -->
+      <main class="dashboard-content">
+        
+        <!-- SECTION 1: OVERVIEW -->
+        <section class="dashboard-section active" id="adminOverview">
+          <!-- Stats Cards -->
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-info">
+                <h4>Total Revenue</h4>
+                <div class="metric-value" id="adRevenue">$0.00</div>
+              </div>
+              <div class="metric-icon-box">
+                <i class="fa-solid fa-dollar-sign"></i>
+              </div>
+            </div>
+            
+            <div class="metric-card">
+              <div class="metric-info">
+                <h4>Subscribers</h4>
+                <div class="metric-value" id="adSubscribers">0</div>
+              </div>
+              <div class="metric-icon-box">
+                <i class="fa-solid fa-users"></i>
+              </div>
+            </div>
+            
+            <div class="metric-card">
+              <div class="metric-info">
+                <h4>Active Subscriptions</h4>
+                <div class="metric-value" id="adActivePlans">0</div>
+              </div>
+              <div class="metric-icon-box">
+                <i class="fa-solid fa-circle-check"></i>
+              </div>
+            </div>
+            
+            <div class="metric-card">
+              <div class="metric-info">
+                <h4>Open Support Tickets</h4>
+                <div class="metric-value" id="adTickets">0</div>
+              </div>
+              <div class="metric-icon-box">
+                <i class="fa-solid fa-ticket"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chart Card -->
+          <div class="dashboard-grid-1">
+            <div class="chart-card">
+              <div class="card-header-dashboard">
+                <h3 class="card-title-dashboard">Monthly Revenue Growth</h3>
+              </div>
+              <div class="chart-container">
+                <canvas id="adRevenueChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2: CUSTOMERS -->
+        <section class="dashboard-section" id="adminCustomers">
+          <div class="action-header-bar">
+            <h3 style="font-size: 1.25rem;">Manage Registered Accounts</h3>
+            <div class="search-input-wrapper">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" placeholder="Search name, email, phone..." class="form-input" id="customerSearch">
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <div class="table-wrapper">
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Customer Name</th>
+                    <th>Email Address</th>
+                    <th>Mobile Phone</th>
+                    <th>Active Plan</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="adCustomerTableBody">
+                  <!-- Rendered dynamically by dashboard.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3: RECHARGE -->
+        <section class="dashboard-section" id="adminRecharge">
+          <div class="action-header-bar">
+            <h3 style="font-size: 1.25rem;">Online Recharge Logs</h3>
+          </div>
+
+          <div class="chart-card">
+            <div class="table-wrapper">
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Txn ID</th>
+                    <th>User Email</th>
+                    <th>Plan Name</th>
+                    <th>Paid Amount</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="adTxnTableBody">
+                  <!-- Rendered dynamically by dashboard.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 4: PLANS -->
+        <section class="dashboard-section" id="adminPlans">
+          <div class="dashboard-grid-2">
+            
+            <!-- Create Plan -->
+            <div class="chart-card">
+              <h3 class="card-title-dashboard" style="margin-bottom:1.5rem;">Configure New Plan</h3>
+              <form id="adCreatePlanForm">
+                <div class="form-group" style="margin-bottom:1rem">
+                  <label class="form-label" for="adPlanName">Plan Name</label>
+                  <input type="text" id="adPlanName" placeholder="e.g. Fiber Starter 50" class="form-input">
+                </div>
+
+                <div class="form-grid" style="margin-bottom:1rem">
+                  <div class="form-group">
+                    <label class="form-label" for="adPlanPrice">Price ($)</label>
+                    <input type="number" step="0.01" id="adPlanPrice" placeholder="29.99" class="form-input">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="adPlanType">Plan Type</label>
+                    <select id="adPlanType" class="form-input">
+                      <option value="mobile">Mobile Package</option>
+                      <option value="broadband">Fiber Broadband</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-grid" style="margin-bottom:1rem">
+                  <div class="form-group">
+                    <label class="form-label" for="adPlanData">Data Quota</label>
+                    <input type="text" id="adPlanData" placeholder="e.g. 100 GB" class="form-input">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="adPlanCalls">Calls Quota</label>
+                    <input type="text" id="adPlanCalls" placeholder="e.g. Unlimited" class="form-input">
+                  </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom:1.5rem">
+                  <label class="form-label" for="adPlanValidity">Validity Cycle</label>
+                  <input type="text" id="adPlanValidity" placeholder="e.g. 28 Days, Month" class="form-input">
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width:100%">Create Active Plan</button>
+              </form>
+            </div>
+
+            <!-- Manage Plans -->
+            <div class="list-card" style="padding:0; border:none; background:none; box-shadow:none;">
+              <h3 class="card-title-dashboard" style="margin-bottom:1.5rem;">Configured Active Plans</h3>
+              <div class="admin-plans-grid" id="adPlansGrid" style="display:flex; flex-direction:column; gap:1.25rem;">
+                <!-- Populated dynamically by dashboard.js -->
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- SECTION 5: REPORTS -->
+        <section class="dashboard-section" id="reports">
+          <div class="dashboard-grid-2 equal">
+            
+            <div class="chart-card">
+              <div class="card-header-dashboard">
+                <h3 class="card-title-dashboard">Package Breakdown</h3>
+              </div>
+              <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1.5rem">Subscriptions distribution by categories (Mobile vs Broadband).</p>
+              <div class="chart-container">
+                <canvas id="adPopularityChart"></canvas>
+              </div>
+            </div>
+
+            <div class="chart-card">
+              <div class="card-header-dashboard">
+                <h3 class="card-title-dashboard">Troubleshooting Resolution Rate</h3>
+              </div>
+              <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1.5rem">Resolved tickets versus open unresolved network requests.</p>
+              <div class="chart-container">
+                <canvas id="adTicketStatusChart"></canvas>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- Dashboard Footer -->
+        <footer class="dashboard-footer">
+          <div>&copy; 2026 Stackly Telecom. Admin Management System.</div>
+          <div class="dashboard-footer-links">
+            <a href="index.html">Main Site</a>
+            <a href="support.html">System Support</a>
+            <a href="contact.html">Contact Operations</a>
+          </div>
+        </footer>
+
+      </main>
+
+    </div>
+  </div>
+
+  <!-- Edit Customer Modal (Admin only) -->
+  <div class="modal-overlay" id="editCustomerModal">
+    <div class="modal-card">
+      <div class="modal-header-db">
+        <h3 style="font-size: 1.25rem; font-weight:700;">Modify Subscription Plan</h3>
+        <button onclick="closeEditCustomerModal()" style="background:none; font-size:1.2rem; cursor:pointer; color:var(--text-muted);"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="editCustomerForm">
+        <input type="hidden" id="editCustEmail">
+        
+        <div class="form-group" style="margin-bottom: 1.25rem;">
+          <label class="form-label">Customer Name</label>
+          <input type="text" id="editCustName" class="form-input" disabled style="background-color: var(--bg-light)">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 2rem;">
+          <label class="form-label" for="editCustPlan">Active Subscription Plan</label>
+          <select id="editCustPlan" class="form-input">
+            <!-- Populated dynamically -->
+          </select>
+        </div>
+
+        <div style="display:flex; gap:1rem; justify-content:flex-end;">
+          <button type="button" class="btn btn-secondary" onclick="closeEditCustomerModal()" style="padding:0.7rem 1.5rem">Cancel</button>
+          <button type="submit" class="btn btn-primary" style="padding:0.7rem 1.5rem">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <!-- Main JS Files -->
+  <script src="js/auth.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quick Online Recharge & Plans | Stackly Telecom</title>
+  <meta name="description" content="Recharge your mobile prepaid number, explore 5G & postpaid plans, or pay your fiber broadband bill instantly on Stackly.">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Sticky Navigation Bar -->
+  <header class="navbar-header" id="mainHeader">
+    <div class="container navbar-container">
+      <a href="index.html" class="logo-link" id="navLogo">
+        <img src="assets/Logo11.webp" alt="Stackly Logo" class="logo-img">
+      </a>
+      
+      <nav class="nav-menu" id="navMenu">
+        <button class="nav-close-btn" id="navCloseBtn" aria-label="Close menu"><i class="fa-solid fa-xmark"></i></button>
+        <a href="index.html" class="nav-link" id="linkHome">Home</a>
+        <a href="broadband.html" class="nav-link" id="linkBroadband">Broadband</a>
+        <a href="recharge.html" class="nav-link active" id="linkRecharge">Recharge & Plans</a>
+        <a href="support.html" class="nav-link" id="linkSupport">Support</a>
+        <a href="contact.html" class="nav-link" id="linkContact">Contact</a>
+        <div class="nav-actions-mobile">
+          <a href="login.html" class="btn btn-primary" style="width: 100%; gap: 0.5rem;"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>
+        </div>
+      </nav>
+
+      <div class="nav-actions" id="profile-dropdown-wrapper">
+        <a href="login.html" class="btn btn-secondary" id="loginBtnNav"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>
+      </div>
+
+      <button class="hamburger" aria-label="Toggle navigation menu" id="hamburgerBtn">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <h1 class="page-hero-title">Mobile Recharge & Plans</h1>
+      <p class="page-hero-subtitle">Select your connection, choose from 5G, Data, Top-Up & Postpaid plans, and recharge instantly.</p>
+    </div>
+  </section>
+
+  <!-- Single-Page Checkout & Integrated Plans Flow -->
+  <div class="container">
+    <div class="recharge-flow-container">
+      
+      <!-- Checkout Form Card -->
+      <div class="form-card" id="rechargeFormCard">
+        <h2 class="form-title" style="text-align: center; margin-bottom: 2rem;">Quick Online Recharge</h2>
+        <form id="rechargeForm">
+          
+          <!-- Step 1: Connection Details -->
+          <div class="recharge-step-box">
+            <div class="step-heading">
+              <span class="step-number-badge">1</span>
+              Connection & Operator Details
+            </div>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label" for="connectionType">Connection Type</label>
+                <select class="form-input" id="connectionType">
+                  <option value="mobile">Mobile Prepaid / Postpaid</option>
+                  <option value="broadband">Fiber Broadband Account</option>
+                </select>
+              </div>
+
+              <div class="form-group" id="targetFieldGroup">
+                <label class="form-label" for="targetNumber" id="targetLabel">Mobile Number</label>
+                <input type="text" id="targetNumber" placeholder="Enter 10-digit mobile number" class="form-input">
+                <span class="error-msg" id="targetError">Please enter a valid 10-digit mobile number.</span>
+              </div>
+
+              <div class="form-group full-width">
+                <label class="form-label" for="operatorCircle">Telecom Operator & Circle</label>
+                <select class="form-input" id="operatorCircle">
+                  <option value="Stackly 5G - National">Stackly 5G (Nationwide Network)</option>
+                  <option value="Stackly Fiber - Metro">Stackly Ultra Fiber (Metro Circle)</option>
+                  <option value="Stackly Enterprise - Regional">Stackly Business & Enterprise</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2: Integrated Plans Section (Displayed BELOW Mobile/Operator selection) -->
+          <div class="recharge-step-box" id="plansSection">
+            <div class="step-heading">
+              <span class="step-number-badge">2</span>
+              Choose Your Recharge Plan
+            </div>
+
+            <!-- Category Chips / Tabs -->
+            <div class="plan-category-chips-wrapper" id="planChipsWrapper">
+              <button type="button" class="plan-chip active" data-category="popular"><i class="fa-solid fa-fire"></i> Popular</button>
+              <button type="button" class="plan-chip" data-category="unlimited"><i class="fa-solid fa-bolt"></i> 5G Unlimited</button>
+              <button type="button" class="plan-chip" data-category="data"><i class="fa-solid fa-database"></i> Data Boosters</button>
+              <button type="button" class="plan-chip" data-category="topup"><i class="fa-solid fa-phone"></i> Top-Up</button>
+              <button type="button" class="plan-chip" data-category="international"><i class="fa-solid fa-plane"></i> International</button>
+              <button type="button" class="plan-chip" data-category="postpaid"><i class="fa-solid fa-file-invoice-dollar"></i> Postpaid Packs</button>
+            </div>
+
+            <!-- Inline Responsive Plan Grid -->
+            <div class="inline-plans-grid" id="inlinePlansGrid">
+              <!-- Dynamically populated cards -->
+            </div>
+
+            <!-- Hidden Plan Select for Form Integration -->
+            <select id="planSelector" style="display: none;"></select>
+
+            <!-- Selected Plan Specifications & Amount Banner -->
+            <div class="selected-plan-banner" id="selectedPlanDetail">
+              <!-- Dynamic plan summary rendered here -->
+            </div>
+          </div>
+
+          <!-- Step 3: Payment Option -->
+          <div class="recharge-step-box">
+            <div class="step-heading">
+              <span class="step-number-badge">3</span>
+              Payment Information
+            </div>
+            
+            <div class="form-group" style="margin-bottom: 1.5rem;">
+              <label class="form-label" for="paymentMethod">Payment Method</label>
+              <select class="form-input" id="paymentMethod">
+                <option value="Credit Card">Credit Card</option>
+                <option value="Debit Card">Debit Card</option>
+                <option value="UPI">UPI</option>
+                <option value="Net Banking">Net Banking</option>
+              </select>
+            </div>
+
+            <div id="cardFields">
+              <div class="form-group" style="margin-bottom: 1.25rem;">
+                <label class="form-label" for="cardNumber">Card Number</label>
+                <input type="text" id="cardNumber" placeholder="1234 5678 1234 5678" class="form-input">
+                <span class="error-msg" id="cardError">Invalid card number. Enter 16 digits.</span>
+              </div>
+
+              <div class="form-grid" style="margin-bottom: 1.5rem;">
+                <div class="form-group">
+                  <label class="form-label" for="cardExpiry">Expiry Date</label>
+                  <input type="text" id="cardExpiry" placeholder="MM/YY" class="form-input">
+                  <span class="error-msg" id="expiryError">Required.</span>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="cardCvv">CVV</label>
+                  <input type="password" id="cardCvv" placeholder="***" class="form-input">
+                  <span class="error-msg" id="cvvError">Invalid.</span>
+                </div>
+              </div>
+            </div>
+
+            <div id="upiFields" style="display: none;">
+              <div class="form-group" style="margin-bottom: 1.5rem;">
+                <label class="form-label" for="upiId">UPI Virtual Address (VPA)</label>
+                <input type="text" id="upiId" placeholder="username@upi" class="form-input">
+                <span class="error-msg" id="upiError">Enter a valid UPI ID (e.g. name@bank).</span>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="submitRechargeBtn" style="width: 100%; padding: 1rem; font-size: 1.15rem; font-weight: 700;">Proceed to Pay</button>
+        </form>
+      </div>
+
+      <!-- Checkout Success Card (Hidden by Default) -->
+      <div class="form-card recharge-success-card" id="rechargeSuccessCard" style="display: none;">
+        <div class="success-icon-wrapper">
+          <i class="fa-solid fa-check"></i>
+        </div>
+        <h2 style="font-size: 2rem; margin-bottom: 0.5rem; font-family: var(--font-family-primary);">Recharge Successful!</h2>
+        <p style="color: var(--text-muted);">Thank you for choosing Stackly. Your transaction has completed successfully and your service is active.</p>
+        
+        <div class="recharge-summary-list" id="rechargeSummary">
+          <!-- Filled by JS -->
+        </div>
+
+        <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1rem;">
+          <a href="index.html" class="btn btn-secondary">Back to Home</a>
+          <a href="customer-dashboard.html" class="btn btn-primary" id="successDashboardBtn" style="display: none;"><i class="fa-solid fa-gauge"></i> Go to Dashboard</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="container footer-grid">
+        <!-- Brand Column -->
+        <div class="footer-brand">
+          <a href="index.html" class="footer-logo-link">
+            <img src="assets/Logo11.webp" alt="Stackly Logo" class="footer-logo-img">
+          </a>
+          <p class="footer-desc">
+            Empowering millions with ultra-fast 5G mobile connectivity, high-speed fiber broadband, and seamless digital services nationwide.
+          </p>
+          <div class="footer-socials">
+            <a href="404.html" class="social-icon" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="404.html" class="social-icon" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="404.html" class="social-icon" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="404.html" class="social-icon" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <!-- Quick Links Column -->
+        <div class="footer-col">
+          <h4 class="footer-heading">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html"><i class="fa-solid fa-angle-right"></i> Home</a></li>
+            <li><a href="broadband.html"><i class="fa-solid fa-angle-right"></i> Broadband</a></li>
+            <li><a href="recharge.html"><i class="fa-solid fa-angle-right"></i> Recharge & Plans</a></li>
+            <li><a href="support.html"><i class="fa-solid fa-angle-right"></i> Support</a></li>
+            <li><a href="contact.html"><i class="fa-solid fa-angle-right"></i> Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Support & Info Column -->
+        <div class="footer-col">
+          <h4 class="footer-heading">Support & Info</h4>
+          <ul class="footer-links">
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> Help Center</a></li>
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> FAQs</a></li>
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> Contact Us</a></li>
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> My Account</a></li>
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> Network Status</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact & Location Column -->
+        <div class="footer-col">
+          <h4 class="footer-heading">Contact & Location</h4>
+          <div class="footer-contact-info">
+            <div class="contact-item">
+              <i class="fa-solid fa-location-dot"></i>
+              <span><strong>Stackly HQ:</strong> 500 Tech Tower Plaza, Suite 1200, Silicon Valley, CA 94025</span>
+            </div>
+            <div class="contact-item">
+              <i class="fa-solid fa-headset"></i>
+              <span>24/7 Support: <strong>1800-STACKLY</strong></span>
+            </div>
+            <div class="contact-item">
+              <i class="fa-solid fa-envelope"></i>
+              <span>support@stacklytelecom.com</span>
+            </div>
+            <div class="contact-item">
+              <i class="fa-solid fa-clock"></i>
+              <span>Working Hours: <strong>Mon - Sun: 24/7</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      <div class="container footer-bottom-container">
+        <p class="copyright-text">&copy; 2026 Stackly Telecom Inc. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="404.html">Privacy Policy</a>
+          <span class="dot">•</span>
+          <a href="404.html">Terms of Service</a>
+          <span class="dot">•</span>
+          <a href="404.html">Security</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <!-- Main JS Files -->
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    const plansDatabase = [
+      // Mobile - Popular
+      { id: "p1", name: "Premium 5G Unlimited", price: 29.99, data: "Unlimited 5G", calls: "Unlimited Nationwide", validity: "28 Days", type: "mobile", category: "popular", badge: "Best Seller", specs: ["Unlimited 5G Data", "Unlimited Calls", "100 SMS / Day", "App Suite Access"] },
+      { id: "p2", name: "Standard Mobile Plus", price: 19.99, data: "50 GB 4G/5G", calls: "Unlimited Nationwide", validity: "28 Days", type: "mobile", category: "popular", badge: "Value Pack", specs: ["50 GB High-Speed Data", "Unlimited Calls", "100 SMS / Day"] },
+      { id: "p3", name: "Essential Budget Pack", price: 9.99, data: "10 GB 4G", calls: "1000 Mins Calls", validity: "14 Days", type: "mobile", category: "popular", badge: "Budget", specs: ["10 GB Data", "1000 Mins Calls", "100 SMS Total"] },
+
+      // Mobile - 5G Unlimited
+      { id: "p1_unl", name: "Super 5G Ultra Max", price: 39.99, data: "Unlimited 5G Max", calls: "Unlimited Calls & SMS", validity: "56 Days", type: "mobile", category: "unlimited", badge: "5G Speed Boost", specs: ["Unlimited 5G Data (No Caps)", "Unlimited Calls & SMS", "Disney+ Streaming Access"] },
+      { id: "p2_unl", name: "5G Wireless Home Pack", price: 49.99, data: "True Unlimited 5G", calls: "Unlimited Calls", validity: "30 Days", type: "mobile", category: "unlimited", badge: "Home 5G", specs: ["True Unlimited 5G", "Wi-Fi Hotspot Enabled", "Priority Bandwidth"] },
+
+      // Mobile - Data Boosters
+      { id: "p8", name: "Data Booster 10GB", price: 10.00, data: "10 GB Add-on", calls: "Base Plan", validity: "Base Plan", type: "mobile", category: "data", badge: "Add-On", specs: ["10 GB Instant Data", "Matches Base Plan Validity"] },
+      { id: "p_data50", name: "Data Booster 50GB", price: 20.00, data: "50 GB Add-on", calls: "Base Plan", validity: "Base Plan", type: "mobile", category: "data", badge: "Mega Booster", specs: ["50 GB High-Speed Data", "High-speed rollover enabled"] },
+      { id: "p_night", name: "Night Owl Data Pass", price: 5.00, data: "Unlimited (12 AM - 6 AM)", calls: "N/A", validity: "7 Days", type: "mobile", category: "data", badge: "Night Pass", specs: ["Unlimited Night Data", "Valid 12 AM to 6 AM Daily"] },
+
+      // Mobile - Top-Up
+      { id: "p_topup10", name: "Talktime Top-Up $10", price: 10.00, data: "N/A", calls: "$10 Full Talktime", validity: "No Expiry", type: "mobile", category: "topup", badge: "Full Talktime", specs: ["$10 Talktime Balance", "100 Nationwide SMS", "Unlimited Validity"] },
+      { id: "p_topup25", name: "Talktime Top-Up $25", price: 25.00, data: "N/A", calls: "$30 Credit ($5 Bonus)", validity: "No Expiry", type: "mobile", category: "topup", badge: "Bonus Credit", specs: ["$25 Talktime + $5 Bonus", "Unlimited Validity"] },
+
+      // Mobile - International
+      { id: "p_intl5", name: "Global Roaming Pass 5GB", price: 25.00, data: "5 GB International", calls: "100 Global Mins", validity: "10 Days", type: "mobile", category: "international", badge: "Global Pass", specs: ["5 GB Global Data in 80+ Countries", "100 Roaming Mins"] },
+      { id: "p_intl15", name: "World Traveler Pass 15GB", price: 45.00, data: "15 GB International", calls: "250 Global Mins", validity: "30 Days", type: "mobile", category: "international", badge: "World Pass", specs: ["15 GB International Data", "250 Global Mins & Incoming"] },
+
+      // Mobile - Postpaid
+      { id: "p7", name: "Infinity Elite Postpaid", price: 49.99, data: "Unlimited 5G", calls: "Unlimited Calls & SMS", validity: "Monthly Bill", type: "mobile", category: "postpaid", badge: "Postpaid", specs: ["Unlimited 5G Data (No Caps)", "5GB Global Roaming", "Priority Tech Support"] },
+      { id: "p_postpaid_family", name: "Family Duo Postpaid", price: 79.99, data: "200 GB Shared", calls: "Unlimited Calls", validity: "Monthly Bill", type: "mobile", category: "postpaid", badge: "Family Pack", specs: ["2 Connections Included", "200 GB Shared Data", "OTT Subscriptions"] },
+
+      // Broadband
+      { id: "p4", name: "Gigabit Fiber Premium", price: 79.99, data: "1 Gbps Speed", calls: "Free Landline", validity: "30 Days", type: "broadband", category: "popular", badge: "Ultra Fast", specs: ["1 Gbps Symmetric Speed", "Unlimited Data", "Free Landline Included"] },
+      { id: "p5", name: "Superfast Fiber 500", price: 59.99, data: "500 Mbps Speed", calls: "Free Landline", validity: "30 Days", type: "broadband", category: "popular", badge: "Most Popular", specs: ["500 Mbps Speed", "Unlimited Data", "Free Landline Included"] },
+      { id: "p6", name: "Starter Fiber 100", price: 39.99, data: "100 Mbps Speed", calls: "Free Landline", validity: "30 Days", type: "broadband", category: "popular", badge: "Starter Pack", specs: ["100 Mbps Speed", "Unlimited Data", "Free Router Rental"] }
+    ];
+
+    let activeSelectedPlanId = "p1";
+    let activeCategory = "popular";
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // Sync localStorage with plans database if missing or out of date
+      const localPlans = JSON.parse(localStorage.getItem("stackly_plans") || "[]");
+      if (localPlans.length < plansDatabase.length) {
+        localStorage.setItem("stackly_plans", JSON.stringify(plansDatabase));
+      }
+
+      const connTypeSelect = document.getElementById("connectionType");
+      const targetLabel = document.getElementById("targetLabel");
+      const targetInput = document.getElementById("targetNumber");
+      const chipsWrapper = document.getElementById("planChipsWrapper");
+      const chipBtns = document.querySelectorAll(".plan-chip");
+
+      // Handle category chip click
+      chipBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          chipBtns.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          activeCategory = btn.getAttribute("data-category");
+          renderInlinePlans();
+        });
+      });
+
+      // Handle connection type toggle (Mobile vs Broadband)
+      connTypeSelect.addEventListener("change", () => {
+        if (connTypeSelect.value === "mobile") {
+          targetLabel.innerText = "Mobile Number";
+          targetInput.placeholder = "Enter 10-digit number";
+          chipsWrapper.style.display = "flex";
+          activeSelectedPlanId = "p1";
+        } else {
+          targetLabel.innerText = "Fiber Account ID";
+          targetInput.placeholder = "Enter Fiber Account ID (e.g. STK-12345)";
+          chipsWrapper.style.display = "none";
+          activeSelectedPlanId = "p4";
+        }
+        renderInlinePlans();
+      });
+
+      // Parse plan from URL query string if present
+      const urlParams = new URLSearchParams(window.location.search);
+      const queryPlanId = urlParams.get("plan");
+      if (queryPlanId) {
+        const found = plansDatabase.find(p => p.id === queryPlanId);
+        if (found) {
+          activeSelectedPlanId = queryPlanId;
+          if (found.type === "broadband") {
+            connTypeSelect.value = "broadband";
+            connTypeSelect.dispatchEvent(new Event("change"));
+          } else {
+            activeCategory = found.category || "popular";
+            chipBtns.forEach(b => {
+              if (b.getAttribute("data-category") === activeCategory) {
+                b.classList.add("active");
+              } else {
+                b.classList.remove("active");
+              }
+            });
+          }
+        }
+      }
+
+      // Initial render
+      renderInlinePlans();
+
+      // Handle Payment Option toggles
+      const payMethod = document.getElementById("paymentMethod");
+      const cardFields = document.getElementById("cardFields");
+      const upiFields = document.getElementById("upiFields");
+
+      payMethod.addEventListener("change", () => {
+        if (payMethod.value === "UPI") {
+          cardFields.style.display = "none";
+          upiFields.style.display = "block";
+        } else if (payMethod.value === "Net Banking") {
+          cardFields.style.display = "none";
+          upiFields.style.display = "none";
+        } else {
+          cardFields.style.display = "block";
+          upiFields.style.display = "none";
+        }
+      });
+
+      // Form Submission
+      const form = document.getElementById("rechargeForm");
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        
+        let isValid = true;
+        const targetVal = targetInput.value.trim();
+        const targetError = document.getElementById("targetError");
+        const groupTarget = document.getElementById("targetFieldGroup");
+
+        if (connTypeSelect.value === "mobile") {
+          const numPattern = /^\d{10}$/;
+          if (!numPattern.test(targetVal)) {
+            groupTarget.classList.add("has-error");
+            isValid = false;
+          } else {
+            groupTarget.classList.remove("has-error");
+          }
+        } else {
+          if (!targetVal || targetVal.length < 4) {
+            groupTarget.classList.add("has-error");
+            targetError.innerText = "Please enter a valid Fiber account ID.";
+            isValid = false;
+          } else {
+            groupTarget.classList.remove("has-error");
+          }
+        }
+
+        // Validate Card / UPI fields
+        if (payMethod.value === "Credit Card" || payMethod.value === "Debit Card") {
+          const cardNum = document.getElementById("cardNumber").value.trim().replace(/\s/g, '');
+          const expiry = document.getElementById("cardExpiry").value.trim();
+          const cvv = document.getElementById("cardCvv").value.trim();
+
+          const cardError = document.getElementById("cardError");
+          const expiryError = document.getElementById("expiryError");
+          const cvvError = document.getElementById("cardCvv").nextElementSibling;
+
+          if (!/^\d{16}$/.test(cardNum)) {
+            cardError.parentElement.classList.add("has-error");
+            isValid = false;
+          } else {
+            cardError.parentElement.classList.remove("has-error");
+          }
+
+          if (!/^\d{2}\/\d{2}$/.test(expiry)) {
+            expiryError.parentElement.parentElement.classList.add("has-error");
+            isValid = false;
+          } else {
+            expiryError.parentElement.parentElement.classList.remove("has-error");
+          }
+
+          if (!/^\d{3}$/.test(cvv)) {
+            cvvError.parentElement.parentElement.classList.add("has-error");
+            isValid = false;
+          } else {
+            cvvError.parentElement.parentElement.classList.remove("has-error");
+          }
+        } else if (payMethod.value === "UPI") {
+          const upiId = document.getElementById("upiId").value.trim();
+          const upiError = document.getElementById("upiError");
+
+          if (!/^[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}$/.test(upiId)) {
+            upiError.parentElement.classList.add("has-error");
+            isValid = false;
+          } else {
+            upiError.parentElement.classList.remove("has-error");
+          }
+        }
+
+        if (!isValid) return;
+
+        const currentPlans = JSON.parse(localStorage.getItem("stackly_plans") || "[]");
+        const activePlan = currentPlans.find(p => p.id === activeSelectedPlanId) || plansDatabase.find(p => p.id === activeSelectedPlanId) || plansDatabase[0];
+
+        // Submit Process
+        const submitBtn = document.getElementById("submitRechargeBtn");
+        submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Settle Payment...`;
+        submitBtn.disabled = true;
+
+        setTimeout(() => {
+          const txnId = "TXN" + Math.floor(10000 + Math.random() * 90000);
+          const today = new Date().toISOString().split("T")[0];
+          const session = JSON.parse(localStorage.getItem("stackly_session") || "null");
+
+          // Save transaction to DB
+          const txns = JSON.parse(localStorage.getItem("stackly_transactions") || "[]");
+          const newTxn = {
+            id: txnId,
+            email: session ? session.email : "guest@gmail.com",
+            amount: activePlan.price,
+            planName: activePlan.name,
+            date: today,
+            status: "success",
+            paymentMethod: payMethod.value
+          };
+          txns.unshift(newTxn);
+          localStorage.setItem("stackly_transactions", JSON.stringify(txns));
+
+          // If customer logged in
+          if (session && session.role === "customer") {
+            const users = JSON.parse(localStorage.getItem("stackly_users") || "[]");
+            const updatedUsers = users.map(u => {
+              if (u.email === session.email) {
+                u.plan = activePlan.name;
+                return u;
+              }
+              return u;
+            });
+            localStorage.setItem("stackly_users", JSON.stringify(updatedUsers));
+            session.plan = activePlan.name;
+            localStorage.setItem("stackly_session", JSON.stringify(session));
+            document.getElementById("successDashboardBtn").style.display = "inline-flex";
+          }
+
+          // Populate success card
+          const summary = document.getElementById("rechargeSummary");
+          summary.innerHTML = `
+            <div class="summary-row">
+              <span class="summary-label">Transaction ID</span>
+              <span class="summary-value">${txnId}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">Target Account / Number</span>
+              <span class="summary-value">${targetVal}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">Selected Plan</span>
+              <span class="summary-value">${activePlan.name}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">Recharge Amount</span>
+              <span class="summary-value" style="color:var(--primary-red); font-weight:800;">$${activePlan.price.toFixed(2)}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">Payment Method</span>
+              <span class="summary-value">${payMethod.value}</span>
+            </div>
+          `;
+
+          document.getElementById("rechargeFormCard").style.display = "none";
+          const successCard = document.getElementById("rechargeSuccessCard");
+          successCard.style.display = "block";
+
+          if (window.gsap) {
+            gsap.from(successCard, {
+              opacity: 0,
+              y: 45,
+              duration: 0.5,
+              ease: "back.out(1.2)"
+            });
+          }
+        }, 1200);
+      });
+    });
+
+    function renderInlinePlans() {
+      const connType = document.getElementById("connectionType").value;
+      const grid = document.getElementById("inlinePlansGrid");
+      const selector = document.getElementById("planSelector");
+
+      let currentPlans = JSON.parse(localStorage.getItem("stackly_plans") || "[]");
+      if (currentPlans.length < plansDatabase.length) {
+        currentPlans = plansDatabase;
+      }
+
+      let filtered = currentPlans.filter(p => {
+        if (p.type !== connType) return false;
+        if (connType === "broadband") return true;
+        return p.category === activeCategory || activeCategory === "all";
+      });
+
+      if (filtered.length === 0) {
+        filtered = currentPlans.filter(p => p.type === connType);
+      }
+
+      // Hidden selector sync
+      selector.innerHTML = "";
+      filtered.forEach(p => {
+        const opt = document.createElement("option");
+        opt.value = p.id;
+        opt.innerText = `${p.name} - $${p.price.toFixed(2)}`;
+        selector.appendChild(opt);
+      });
+
+      if (!filtered.some(p => p.id === activeSelectedPlanId)) {
+        activeSelectedPlanId = filtered[0] ? filtered[0].id : "p1";
+      }
+
+      grid.innerHTML = "";
+      filtered.forEach(plan => {
+        const isSelected = plan.id === activeSelectedPlanId;
+        const card = document.createElement("div");
+        card.className = `inline-plan-card ${isSelected ? 'selected' : ''}`;
+        card.setAttribute("data-id", plan.id);
+        
+        const specsList = plan.specs || [plan.data, plan.calls, plan.validity];
+        const specsHtml = specsList
+          .map(s => `<div class="inline-spec-item"><i class="fa-solid fa-circle-check"></i> ${s}</div>`)
+          .join("");
+
+        card.innerHTML = `
+          <div class="select-check"><i class="fa-solid fa-check"></i></div>
+          ${plan.badge ? `<span class="inline-plan-badge">${plan.badge}</span>` : ''}
+          <h4 class="inline-plan-name">${plan.name}</h4>
+          <div class="inline-plan-price">$${plan.price.toFixed(2)} <span>/ ${plan.validity}</span></div>
+          <div class="inline-plan-specs">
+            ${specsHtml}
+          </div>
+          <button type="button" class="inline-plan-btn">${isSelected ? 'Selected Plan' : 'Select Plan'}</button>
+        `;
+
+        card.addEventListener("click", () => {
+          selectPlanInline(plan.id);
+        });
+
+        grid.appendChild(card);
+      });
+
+      updateSelectedBanner();
+    }
+
+    function selectPlanInline(planId) {
+      activeSelectedPlanId = planId;
+
+      document.querySelectorAll(".inline-plan-card").forEach(c => {
+        if (c.getAttribute("data-id") === planId) {
+          c.classList.add("selected");
+          const btn = c.querySelector(".inline-plan-btn");
+          if (btn) btn.innerText = "Selected Plan";
+        } else {
+          c.classList.remove("selected");
+          const btn = c.querySelector(".inline-plan-btn");
+          if (btn) btn.innerText = "Select Plan";
+        }
+      });
+
+      const selector = document.getElementById("planSelector");
+      if (selector) selector.value = planId;
+
+      updateSelectedBanner();
+    }
+
+    function updateSelectedBanner() {
+      const currentPlans = JSON.parse(localStorage.getItem("stackly_plans") || "[]");
+      const plan = currentPlans.find(p => p.id === activeSelectedPlanId) || plansDatabase.find(p => p.id === activeSelectedPlanId);
+      const detailsBox = document.getElementById("selectedPlanDetail");
+      const submitBtn = document.getElementById("submitRechargeBtn");
+
+      if (plan && detailsBox) {
+        detailsBox.innerHTML = `
+          <div>
+            <div style="font-size: 0.8rem; text-transform: uppercase; font-weight: 700; color: var(--primary-red); letter-spacing: 0.5px;">Selected Plan</div>
+            <div style="font-size: 1.1rem; font-weight: 700; color: var(--text-dark); margin-top: 0.15rem;">${plan.name}</div>
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.15rem;">${plan.data} • ${plan.calls} • ${plan.validity}</div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 1.6rem; font-weight: 800; color: var(--primary-red);">$${plan.price.toFixed(2)}</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">Recharge Amount</div>
+          </div>
+        `;
+        detailsBox.style.display = "flex";
+
+        if (submitBtn) {
+          submitBtn.innerHTML = `Proceed to Pay $${plan.price.toFixed(2)} <i class="fa-solid fa-lock" style="margin-left:0.5rem;"></i>`;
+        }
+      }
+    }
+  </script>
+</body>
+</html>

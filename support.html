@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Support & Help Desk | Stackly Telecom</title>
+  <meta name="description" content="Get direct support for your mobile connectivity and broadband fiber routers. Log tickets online or browse our solved troubleshooting FAQs.">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Sticky Navigation Bar -->
+  <header class="navbar-header" id="mainHeader">
+    <div class="container navbar-container">
+      <a href="index.html" class="logo-link" id="navLogo">
+        <img src="assets/Logo11.webp" alt="Stackly Logo" class="logo-img">
+      </a>
+      
+      <nav class="nav-menu" id="navMenu">
+        <button class="nav-close-btn" id="navCloseBtn" aria-label="Close menu"><i class="fa-solid fa-xmark"></i></button>
+        <a href="index.html" class="nav-link" id="linkHome">Home</a>
+        <a href="broadband.html" class="nav-link" id="linkBroadband">Broadband</a>
+        <a href="recharge.html" class="nav-link" id="linkRecharge">Recharge & Plans</a>
+        <a href="support.html" class="nav-link active" id="linkSupport">Support</a>
+        <a href="contact.html" class="nav-link" id="linkContact">Contact</a>
+        <div class="nav-actions-mobile">
+          <a href="login.html" class="btn btn-primary" style="width: 100%; gap: 0.5rem;"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>
+        </div>
+      </nav>
+
+      <div class="nav-actions" id="profile-dropdown-wrapper">
+        <a href="login.html" class="btn btn-secondary" id="loginBtnNav"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>
+      </div>
+
+      <button class="hamburger" aria-label="Toggle navigation menu" id="hamburgerBtn">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <h1 class="page-hero-title">Customer Care & Support</h1>
+      <p class="page-hero-subtitle">Need help with your connection? Submit a support request or search through our quick troubleshooting directories.</p>
+    </div>
+  </section>
+
+  <!-- Troubleshooting Categories -->
+  <section class="why-section">
+    <div class="container">
+      <div class="support-grid">
+        <!-- Box 1 -->
+        <div class="support-box">
+          <div class="support-box-icon"><i class="fa-solid fa-wifi"></i></div>
+          <h3 class="support-box-title">Broadband Down</h3>
+          <p class="support-box-desc">Verify router status logs, check blinking light errors, and request field line re-connections.</p>
+          <a href="#ticketFormSection" class="btn btn-outline-red btn-sm">Submit Ticket</a>
+        </div>
+
+        <!-- Box 2 -->
+        <div class="support-box">
+          <div class="support-box-icon"><i class="fa-solid fa-sim-card"></i></div>
+          <h3 class="support-box-title">SIM Activation</h3>
+          <p class="support-box-desc">Activate eSIMs, resolve signal outages, modify porting requests, or request replacement cards.</p>
+          <a href="#ticketFormSection" class="btn btn-outline-red btn-sm">Report SIM Issue</a>
+        </div>
+
+        <!-- Box 3 -->
+        <div class="support-box">
+          <div class="support-box-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+          <h3 class="support-box-title">Billing Queries</h3>
+          <p class="support-box-desc">Inquire about transaction failures, update recurring billing cycles, or seek invoice records.</p>
+          <a href="#ticketFormSection" class="btn btn-outline-red btn-sm">Open Dispute</a>
+        </div>
+      </div>
+
+      <!-- Ticket Submit Form Section -->
+      <div class="form-card" id="ticketFormSection" style="max-width: 800px; margin: 0 auto;">
+        <h2 class="form-title">Log a Trouble Ticket</h2>
+        
+        <div id="ticketSuccessMsg" style="background-color: rgba(46, 204, 113, 0.1); color: #2ecc71; border: 1px solid #2ecc71; padding: 1.25rem; border-radius: var(--border-radius-sm); margin-bottom: 2rem; display: none; align-items: center; gap: 1rem; font-weight: 600;">
+          <i class="fa-solid fa-circle-check" style="font-size: 1.5rem;"></i>
+          <div>
+            <div style="font-size:1.05rem">Ticket Registered Successfully!</div>
+            <div style="font-size:0.85rem; font-weight:400;" id="successTicketId">ID: TKT8890</div>
+          </div>
+        </div>
+
+        <form id="ticketSubmitForm">
+          <div class="form-grid">
+            <div class="form-group" id="tktNameGroup">
+              <label class="form-label" for="tktName">Full Name</label>
+              <input type="text" id="tktName" placeholder="Sarah Connor" class="form-input">
+              <span class="error-msg">Please enter your name.</span>
+            </div>
+            
+            <div class="form-group" id="tktEmailGroup">
+              <label class="form-label" for="tktEmail">Gmail Address</label>
+              <input type="text" id="tktEmail" placeholder="example@gmail.com" class="form-input">
+              <span class="error-msg">Please enter a valid Gmail address (ending in @gmail.com).</span>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group" id="tktSubjectGroup">
+              <label class="form-label" for="tktSubject">Subject</label>
+              <input type="text" id="tktSubject" placeholder="e.g. Red blinking light on router" class="form-input">
+              <span class="error-msg">Subject cannot be empty.</span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="tktCategory">Category</label>
+              <select class="form-input" id="tktCategory">
+                <option value="technical">Technical Support</option>
+                <option value="billing">Billing & Recharge</option>
+                <option value="account">Account Access</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group full-width" id="tktMessageGroup" style="margin-bottom: 1.5rem;">
+            <label class="form-label" for="tktMessage">Description of Issue</label>
+            <textarea id="tktMessage" placeholder="Please write details about your issue so our network engineers can diagnose..." class="form-input"></textarea>
+            <span class="error-msg">Please provide issue descriptions.</span>
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="tktSubmitBtn">Register Support Ticket</button>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Solved FAQ Section -->
+  <section class="faq-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Help Desk</span>
+        <h2 class="section-title">Solved Technical FAQ</h2>
+        <p class="section-desc">Search through frequent trouble tickets compiled from active subscribers.</p>
+      </div>
+
+      <div class="faq-wrapper">
+        <div class="faq-item">
+          <div class="faq-header">
+            What does the blinking red WAN light on the router mean?
+            <div class="faq-icon-box"><i class="fa-solid fa-plus"></i></div>
+          </div>
+          <div class="faq-body">
+            <div class="faq-content">
+              A blinking red WAN light indicates that the router is not receiving an optical connection from the external fiber line. Check if the yellow fiber patch cord is plugged securely into the blue GPON port on the back. If secure, open a ticket for technician review.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-header">
+            How do I configure the WiFi network name (SSID) on Stackly routers?
+            <div class="faq-icon-box"><i class="fa-solid fa-plus"></i></div>
+          </div>
+          <div class="faq-body">
+            <div class="faq-content">
+              Connect to your Stackly router via cable or wireless, open a web browser, and go to http://192.168.1.1. Enter the admin credentials printed on the router label, navigate to "Wireless Settings", and update the SSID and passphrase.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-header">
+            How do I test my connection latency/ping?
+            <div class="faq-icon-box"><i class="fa-solid fa-plus"></i></div>
+          </div>
+          <div class="faq-body">
+            <div class="faq-content">
+              Open the command terminal on your computer and type "ping 8.8.8.8". A standard high-speed Stackly fiber connection averages a ping between 2ms to 8ms to public DNS nodes.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="container footer-grid">
+        <!-- Brand Column -->
+        <div class="footer-brand">
+          <a href="index.html" class="footer-logo-link">
+            <img src="assets/Logo11.webp" alt="Stackly Logo" class="footer-logo-img">
+          </a>
+          <p class="footer-desc">
+            Empowering millions with ultra-fast 5G mobile connectivity, high-speed fiber broadband, and seamless digital services nationwide.
+          </p>
+          <div class="footer-socials">
+            <a href="404.html" class="social-icon" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="404.html" class="social-icon" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="404.html" class="social-icon" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="404.html" class="social-icon" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <!-- Quick Links Column -->
+        <div class="footer-col">
+          <h4 class="footer-heading">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html"><i class="fa-solid fa-angle-right"></i> Home</a></li>
+            <li><a href="broadband.html"><i class="fa-solid fa-angle-right"></i> Broadband</a></li>
+            <li><a href="recharge.html"><i class="fa-solid fa-angle-right"></i> Recharge & Plans</a></li>
+            <li><a href="support.html"><i class="fa-solid fa-angle-right"></i> Support</a></li>
+            <li><a href="contact.html"><i class="fa-solid fa-angle-right"></i> Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Support & Info Column -->
+        <div class="footer-col">
+          <h4 class="footer-heading">Support & Info</h4>
+          <ul class="footer-links">
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> Help Center</a></li>
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> FAQs</a></li>
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> Contact Us</a></li>
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> My Account</a></li>
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> Network Status</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact & Location Column -->
+        <div class="footer-col">
+          <h4 class="footer-heading">Contact & Location</h4>
+          <div class="footer-contact-info">
+            <div class="contact-item">
+              <i class="fa-solid fa-location-dot"></i>
+              <span><strong>Stackly HQ:</strong> 500 Tech Tower Plaza, Suite 1200, Silicon Valley, CA 94025</span>
+            </div>
+            <div class="contact-item">
+              <i class="fa-solid fa-headset"></i>
+              <span>24/7 Support: <strong>1800-STACKLY</strong></span>
+            </div>
+            <div class="contact-item">
+              <i class="fa-solid fa-envelope"></i>
+              <span>support@stacklytelecom.com</span>
+            </div>
+            <div class="contact-item">
+              <i class="fa-solid fa-clock"></i>
+              <span>Working Hours: <strong>Mon - Sun: 24/7</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      <div class="container footer-bottom-container">
+        <p class="copyright-text">&copy; 2026 Stackly Telecom Inc. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="404.html">Privacy Policy</a>
+          <span class="dot">•</span>
+          <a href="404.html">Terms of Service</a>
+          <span class="dot">•</span>
+          <a href="404.html">Security</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+  <!-- Main JS Files -->
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("ticketSubmitForm");
+      
+      if (form) {
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+
+          let isValid = true;
+          const nameInput = document.getElementById("tktName");
+          const emailInput = document.getElementById("tktEmail");
+          const subjectInput = document.getElementById("tktSubject");
+          const messageInput = document.getElementById("tktMessage");
+
+          const nameGroup = document.getElementById("tktNameGroup");
+          const emailGroup = document.getElementById("tktEmailGroup");
+          const subjectGroup = document.getElementById("tktSubjectGroup");
+          const messageGroup = document.getElementById("tktMessageGroup");
+
+          // Reset errors
+          nameGroup.classList.remove("has-error");
+          emailGroup.classList.remove("has-error");
+          subjectGroup.classList.remove("has-error");
+          messageGroup.classList.remove("has-error");
+
+          if (!nameInput.value.trim()) {
+            nameGroup.classList.add("has-error");
+            isValid = false;
+          }
+
+          // Gmail check (ends with @gmail.com)
+          const gmailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+          if (!gmailPattern.test(emailInput.value.toLowerCase().trim())) {
+            emailGroup.classList.add("has-error");
+            isValid = false;
+          }
+
+          if (!subjectInput.value.trim()) {
+            subjectGroup.classList.add("has-error");
+            isValid = false;
+          }
+
+          if (!messageInput.value.trim()) {
+            messageGroup.classList.add("has-error");
+            isValid = false;
+          }
+
+          if (!isValid) return;
+
+          // Submit ticket
+          const btn = document.getElementById("tktSubmitBtn");
+          btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Logging Ticket...`;
+          btn.disabled = true;
+
+          setTimeout(() => {
+            const ticketId = "TKT" + Math.floor(1000 + Math.random() * 9000);
+            const today = new Date().toISOString().split("T")[0];
+
+            const newTicket = {
+              id: ticketId,
+              email: emailInput.value.toLowerCase().trim(),
+              subject: subjectInput.value.trim(),
+              category: document.getElementById("tktCategory").value,
+              message: messageInput.value.trim(),
+              status: "pending",
+              date: today
+            };
+
+            // Save to LocalStorage
+            const tickets = JSON.parse(localStorage.getItem("stackly_tickets") || "[]");
+            tickets.unshift(newTicket);
+            localStorage.setItem("stackly_tickets", JSON.stringify(tickets));
+
+            // Reset inputs
+            form.reset();
+            
+            // Show Success Notification
+            document.getElementById("successTicketId").innerText = `Ticket Registration ID: ${ticketId}`;
+            const successBox = document.getElementById("ticketSuccessMsg");
+            successBox.style.display = "flex";
+
+            // Restore button
+            btn.innerHTML = "Register Support Ticket";
+            btn.disabled = false;
+
+            // GSAP Scroll back to top of card smoothly and pulse
+            gsap.to(window, {
+              duration: 0.5,
+              scrollTo: "#ticketFormSection",
+              onComplete: () => {
+                gsap.from(successBox, {
+                  scale: 0.95,
+                  duration: 0.3,
+                  ease: "back.out(1.5)"
+                });
+              }
+            });
+
+          }, 1200);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

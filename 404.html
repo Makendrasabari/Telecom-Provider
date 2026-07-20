@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 - Page Not Found | Stackly Telecom</title>
+  <meta name="description" content="The page you are looking for does not exist or has been moved. Return to Stackly Telecom home for 5G mobile and fiber broadband services.">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      background: radial-gradient(circle at 50% 30%, rgba(230, 0, 18, 0.08) 0%, rgba(15, 23, 42, 0.03) 80%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .error-404-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1.5rem;
+      text-align: center;
+    }
+
+    .error-404-box {
+      max-width: 720px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .error-brand-logo {
+      height: 55px;
+      margin: 0 auto 0.5rem auto;
+      object-fit: contain;
+    }
+
+    .error-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(230, 0, 18, 0.1);
+      color: var(--primary-red);
+      border: 1px solid rgba(230, 0, 18, 0.2);
+      padding: 0.5rem 1.25rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .error-code {
+      font-family: var(--font-family-primary);
+      font-size: 8.5rem;
+      font-weight: 900;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--primary-red) 0%, #FF5252 50%, var(--text-dark) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+      letter-spacing: -2px;
+    }
+
+    .error-title {
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 1rem;
+    }
+
+    .error-desc {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      max-width: 540px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .error-search-box {
+      display: flex;
+      max-width: 480px;
+      margin: 0 auto 2.5rem auto;
+      gap: 0.5rem;
+    }
+
+    .error-search-input {
+      flex: 1;
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-sm);
+      padding: 0.85rem 1.25rem;
+      font-size: 0.95rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .error-search-input:focus {
+      border-color: var(--primary-red);
+      box-shadow: 0 0 0 3px rgba(230, 0, 18, 0.12);
+    }
+
+    .error-ctas {
+      display: flex;
+      justify-content: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .quick-help-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 4rem;
+      text-align: left;
+    }
+
+    .quick-help-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-md);
+      padding: 1.5rem;
+      transition: var(--transition-smooth);
+    }
+
+    .quick-help-card:hover {
+      border-color: var(--primary-red);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .quick-help-card i {
+      font-size: 1.5rem;
+      color: var(--primary-red);
+      margin-bottom: 0.75rem;
+    }
+
+    .quick-help-card h4 {
+      font-size: 1.1rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .quick-help-card p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 768px) {
+      .error-code {
+        font-size: 6rem;
+      }
+      .error-title {
+        font-size: 1.75rem;
+      }
+      .quick-help-grid {
+        grid-template-columns: 1fr;
+      }
+      .error-search-box {
+        flex-direction: column;
+      }
+      .error-search-box .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 404 Standalone Main Section -->
+  <section class="error-404-page">
+    <div class="container">
+      <div class="error-404-box">
+        <a href="index.html" style="display: inline-block; margin-bottom: 0.25rem;">
+          <img src="assets/Logo11.webp" alt="Stackly Telecom" class="error-brand-logo">
+        </a>
+        <div style="margin-bottom: 1.25rem;">
+          <span class="error-badge"><i class="fa-solid fa-circle-exclamation"></i> Error 404</span>
+        </div>
+        <h1 class="error-code">404</h1>
+        <h2 class="error-title">Page Not Found</h2>
+        <p class="error-desc">
+          We couldn't find the page you're looking for. It might have been moved, renamed, or is temporarily offline.
+        </p>
+
+        <div class="error-ctas">
+          <a href="index.html" class="btn btn-primary"><i class="fa-solid fa-house"></i> Back to Homepage</a>
+          <button type="button" class="btn btn-secondary" onclick="window.history.back()"><i class="fa-solid fa-arrow-left"></i> Go Back</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

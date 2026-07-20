@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stackly Telecom | Premium 5G Network & Fiber Broadband Services</title>
+  <meta name="description" content="Experience ultra-fast 5G mobile connectivity, premium fiber broadband, and instant online recharges with Stackly. Join millions of happy customers nationwide.">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Sticky Navigation Bar -->
+  <header class="navbar-header" id="mainHeader">
+    <div class="container navbar-container">
+      <a href="index.html" class="logo-link" id="navLogo">
+        <!-- Stackly logo. is in assets size should no small, color premium red -->
+        <img src="assets/Logo11.webp" alt="Stackly Logo" class="logo-img">
+      </a>
+      
+      <nav class="nav-menu" id="navMenu">
+        <button class="nav-close-btn" id="navCloseBtn" aria-label="Close menu"><i class="fa-solid fa-xmark"></i></button>
+        <a href="index.html" class="nav-link active" id="linkHome">Home</a>
+        <a href="broadband.html" class="nav-link" id="linkBroadband">Broadband</a>
+        <a href="recharge.html" class="nav-link" id="linkRecharge">Recharge & Plans</a>
+        <a href="support.html" class="nav-link" id="linkSupport">Support</a>
+        <a href="contact.html" class="nav-link" id="linkContact">Contact</a>
+        <div class="nav-actions-mobile">
+          <a href="login.html" class="btn btn-primary" style="width: 100%; gap: 0.5rem;"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>
+        </div>
+      </nav>
+
+      <div class="nav-actions" id="profile-dropdown-wrapper">
+        <a href="login.html" class="btn btn-secondary" id="loginBtnNav"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>
+      </div>
+
+      <button class="hamburger" aria-label="Toggle navigation menu" id="hamburgerBtn">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Section 1: Hero Banner -->
+  <section class="hero-banner" id="heroBannerSection">
+    <div class="hero-bg-wrapper" id="heroBgSlider">
+      <!-- 5 Hero Background Images -->
+      <div class="hero-bg-slide active">
+        <img src="assets/fiveg_network.webp" alt="Stackly 5G City Connectivity Network" class="hero-bg-img">
+      </div>
+      <div class="hero-bg-slide">
+        <img src="assets/fiber_broadband.webp" alt="Ultra-Fast Fiber Optic Broadband" class="hero-bg-img">
+      </div>
+      <div class="hero-bg-slide">
+        <img src="assets/telecom_towers.webp" alt="Nationwide 5G Telecom Towers" class="hero-bg-img">
+      </div>
+      <div class="hero-bg-slide">
+        <img src="assets/mobile_connectivity.webp" alt="Seamless Mobile 5G Connectivity" class="hero-bg-img">
+      </div>
+      <div class="hero-bg-slide">
+        <img src="assets/happy_customers.webp" alt="Millions of Happy Connected Customers" class="hero-bg-img">
+      </div>
+
+      <!-- Hero Slider Controls & Indicators -->
+      <div class="hero-slider-controls">
+        <button class="hero-slider-arrow prev" id="heroSliderPrev" aria-label="Previous Slide"><i class="fa-solid fa-chevron-left"></i></button>
+        <div class="hero-slider-dots" id="heroSliderDots">
+          <span class="dot active" data-slide="0" title="5G Network"></span>
+          <span class="dot" data-slide="1" title="Fiber Broadband"></span>
+          <span class="dot" data-slide="2" title="Tower Coverage"></span>
+          <span class="dot" data-slide="3" title="Mobile Connectivity"></span>
+          <span class="dot" data-slide="4" title="Happy Customers"></span>
+        </div>
+        <button class="hero-slider-arrow next" id="heroSliderNext" aria-label="Next Slide"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+    </div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <i class="fa-solid fa-bolt"></i> Next-Gen 5G Network is Live
+        </div>
+        <h1 class="hero-title">Connectivity Without Limits.</h1>
+        <p class="hero-subtitle">Experience lightning-fast broadband speeds and premium network reliability tailored for your digital lifestyle. Powered by Stackly's nationwide fiber infrastructure.</p>
+        <div class="hero-ctas">
+          <a href="recharge.html#plansSection" class="btn btn-primary" id="heroGetStartedBtn">Get Started <i class="fa-solid fa-arrow-right"></i></a>
+          <a href="broadband.html" class="btn btn-secondary" id="heroExplorePlansBtn">Explore Plans</a>
+        </div>
+      </div>
+      
+      <div class="hero-cards-wrapper">
+        <!-- Floating Information Cards -->
+        <div class="floating-card floating-card-1">
+          <div class="floating-icon">
+            <i class="fa-solid fa-gauge-high"></i>
+          </div>
+          <div class="floating-info">
+            <h4>Gigabit Speeds</h4>
+            <p>Up to 1.2 Gbps downlink capabilities over our active 5G node network.</p>
+          </div>
+        </div>
+        
+        <div class="floating-card floating-card-2">
+          <div class="floating-icon">
+            <i class="fa-solid fa-tower-broadcast"></i>
+          </div>
+          <div class="floating-info">
+            <h4>99.9% Reliability</h4>
+            <p>Carrier-grade SLA and active dual-route network redundancy.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Stats Counter -->
+  <section class="stats-section" id="statsSection">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number" data-target="99.9" data-decimal="true" data-suffix="%" id="statRel">0%</div>
+          <div class="stat-title">Network Uptime</div>
+          <div class="stat-desc">Guaranteed service availability</div>
+        </div>
+        
+        <div class="stat-item">
+          <div class="stat-number" data-target="1.2" data-decimal="true" data-suffix=" Gbps" id="statSpeed">0 Gbps</div>
+          <div class="stat-title">Max 5G Speeds</div>
+          <div class="stat-desc">Blazing fast downloads</div>
+        </div>
+        
+        <div class="stat-item">
+          <div class="stat-number" data-target="15" data-decimal="false" data-suffix="M+" id="statCust">0M+</div>
+          <div class="stat-title">Happy Customers</div>
+          <div class="stat-desc">Active nationwide subscriptions</div>
+        </div>
+        
+        <div class="stat-item">
+          <div class="stat-number" data-target="300" data-decimal="false" data-suffix="+" id="statCities">0+</div>
+          <div class="stat-title">Cities Covered</div>
+          <div class="stat-desc">Expanding footprint daily</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Why Choose Us -->
+  <section class="why-section" id="whyChooseUsSection">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Features</span>
+        <h2 class="section-title">Why Smart Homes Choose Stackly</h2>
+        <p class="section-desc">We combine advanced infrastructure with customer-centric services to bring you a premium telecom experience.</p>
+      </div>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fa-solid fa-microchip"></i>
+          </div>
+          <h3 class="feature-title">Smart Routing Tech</h3>
+          <p class="feature-desc">Dynamic traffic steering protocols ensure minimum ping latency and stutter-free gaming or online meetings.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <h3 class="feature-title">Secure Connection</h3>
+          <p class="feature-desc">Active DNS-level protection keeps malware and intrusive trackers off your connected home devices.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fa-solid fa-headset"></i>
+          </div>
+          <h3 class="feature-title">24/7 Concierge Care</h3>
+          <p class="feature-desc">Direct line access to dedicated network engineers who resolve technical inquiries in real-time, no bots.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: 5G & Fiber Broadband Showcase -->
+  <section class="showcase-section" id="showcaseSection">
+    <div class="container">
+      <!-- 5G Showcase -->
+      <div class="showcase-row">
+        <div class="showcase-image-wrapper">
+          <img src="assets/telecom_towers.webp" alt="High speed Stackly 5G Tower" class="showcase-img">
+        </div>
+        <div class="showcase-content">
+          <span class="showcase-tag">Next-Gen Mobile</span>
+          <h2 class="showcase-title">Pioneering the 5G Revolution</h2>
+          <p class="showcase-desc">Step into the future of mobile connectivity. Our standalone 5G network delivers high-density coverage with speeds that match traditional wired setups.</p>
+          <div class="showcase-features">
+            <div class="showcase-feature-item">
+              <i class="fa-solid fa-circle-check"></i> Gigabit-level Peak Speeds
+            </div>
+            <div class="showcase-feature-item">
+              <i class="fa-solid fa-circle-check"></i> Ultra-reliable Low Latency Node Nodes
+            </div>
+            <div class="showcase-feature-item">
+              <i class="fa-solid fa-circle-check"></i> Expanded High-rise & Indoor Signal penetration
+            </div>
+          </div>
+          <a href="recharge.html#plansSection" class="btn btn-outline-red">Explore Mobile Plans</a>
+        </div>
+      </div>
+      
+      <!-- Fiber Broadband Showcase (Reverse Layout) -->
+      <div class="showcase-row reverse">
+        <div class="showcase-image-wrapper">
+          <img src="assets/fiber_broadband.webp" alt="Stackly Premium Fiber optic cables" class="showcase-img">
+        </div>
+        <div class="showcase-content">
+          <span class="showcase-tag">Pure Fiber Optics</span>
+          <h2 class="showcase-title">Uncompromising Fiber Internet</h2>
+          <p class="showcase-desc">Bring gigabit broadband straight to your living room. Perfect for remote work, multi-screen 4K streaming, and heavy cloud computing without buffers.</p>
+          <div class="showcase-features">
+            <div class="showcase-feature-item">
+              <i class="fa-solid fa-circle-check"></i> Symmetrical Upload & Download Speeds
+            </div>
+            <div class="showcase-feature-item">
+              <i class="fa-solid fa-circle-check"></i> Zero Throttling or Fair Usage Policies
+            </div>
+            <div class="showcase-feature-item">
+              <i class="fa-solid fa-circle-check"></i> Professional WiFi-6 Smart Router included
+            </div>
+          </div>
+          <a href="broadband.html" class="btn btn-outline-red">View Broadband Plans</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 5: Popular Recharge Plans -->
+  <section class="plans-section" id="popularPlansSection">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Best Sellers</span>
+        <h2 class="section-title">Popular Recharge Plans</h2>
+        <p class="section-desc">Choose a plan that fits your exact data and budget needs. Recharge in less than a minute.</p>
+      </div>
+      
+      <div class="plans-tabs">
+        <button class="tab-btn active" data-filter="all" id="tabFilterAll">All Plans</button>
+        <button class="tab-btn" data-filter="mobile" id="tabFilterMobile">Mobile Plans</button>
+        <button class="tab-btn" data-filter="broadband" id="tabFilterBroadband">Broadband Plans</button>
+      </div>
+      
+      <div class="plans-grid">
+        <!-- Plan Card 1 -->
+        <div class="plan-card popular" data-type="mobile">
+          <div class="plan-badge">Most Popular</div>
+          <span class="plan-type">Mobile</span>
+          <h3 class="plan-name">Premium 5G Unlimited</h3>
+          <div class="plan-price-wrapper">
+            <span class="plan-price">$29.99</span>
+            <span class="plan-period">/ 28 Days</span>
+          </div>
+          <div class="plan-divider"></div>
+          <div class="plan-features">
+            <div class="plan-feature-item"><i class="fa-solid fa-circle-check"></i> Unlimited 5G Data</div>
+            <div class="plan-feature-item"><i class="fa-solid fa-circle-check"></i> Unlimited Nationwide Calls</div>
+            <div class="plan-feature-item"><i class="fa-solid fa-circle-check"></i> 100 SMS / Day</div>
+            <div class="plan-feature-item"><i class="fa-solid fa-circle-check"></i> Premium App Access</div>
+          </div>
+          <a href="recharge.html?plan=p1" class="btn btn-primary">Recharge Now</a>
+        </div>
+        
+        <!-- Plan Card 2 -->
+        <div class="plan-card" data-type="mobile">
+          <span class="plan-type">Mobile</span>
+          <h3 class="plan-name">Standard Mobile Plus</h3>
+          <div class="plan-price-wrapper">
+            <span class="plan-price">$19.99</span>
+            <span class="plan-period">/ 28 Days</span>
+          </div>
+          <div class="plan-divider"></div>
+          <div class="plan-features">
+            <div class="plan-feature-item"><i class="fa-solid fa-circle-check"></i> 50 GB High-Speed Data</div>
+            <div class="plan-feature-item"><i class="fa-solid fa-circle-check"></i> Unlimited Nationwide Calls</div>
+            <div class="plan-feature-item"><i class="fa-solid fa-circle-check"></i> 100 SMS / Day</div>
+            <div class="plan-feature-item disabled"><i class="fa-solid fa-circle-xmark"></i> Premium App Access</div>
+          </div>
+          <a href="recharge.html?plan=p2" class="btn btn-outline-red">Recharge Now</a>
+        </div>
+        
+        <!-- Plan Card 3 -->
+        <div class="plan-card" data-type="broadband">
+          <span class="plan-type">Broadband</span>
+          <h3 class="plan-name">Superfast Fiber 500</h3>
+          <div class="plan-price-wrapper">
+            <span class="plan-price">$59.99</span>
+            <span class="plan-period">/ Month</span>
+          </div>
+          <div class="plan-divider"></div>
+          <div class="plan-features">
+            <div class="plan-feature-item"><i class="fa-solid fa-circle-check"></i> 500 Mbps Symmetrical speeds</div>
+            <div class="plan-feature-item"><i class="fa-solid fa-circle-check"></i> Unlimited Bandwidth</div>
+            <div class="plan-feature-item"><i class="fa-solid fa-circle-check"></i> Free Wi-Fi 6 Router included</div>
+            <div class="plan-feature-item"><i class="fa-solid fa-circle-check"></i> 24-Hour support SLA</div>
+          </div>
+          <a href="recharge.html?plan=p5" class="btn btn-outline-red">Select Plan</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 6: Mobile App Preview -->
+  <section class="app-section" id="appPreviewSection">
+    <div class="container">
+      <div class="app-grid">
+        <div class="app-content">
+          <span class="showcase-tag" style="color:var(--primary-red)">Pocket Control</span>
+          <h2 class="app-title">Manage Everything on the Stackly App</h2>
+          <p class="app-desc">Track real-time data consumption, check bill cycles, customize routers, and request priority support tickets anywhere, anytime.</p>
+          
+          <div class="app-features">
+            <div class="app-feature">
+              <i class="fa-solid fa-chart-line"></i>
+              <div>
+                <h4>Live Tracking</h4>
+                <p>Monitor bandwidth parameters and active device counts.</p>
+              </div>
+            </div>
+            
+            <div class="app-feature">
+              <i class="fa-solid fa-credit-card"></i>
+              <div>
+                <h4>One-Tap Pay</h4>
+                <p>Securely link credit cards or UPI for automated recharges.</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="app-badges">
+            <a href="404.html" class="custom-app-btn">
+              <i class="fa-brands fa-google-play"></i>
+              <div class="app-btn-content">
+                <span class="app-btn-subtitle">GET IT ON</span>
+                <span class="app-btn-title">Google Play</span>
+              </div>
+            </a>
+            <a href="404.html" class="custom-app-btn">
+              <i class="fa-brands fa-apple"></i>
+              <div class="app-btn-content">
+                <span class="app-btn-subtitle">DOWNLOAD ON THE</span>
+                <span class="app-btn-title">App Store</span>
+              </div>
+            </a>
+          </div>
+        </div>
+        
+        <div class="app-mockup">
+          <img src="assets/smartphones.webp" alt="Stackly dashboard mobile application" class="app-mockup-img">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 7: Reviews Slider -->
+  <section class="reviews-section" id="reviewsSliderSection">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Testimonials</span>
+        <h2 class="section-title">What Our Customers Say</h2>
+        <p class="section-desc">Read reviews from verified active residential broadband and business connectivity subscribers.</p>
+      </div>
+      
+      <div class="reviews-carousel-wrapper">
+        <button class="carousel-nav-btn prev" aria-label="Previous review"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="carousel-nav-btn next" aria-label="Next review"><i class="fa-solid fa-chevron-right"></i></button>
+        
+        <div class="reviews-track-wrapper" style="overflow: hidden; width: 100%;">
+          <div class="reviews-track">
+            <!-- Review 1 -->
+            <div class="review-slide">
+              <div class="review-card">
+                <i class="fa-solid fa-quote-left review-quote-icon"></i>
+                <div class="review-rating">
+                  <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <p class="review-text">"Stackly's Fiber Broadband is insanely fast. I work as a video editor and upload gigabytes of footage daily. The symmetrical speed makes my workflow incredibly smooth."</p>
+                <div class="review-author">
+                  <img src="assets/happy_customers.webp" alt="Sarah J. Jenkins" class="review-author-avatar">
+                  <div class="review-author-info">
+                    <h4>Sarah Jenkins</h4>
+                    <p>Verified Fiber Customer</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Review 2 -->
+            <div class="review-slide">
+              <div class="review-card">
+                <i class="fa-solid fa-quote-left review-quote-icon"></i>
+                <div class="review-rating">
+                  <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <p class="review-text">"Switched my corporate line to Stackly 5G connectivity and couldn't be happier. No network drops even inside thick concrete structures. Truly stellar."</p>
+                <div class="review-author">
+                  <img src="assets/happy_customers.webp" alt="Marcus Thompson" class="review-author-avatar">
+                  <div class="review-author-info">
+                    <h4>Marcus Thompson</h4>
+                    <p>Enterprise Network Manager</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="carousel-dots"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 8: FAQ Accordion -->
+  <section class="faq-section" id="faqAccordionSection">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">FAQ</span>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-desc">Find quick answers to common questions about installation, billing, 5G devices, and custom setups.</p>
+      </div>
+      
+      <div class="faq-wrapper">
+        <div class="faq-item">
+          <div class="faq-header">
+            How long does the fiber installation process take?
+            <div class="faq-icon-box"><i class="fa-solid fa-plus"></i></div>
+          </div>
+          <div class="faq-body">
+            <div class="faq-content">
+              Standard fiber broadband installation takes 2-4 hours. Once you register a request, our field engineer completes site mapping and links the connection on the same day.
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-header">
+            Is my older phone compatible with Stackly 5G?
+            <div class="faq-icon-box"><i class="fa-solid fa-plus"></i></div>
+          </div>
+          <div class="faq-body">
+            <div class="faq-content">
+              Stackly 5G works on all major 5G-ready smartphones supporting sub-6GHz frequencies. If your phone supports older bands, it will fall back automatically to our premium 4G LTE network.
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-header">
+            Do you throttle speed after a certain usage limit?
+            <div class="faq-icon-box"><i class="fa-solid fa-plus"></i></div>
+          </div>
+          <div class="faq-body">
+            <div class="faq-content">
+              No. Our premium fiber broadband plans offer completely unlimited downloads and uploads with zero speed throttling or Fair Usage Policy (FUP) caps.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="container footer-grid">
+        <!-- Brand Column -->
+        <div class="footer-brand">
+          <a href="index.html" class="footer-logo-link">
+            <img src="assets/Logo11.webp" alt="Stackly Logo" class="footer-logo-img">
+          </a>
+          <p class="footer-desc">
+            Empowering millions with ultra-fast 5G mobile connectivity, high-speed fiber broadband, and seamless digital services nationwide.
+          </p>
+          <div class="footer-socials">
+            <a href="404.html" class="social-icon" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="404.html" class="social-icon" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="404.html" class="social-icon" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="404.html" class="social-icon" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <!-- Quick Links Column -->
+        <div class="footer-col">
+          <h4 class="footer-heading">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html"><i class="fa-solid fa-angle-right"></i> Home</a></li>
+            <li><a href="broadband.html"><i class="fa-solid fa-angle-right"></i> Broadband</a></li>
+            <li><a href="recharge.html"><i class="fa-solid fa-angle-right"></i> Recharge & Plans</a></li>
+            <li><a href="support.html"><i class="fa-solid fa-angle-right"></i> Support</a></li>
+            <li><a href="contact.html"><i class="fa-solid fa-angle-right"></i> Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Support & Info Column -->
+        <div class="footer-col">
+          <h4 class="footer-heading">Support & Info</h4>
+          <ul class="footer-links">
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> Help Center</a></li>
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> FAQs</a></li>
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> Contact Us</a></li>
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> My Account</a></li>
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> Network Status</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact & Location Column -->
+        <div class="footer-col">
+          <h4 class="footer-heading">Contact & Location</h4>
+          <div class="footer-contact-info">
+            <div class="contact-item">
+              <i class="fa-solid fa-location-dot"></i>
+              <span><strong>Stackly HQ:</strong> 500 Tech Tower Plaza, Suite 1200, Silicon Valley, CA 94025</span>
+            </div>
+            <div class="contact-item">
+              <i class="fa-solid fa-headset"></i>
+              <span>24/7 Support: <strong>1800-STACKLY</strong></span>
+            </div>
+            <div class="contact-item">
+              <i class="fa-solid fa-envelope"></i>
+              <span>support@stacklytelecom.com</span>
+            </div>
+            <div class="contact-item">
+              <i class="fa-solid fa-clock"></i>
+              <span>Working Hours: <strong>Mon - Sun: 24/7</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      <div class="container footer-bottom-container">
+        <p class="copyright-text">&copy; 2026 Stackly Telecom Inc. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="404.html">Privacy Policy</a>
+          <span class="dot">•</span>
+          <a href="404.html">Terms of Service</a>
+          <span class="dot">•</span>
+          <a href="404.html">Security</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <!-- Main JS Files -->
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

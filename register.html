@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register | Stackly Telecom Portal</title>
+  <meta name="description" content="Create a Stackly Telecom Customer account today. Pay online, track mobile usage, and request priority support instantly.">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body style="background-color: var(--bg-light);">
+
+  <div class="auth-page">
+    <div class="auth-card">
+      <a href="index.html" class="auth-back-btn" id="regBackHomeBtn"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+      
+      <div class="auth-header">
+        <img src="assets/Logo11.webp" alt="Stackly Logo" class="auth-logo">
+        <h2 class="auth-title">Create Account</h2>
+        <p class="auth-subtitle">Join Stackly today for next-generation telecom services</p>
+      </div>
+
+      <form id="registerForm">
+        <div class="form-group" id="regNameGroup">
+          <label class="form-label" for="regName">Full Name</label>
+          <input type="text" id="regName" placeholder="Sarah Connor" class="form-input">
+          <span class="error-msg">Please enter your name.</span>
+        </div>
+
+        <div class="form-group" id="regEmailGroup">
+          <label class="form-label" for="regEmail">Gmail Address</label>
+          <input type="text" id="regEmail" placeholder="username@gmail.com" class="form-input">
+          <span class="error-msg" id="regEmailError">Enter a valid Gmail address.</span>
+        </div>
+
+        <div class="form-group" id="regPhoneGroup">
+          <label class="form-label" for="regPhone">Mobile Number</label>
+          <input type="text" id="regPhone" placeholder="9876543210" class="form-input">
+          <span class="error-msg">Mobile number must be at least 10 digits.</span>
+        </div>
+
+        <div class="form-group" id="regPasswordGroup" style="margin-bottom: 1.5rem;">
+          <label class="form-label" for="regPassword">Password</label>
+          <input type="password" id="regPassword" placeholder="••••••••" class="form-input">
+          <span class="error-msg" id="regPasswordError">Password must contain at least 2 characters.</span>
+        </div>
+
+        <div class="form-group" id="regRoleGroup" style="margin-bottom: 1.5rem;">
+          <label class="form-label" for="regRole">Select Dashboard / Role</label>
+          <select id="regRole" class="form-input">
+            <option value="customer">User Dashboard</option>
+            <option value="admin">Admin Dashboard</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="regSubmitBtn">Register</button>
+      </form>
+
+      <div class="auth-footer">
+        Already have an account? <a href="login.html">Login</a>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <!-- Main JS Files -->
+  <script src="js/auth.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("registerForm");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById("regName").value;
+        const email = document.getElementById("regEmail").value;
+        const phone = document.getElementById("regPhone").value;
+        const password = document.getElementById("regPassword").value;
+        const role = document.getElementById("regRole").value;
+
+        const nameGroup = document.getElementById("regNameGroup");
+        const emailGroup = document.getElementById("regEmailGroup");
+        const phoneGroup = document.getElementById("regPhoneGroup");
+        const passGroup = document.getElementById("regPasswordGroup");
+
+        // Reset error formatting
+        nameGroup.classList.remove("has-error");
+        emailGroup.classList.remove("has-error");
+        phoneGroup.classList.remove("has-error");
+        passGroup.classList.remove("has-error");
+
+        handleRegistration(name, email, password, phone, role, (field, message) => {
+          if (field === "name") {
+            nameGroup.classList.add("has-error");
+          } else if (field === "email") {
+            emailGroup.classList.add("has-error");
+            document.getElementById("regEmailError").innerText = message;
+          } else if (field === "phone") {
+            phoneGroup.classList.add("has-error");
+          } else if (field === "password") {
+            passGroup.classList.add("has-error");
+            document.getElementById("regPasswordError").innerText = message;
+          }
+        });
+      });
+
+      // Animate entry card
+      gsap.from(".auth-card", {
+        opacity: 0,
+        y: 40,
+        duration: 0.6,
+        ease: "back.out(1.2)"
+      });
+    });
+  </script>
+</body>
+</html>
