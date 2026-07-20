@@ -327,13 +327,11 @@ function initGSAPAnimations() {
       duration: 0.6,
       ease: "power2.out"
     }, "-=0.6")
-    .from(".hero-ctas .btn", {
-      opacity: 0,
-      x: -20,
-      stagger: 0.15,
-      duration: 0.5,
-      ease: "power2.out"
-    }, "-=0.4")
+    .fromTo(".hero-ctas .btn", 
+      { opacity: 0, x: -20 },
+      { opacity: 1, x: 0, stagger: 0.15, duration: 0.5, ease: "power2.out", clearProps: "all" },
+      "-=0.4"
+    )
     .from(".floating-card", {
       opacity: 0,
       scale: 0.8,

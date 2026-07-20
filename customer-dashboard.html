@@ -30,7 +30,7 @@
     <!-- Sidebar -->
     <aside class="sidebar" id="dashboardSidebar">
       <div class="sidebar-logo">
-        <a href="index.html">
+        <a href="customer-dashboard.html">
           <img src="assets/Logo11.webp" alt="Stackly Logo" class="sidebar-logo-img">
         </a>
         <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close Sidebar">
@@ -96,10 +96,6 @@
             <div class="user-profile-badge" id="userProfileBadge" tabindex="0">
               <div class="user-avatar-icon">
                 <i class="fa-solid fa-user"></i>
-              </div>
-              <div class="user-details-header">
-                <span class="user-name-header" id="headerUserName">Customer</span>
-                <span class="user-email-header" id="headerUserEmail">customer@gmail.com</span>
               </div>
               <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
             </div>
@@ -274,27 +270,115 @@
 
         <!-- SECTION 2: RECHARGE -->
         <section class="dashboard-section" id="recharge">
-          <div class="dashboard-form-container">
-            <h3 style="font-size:1.25rem; margin-bottom:0.5rem;">Quick Account Recharge</h3>
-            <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:1.5rem;">Recharge other registered family lines or purchase internet speeds.</p>
+          <div class="dashboard-grid-2">
             
-            <div id="dbRechargeError" style="background-color: rgba(230,0,18,0.1); color:var(--primary-red); padding:0.75rem; border-radius:4px; font-size:0.85rem; margin-bottom:1rem; display:none;"></div>
-            
-            <form id="dbRechargeForm">
-              <div class="form-group">
-                <label class="form-label" for="dbRechargePhone">Target Mobile Number</label>
-                <input type="text" id="dbRechargePhone" placeholder="Enter 10-digit number" class="form-input">
-              </div>
+            <!-- Quick Recharge Form -->
+            <div class="dashboard-form-container">
+              <h3 style="font-size:1.25rem; margin-bottom:0.5rem;"><i class="fa-solid fa-bolt" style="color:var(--primary-red); margin-right:0.5rem;"></i> Quick Account Recharge</h3>
+              <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:1.5rem;">Recharge registered lines, family connections, or top-up high-speed data boost.</p>
+              
+              <div id="dbRechargeError" style="background-color: rgba(230,0,18,0.1); color:var(--primary-red); padding:0.75rem; border-radius:4px; font-size:0.85rem; margin-bottom:1rem; display:none;"></div>
+              
+              <form id="dbRechargeForm">
+                <div class="form-group">
+                  <label class="form-label" for="dbRechargePhone">Target Mobile / Account Number</label>
+                  <input type="text" id="dbRechargePhone" placeholder="Enter 10-digit number" class="form-input">
+                </div>
 
-              <div class="form-group">
-                <label class="form-label">Select Plan Option</label>
-                <div class="quick-plans-selector" id="dbQuickPlansList">
-                  <!-- Dynamically populated by dashboard.js -->
+                <div class="form-group">
+                  <label class="form-label">Select Plan Option</label>
+                  <div class="quick-plans-selector" id="dbQuickPlansList">
+                    <!-- Dynamically populated by dashboard.js -->
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="dbRechargeSubmitBtn" style="width:100%;">Recharge Now</button>
+              </form>
+            </div>
+
+            <!-- Saved Payment Methods & Auto-Refill -->
+            <div class="chart-card">
+              <h3 class="card-title-dashboard" style="margin-bottom:1rem;"><i class="fa-solid fa-credit-card" style="color:var(--primary-red); margin-right:0.5rem;"></i> Saved Payment Methods & Auto-Refill</h3>
+              <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1.25rem;">Manage primary payment cards and automated monthly bill payments.</p>
+              
+              <div style="display:flex; flex-direction:column; gap:1rem; margin-bottom:1.5rem;">
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:1rem; border:1px solid var(--border-color); border-radius:var(--border-radius-sm); background:var(--bg-light);">
+                  <div style="display:flex; align-items:center; gap:0.75rem;">
+                    <i class="fa-brands fa-cc-visa" style="font-size:1.8rem; color:#1A1F71;"></i>
+                    <div>
+                      <div style="font-weight:600; font-size:0.9rem;">Visa Premium •••• 4821</div>
+                      <div style="font-size:0.75rem; color:var(--text-muted);">Expires 09/28 • Default Payment</div>
+                    </div>
+                  </div>
+                  <span class="status-badge success" style="font-size:0.7rem;">Active</span>
+                </div>
+
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:1rem; border:1px solid var(--border-color); border-radius:var(--border-radius-sm);">
+                  <div style="display:flex; align-items:center; gap:0.75rem;">
+                    <i class="fa-solid fa-mobile-screen-button" style="font-size:1.5rem; color:var(--primary-red);"></i>
+                    <div>
+                      <div style="font-weight:600; font-size:0.9rem;">UPI Auto-Pay (stackly@upi)</div>
+                      <div style="font-size:0.75rem; color:var(--text-muted);">Instant Refill Enabled</div>
+                    </div>
+                  </div>
+                  <a href="404.html" class="btn btn-outline-red btn-sm" style="padding:0.25rem 0.6rem; font-size:0.75rem;">Manage</a>
                 </div>
               </div>
 
-              <button type="submit" class="btn btn-primary" id="dbRechargeSubmitBtn" style="width:100%;">Recharge Now</button>
-            </form>
+              <div style="padding:1rem; background:rgba(230,0,18,0.04); border:1px solid rgba(230,0,18,0.15); border-radius:var(--border-radius-sm); display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                  <div style="font-weight:700; font-size:0.9rem; color:var(--text-dark);">Auto-Renew Subscription</div>
+                  <div style="font-size:0.8rem; color:var(--text-muted);">Automatically recharge 24h before plan expiry</div>
+                </div>
+                <a href="404.html" class="btn btn-primary btn-sm" style="padding:0.35rem 0.85rem; font-size:0.8rem;">Enabled</a>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Section 2 Sub-grid: Rewards & Recharge History -->
+          <div class="dashboard-grid-2" style="margin-top:1.5rem;">
+            <!-- Active Vouchers & Coupons -->
+            <div class="chart-card">
+              <h3 class="card-title-dashboard" style="margin-bottom:1rem;"><i class="fa-solid fa-ticket" style="color:var(--primary-red); margin-right:0.5rem;"></i> Active Data Boosters & Rewards</h3>
+              <div style="display:flex; flex-direction:column; gap:0.85rem;">
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:0.85rem; background:var(--bg-light); border-radius:var(--border-radius-sm);">
+                  <div>
+                    <strong style="font-size:0.9rem; display:block;">+10 GB Ultra 5G Booster Coupon</strong>
+                    <span style="font-size:0.75rem; color:var(--text-muted);">Code: STACKLY5G10 • Valid till 30 Aug</span>
+                  </div>
+                  <a href="404.html" class="btn btn-outline-red btn-sm" style="padding:0.3rem 0.75rem; font-size:0.8rem;">Apply Coupon</a>
+                </div>
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:0.85rem; background:var(--bg-light); border-radius:var(--border-radius-sm);">
+                  <div>
+                    <strong style="font-size:0.9rem; display:block;">$5 Cashback on Fiber Refill</strong>
+                    <span style="font-size:0.75rem; color:var(--text-muted);">Code: FIBERBOOST5 • Valid till 15 Sep</span>
+                  </div>
+                  <a href="404.html" class="btn btn-outline-red btn-sm" style="padding:0.3rem 0.75rem; font-size:0.8rem;">Apply Coupon</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent Recharge Quick Ledger -->
+            <div class="chart-card">
+              <h3 class="card-title-dashboard" style="margin-bottom:1rem;"><i class="fa-solid fa-file-invoice-dollar" style="color:var(--primary-red); margin-right:0.5rem;"></i> Recent Recharge Receipts</h3>
+              <div style="display:flex; flex-direction:column; gap:0.75rem;">
+                <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.85rem; padding-bottom:0.5rem; border-bottom:1px solid var(--border-color);">
+                  <div>
+                    <strong>Premium 5G Unlimited ($29.99)</strong>
+                    <div style="font-size:0.75rem; color:var(--text-muted);">TXN98412 • 2026-07-15</div>
+                  </div>
+                  <a href="404.html" class="btn btn-secondary btn-sm" style="padding:0.25rem 0.5rem; font-size:0.75rem;"><i class="fa-solid fa-download"></i> PDF</a>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.85rem; padding-bottom:0.5rem; border-bottom:1px solid var(--border-color);">
+                  <div>
+                    <strong>Superfast Fiber 500 ($59.99)</strong>
+                    <div style="font-size:0.75rem; color:var(--text-muted);">TXN88201 • 2026-06-15</div>
+                  </div>
+                  <a href="404.html" class="btn btn-secondary btn-sm" style="padding:0.25rem 0.5rem; font-size:0.75rem;"><i class="fa-solid fa-download"></i> PDF</a>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -436,9 +520,9 @@
         <footer class="dashboard-footer">
           <div>&copy; 2026 Stackly Telecom. Customer Control Center.</div>
           <div class="dashboard-footer-links">
-            <a href="support.html">Help & Support</a>
-            <a href="recharge.html">Explore Plans & Recharge</a>
-            <a href="contact.html">Contact Us</a>
+            <a href="404.html">Help & Support</a>
+            <a href="404.html">Explore Plans & Recharge</a>
+            <a href="404.html">Contact Us</a>
           </div>
         </footer>
 

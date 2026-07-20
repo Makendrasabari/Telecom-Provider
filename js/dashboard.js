@@ -274,7 +274,7 @@ function renderCustomerPlansAndTransactions(user) {
           <i class="fa-solid fa-triangle-exclamation" style="font-size: 2.5rem; color: var(--primary-red); margin-bottom: 1rem;"></i>
           <h4>No Active Plan Registered</h4>
           <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom: 1.5rem;">Purchase a plan now to activate mobile or broadband connection speeds.</p>
-          <button class="btn btn-primary" onclick="document.querySelector('[data-section=\\'recharge\\']').click();">Recharge Now</button>
+          <button class="btn btn-primary" onclick="window.location.href='404.html';">Recharge Now</button>
         </div>
       `;
     } else {

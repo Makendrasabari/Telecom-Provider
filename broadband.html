@@ -21,9 +21,9 @@
       background-color: var(--bg-light);
       border: 1px solid var(--border-color);
       border-radius: var(--border-radius-md);
-      padding: 3rem;
+      padding: 2.5rem;
       max-width: 700px;
-      margin: -3rem auto 6rem auto;
+      margin: -3.5rem auto 1rem auto;
       position: relative;
       z-index: 10;
       box-shadow: var(--shadow-lg);
@@ -59,12 +59,18 @@
       color: var(--primary-red);
       display: flex;
     }
+    .broadband-plans-section {
+      padding-top: 2.5rem !important;
+    }
 
     @media (max-width: 768px) {
       .check-availability-card {
         padding: 1.75rem 1.25rem;
-        margin: 1.5rem auto 3rem auto;
+        margin: 1.5rem auto 1rem auto;
         max-width: 100%;
+      }
+      .broadband-plans-section {
+        padding-top: 2rem !important;
       }
       .check-title {
         font-size: 1.1rem;
@@ -136,7 +142,7 @@
   </section>
 
   <!-- Plans Showcase Grid -->
-  <section class="plans-section">
+  <section class="plans-section broadband-plans-section">
     <div class="container">
       <div class="section-header">
         <span class="section-tag">High Speed Internet</span>
@@ -226,6 +232,111 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  <!-- Section 5: Interactive Speed Comparison Table -->
+  <section class="container" style="padding: 4rem 0; background-color: var(--bg-white);">
+    <div class="section-header">
+      <span class="section-tag">Real-World Performance</span>
+      <h2 class="section-title">Speed & Download Comparison</h2>
+      <p class="section-desc">See how much faster Stackly Fiber handles large file transfers compared to legacy cable broadband.</p>
+    </div>
+
+    <div style="background: var(--bg-light); border: 1px solid var(--border-color); border-radius: var(--border-radius-lg); padding: 2rem; overflow-x: auto; box-shadow: var(--shadow-md);">
+      <table style="width: 100%; border-collapse: collapse; text-align: left; min-width: 600px;">
+        <thead>
+          <tr style="border-bottom: 2px solid var(--border-color); color: var(--text-dark); font-size: 0.95rem;">
+            <th style="padding: 1rem;">Content / Media Task</th>
+            <th style="padding: 1rem; color: var(--text-muted);">Standard Cable (25 Mbps)</th>
+            <th style="padding: 1rem; color: var(--primary-red);">Starter Fiber (100 Mbps)</th>
+            <th style="padding: 1rem; color: var(--primary-red);">Superfast Fiber (500 Mbps)</th>
+            <th style="padding: 1rem; color: var(--primary-red); font-weight: 800;">Gigabit Fiber (1000 Mbps)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid var(--border-color); font-size: 0.9rem;">
+            <td style="padding: 1rem; font-weight: 600;">4K Ultra-HD Movie (20 GB)</td>
+            <td style="padding: 1rem; color: var(--text-muted);">~ 1 Hr 45 Mins</td>
+            <td style="padding: 1rem;">~ 26 Mins</td>
+            <td style="padding: 1rem; font-weight: 700; color: var(--primary-red);">~ 5.2 Mins</td>
+            <td style="padding: 1rem; font-weight: 800; color: #2ecc71;"><i class="fa-solid fa-bolt"></i> 2.6 Mins</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border-color); font-size: 0.9rem;">
+            <td style="padding: 1rem; font-weight: 600;">AAA Console Game (60 GB)</td>
+            <td style="padding: 1rem; color: var(--text-muted);">~ 5 Hrs 20 Mins</td>
+            <td style="padding: 1rem;">~ 1 Hr 20 Mins</td>
+            <td style="padding: 1rem; font-weight: 700; color: var(--primary-red);">~ 16 Mins</td>
+            <td style="padding: 1rem; font-weight: 800; color: #2ecc71;"><i class="fa-solid fa-bolt"></i> 8 Mins</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border-color); font-size: 0.9rem;">
+            <td style="padding: 1rem; font-weight: 600;">100 MB Work Presentation PDF</td>
+            <td style="padding: 1rem; color: var(--text-muted);">~ 32 Seconds</td>
+            <td style="padding: 1rem;">~ 8 Seconds</td>
+            <td style="padding: 1rem; font-weight: 700; color: var(--primary-red);">~ 1.6 Seconds</td>
+            <td style="padding: 1rem; font-weight: 800; color: #2ecc71;"><i class="fa-solid fa-bolt"></i> Instant (&lt; 0.8s)</td>
+          </tr>
+          <tr style="font-size: 0.9rem;">
+            <td style="padding: 1rem; font-weight: 600;">Simultaneous 4K Streams</td>
+            <td style="padding: 1rem; color: var(--text-muted);">1 Device</td>
+            <td style="padding: 1rem;">4 Devices</td>
+            <td style="padding: 1rem; font-weight: 700; color: var(--primary-red);">20+ Devices</td>
+            <td style="padding: 1rem; font-weight: 800; color: #2ecc71;"><i class="fa-solid fa-bolt"></i> Unlimited Household</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Section 6: Enterprise & Business Fiber Solutions -->
+  <section style="padding: 5rem 0; background-color: var(--text-dark); color: #FFFFFF;">
+    <div class="container">
+      <div class="showcase-row">
+        <div class="showcase-content">
+          <span class="showcase-tag" style="background: rgba(230,0,18,0.2); color: var(--primary-red);">Business Class</span>
+          <h2 class="showcase-title" style="color: #FFFFFF;">Dedicated Enterprise Fiber Lines</h2>
+          <p class="showcase-desc" style="color: #94A3B8;">Power your enterprise with symmetric dark fiber backhaul, 99.999% uptime guarantees, dedicated IPv4/IPv6 blocks, and 24/7 priority SLA dispatch.</p>
+          <div class="showcase-features">
+            <div class="showcase-feature-item" style="color: #E2E8F0;">
+              <i class="fa-solid fa-shield-halved" style="color: var(--primary-red);"></i> Guaranteed 99.999% Network Availability SLA
+            </div>
+            <div class="showcase-feature-item" style="color: #E2E8F0;">
+              <i class="fa-solid fa-server" style="color: var(--primary-red);"></i> Static Public IPv4 / IPv6 Address Allocation
+            </div>
+            <div class="showcase-feature-item" style="color: #E2E8F0;">
+              <i class="fa-solid fa-headset" style="color: var(--primary-red);"></i> 1-on-1 Dedicated Technical Account Manager
+            </div>
+          </div>
+          <a href="404.html" class="btn btn-primary" style="margin-top: 1.5rem;">Explore Enterprise Fiber</a>
+        </div>
+        <div class="showcase-image-wrapper">
+          <img src="assets/broadband_hero.webp" alt="Enterprise Dark Fiber Exchange" class="showcase-img" style="border-radius: var(--border-radius-lg);">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 7: Broadband FAQ Accordion -->
+  <section class="container" style="padding: 5rem 0; background-color: var(--bg-white);">
+    <div class="section-header">
+      <span class="section-tag">Help & Clarity</span>
+      <h2 class="section-title">Broadband FAQ</h2>
+      <p class="section-desc">Got questions about fiber installation, hardware setup, or billing? We've got answers.</p>
+    </div>
+
+    <div style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.25rem;">
+      <div style="border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); padding: 1.25rem; background: var(--bg-light);">
+        <h4 style="font-size: 1.05rem; margin-bottom: 0.5rem; color: var(--text-dark);"><i class="fa-solid fa-circle-question" style="color: var(--primary-red); margin-right: 0.5rem;"></i> Are there any hidden data caps or Fair Usage Policies (FUP)?</h4>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">No. All Stackly Fiber Broadband plans offer 100% truly unlimited data without any hidden speed caps, data throttling, or monthly bandwidth ceilings.</p>
+      </div>
+
+      <div style="border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); padding: 1.25rem; background: var(--bg-light);">
+        <h4 style="font-size: 1.05rem; margin-bottom: 0.5rem; color: var(--text-dark);"><i class="fa-solid fa-circle-question" style="color: var(--primary-red); margin-right: 0.5rem;"></i> How fast is the fiber installation process?</h4>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">Once you confirm your location, our certified technician installs the optical network terminal (ONT) and WiFi-6 router within 24 to 48 hours.</p>
+      </div>
+
+      <div style="border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); padding: 1.25rem; background: var(--bg-light);">
+        <h4 style="font-size: 1.05rem; margin-bottom: 0.5rem; color: var(--text-dark);"><i class="fa-solid fa-circle-question" style="color: var(--primary-red); margin-right: 0.5rem;"></i> Is the Wi-Fi 6 router equipment included for free?</h4>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">Yes! Every Superfast and Gigabit broadband package includes a high-performance Dual-Band WiFi-6 Smart Router at zero extra equipment rental cost.</p>
       </div>
     </div>
   </section>
