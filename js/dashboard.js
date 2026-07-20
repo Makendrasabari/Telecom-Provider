@@ -42,14 +42,15 @@ function initSidebarControls() {
   const toggleBtn = document.getElementById("sidebarToggleBtn");
   const sidebar   = document.getElementById("dashboardSidebar");
   const overlay   = document.getElementById("sidebarOverlay");
+  const closeBtn  = document.getElementById("sidebarCloseBtn") || document.querySelector(".sidebar-close-btn");
 
   function openSidebar() {
-    sidebar.classList.add("active");
+    if (sidebar) sidebar.classList.add("active");
     if (overlay) overlay.classList.add("active");
   }
 
   function closeSidebar() {
-    sidebar.classList.remove("active");
+    if (sidebar) sidebar.classList.remove("active");
     if (overlay) overlay.classList.remove("active");
   }
 
@@ -58,22 +59,26 @@ function initSidebarControls() {
       e.stopPropagation();
       sidebar.classList.contains("active") ? closeSidebar() : openSidebar();
     });
+  }
 
-    // Close when ✕ button is clicked
-    const closeBtn = document.getElementById("sidebarCloseBtn");
-    if (closeBtn) {
-      closeBtn.addEventListener("click", () => closeSidebar());
-    }
+  // Close when ✕ button is clicked
+  if (closeBtn) {
+    closeBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      closeSidebar();
+    });
+  }
 
+  if (sidebar) {
     // Close when a nav link is clicked
     sidebar.querySelectorAll(".sidebar-link").forEach(link => {
       link.addEventListener("click", () => closeSidebar());
     });
+  }
 
-    // Close when clicking the overlay backdrop
-    if (overlay) {
-      overlay.addEventListener("click", () => closeSidebar());
-    }
+  // Close when clicking the overlay backdrop
+  if (overlay) {
+    overlay.addEventListener("click", () => closeSidebar());
   }
 
   // Sidebar Sign Out button click handler

@@ -270,12 +270,28 @@ function handleRegistration(name, email, password, phone, role, errorCallback) {
 function renderProfileDropdown() {
   const session = getSession();
   const wrapper = document.getElementById("profile-dropdown-wrapper");
+  const mobileWrapper = document.querySelector(".nav-actions-mobile");
+
+  if (mobileWrapper) {
+    if (!session) {
+      mobileWrapper.innerHTML = `<a href="login.html" class="btn btn-primary" style="width: 100%; gap: 0.5rem;"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>`;
+    } else {
+      mobileWrapper.innerHTML = `<button class="btn btn-primary" id="logoutBtnMobile" style="width: 100%; gap: 0.5rem;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout (${session.name.split(" ")[0]})</button>`;
+      const logoutMobile = document.getElementById("logoutBtnMobile");
+      if (logoutMobile) {
+        logoutMobile.addEventListener("click", () => {
+          clearSession();
+          window.location.href = "login.html";
+        });
+      }
+    }
+  }
 
   if (!wrapper) return;
 
   if (!session) {
     // If not logged in, show login links (for public headers with this slot)
-    wrapper.innerHTML = `<a href="login.html" class="btn btn-outline-red"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>`;
+    wrapper.innerHTML = `<a href="login.html" class="btn btn-secondary" id="loginBtnNav"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>`;
     return;
   }
 

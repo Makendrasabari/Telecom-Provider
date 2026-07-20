@@ -99,19 +99,42 @@ function initNavbarScroll() {
 function initMobileMenu() {
   const hamburger = document.querySelector(".hamburger");
   const navMenu = document.querySelector(".nav-menu");
+  const navCloseBtn = document.getElementById("navCloseBtn") || document.querySelector(".nav-close-btn");
 
-  if (!hamburger || !navMenu) return;
+  if (!navMenu) return;
 
-  hamburger.addEventListener("click", () => {
-    hamburger.classList.toggle("active");
-    navMenu.classList.toggle("active");
+  const closeMenu = () => {
+    if (hamburger) hamburger.classList.remove("active");
+    navMenu.classList.remove("active");
+  };
+
+  if (hamburger) {
+    hamburger.addEventListener("click", (e) => {
+      e.stopPropagation();
+      hamburger.classList.toggle("active");
+      navMenu.classList.toggle("active");
+    });
+  }
+
+  // Close menu when ✕ button is clicked
+  if (navCloseBtn) {
+    navCloseBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      closeMenu();
+    });
+  }
+
+  // Close menu when clicking backdrop outside nav menu
+  document.addEventListener("click", (e) => {
+    if (navMenu.classList.contains("active") && !navMenu.contains(e.target) && hamburger && !hamburger.contains(e.target)) {
+      closeMenu();
+    }
   });
 
   // Close menu when links are clicked
   document.querySelectorAll(".nav-link").forEach(link => {
     link.addEventListener("click", () => {
-      hamburger.classList.remove("active");
-      navMenu.classList.remove("active");
+      closeMenu();
     });
   });
 }

@@ -187,6 +187,10 @@ ul {
   gap: 1.5rem;
 }
 
+.nav-actions-mobile {
+  display: none;
+}
+
 /* Nav panel close button — hidden on desktop */
 .nav-close-btn {
   display: none;
