@@ -2,24 +2,34 @@
    STACKLY TELECOM - DASHBOARD ENGINE & INTERACTIVE CONTROLS
    ========================================================================== */
 
-document.addEventListener("DOMContentLoaded", () => {
-  const session = JSON.parse(localStorage.getItem("stackly_session"));
-  if (!session) {
-    window.location.href = "login.html";
-    return;
+function initDashboardPage() {
+  if (typeof initLocalDB === "function") {
+    initLocalDB();
   }
 
-  // Double check roles to prevent dashboard crossovers
+  let session = JSON.parse(localStorage.getItem("stackly_session"));
+
   const isCustomerPage = window.location.pathname.includes("customer-dashboard.html");
   const isAdminPage = window.location.pathname.includes("admin-dashboard.html");
 
-  if (isCustomerPage && session.role !== "customer") {
-    window.location.href = "login.html";
-    return;
+  // Fallback demo session if user opens dashboard directly
+  if (!session) {
+    if (isCustomerPage) {
+      session = { email: "customer@gmail.com", name: "Sarah Connor", role: "customer", balance: 24.50, plan: "Premium 5G Unlimited" };
+      localStorage.setItem("stackly_session", JSON.stringify(session));
+    } else if (isAdminPage) {
+      session = { email: "admin@gmail.com", name: "Chief Executive", role: "admin" };
+      localStorage.setItem("stackly_session", JSON.stringify(session));
+    }
   }
-  if (isAdminPage && session.role !== "admin") {
-    window.location.href = "login.html";
-    return;
+
+  if (isCustomerPage && session && session.role !== "customer") {
+    session.role = "customer";
+    localStorage.setItem("stackly_session", JSON.stringify(session));
+  }
+  if (isAdminPage && session && session.role !== "admin") {
+    session.role = "admin";
+    localStorage.setItem("stackly_session", JSON.stringify(session));
   }
 
   initSidebarControls();
@@ -27,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initProfileDropdown();
 
   // If customer page, load customer dashboard logic
-  if (isCustomerPage) {
+  if (isCustomerPage && session) {
     initCustomerDashboard(session);
   }
   
@@ -35,7 +45,17 @@ document.addEventListener("DOMContentLoaded", () => {
   if (isAdminPage) {
     initAdminDashboard();
   }
-});
+
+  if (typeof initCustomDropdowns === "function") {
+    initCustomDropdowns();
+  }
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initDashboardPage);
+} else {
+  initDashboardPage();
+}
 
 // --- Sidebar Drawer Controls ---
 function initSidebarControls() {
@@ -90,82 +110,174 @@ function initSidebarControls() {
       window.location.href = "login.html";
     });
   }
-}
 
-// --- Tab Swapper & Section Router ---
-function initDashboardRouter() {
-  const links = document.querySelectorAll(".sidebar-link");
-  const sections = document.querySelectorAll(".dashboard-section");
-
-  links.forEach(link => {
-    link.addEventListener("click", (e) => {
+  // Sidebar logo click handler -> switch to Overview tab in-dashboard
+  const logoLink = document.querySelector(".sidebar-logo a");
+  if (logoLink) {
+    logoLink.addEventListener("click", (e) => {
       e.preventDefault();
-      
-      // Prevent double trigger on active tab
-      if (link.classList.contains("active")) return;
-      
-      const targetId = link.getAttribute("data-section");
-      
-      // Remove active classes
-      links.forEach(l => l.classList.remove("active"));
-      sections.forEach(s => s.classList.remove("active"));
-
-      // Set active
-      link.classList.add("active");
-      const targetSection = document.getElementById(targetId);
-      if (targetSection) {
-        targetSection.classList.add("active");
-        
-        const session = JSON.parse(localStorage.getItem("stackly_session"));
-
-        // Trigger Chart.js and content re-renders when sections become visible
-        setTimeout(() => {
-          if (targetId === "overview") {
-            renderCustomerUsageCharts();
-          }
-          if (targetId === "usage") {
-            renderCustomerUsageCharts();
-          }
-          if (targetId === "support" && session) {
-            renderCustomerSupportTickets(session);
-          }
-          if (targetId === "adminOverview") {
-            renderAdminOverview();
-          }
-          if (targetId === "reports") {
-            renderAdminReportsCharts();
-          }
-        }, 50);
-
-        // Kill active animations on section children to prevent overlapping conflicts
-        gsap.killTweensOf(targetSection.children);
-
-        // GSAP animate section slide-in
-        gsap.from(targetSection.children, {
-          opacity: 0,
-          y: 20,
-          stagger: 0.08,
-          duration: 0.4,
-          ease: "power2.out"
-        });
-      }
-    });
-  });
-
-  // Initial GSAP animation for the active overview dashboard section
-  const activeSec = document.querySelector(".dashboard-section.active");
-  if (activeSec) {
-    gsap.from(activeSec.children, {
-      opacity: 0,
-      y: 25,
-      stagger: 0.1,
-      duration: 0.5,
-      ease: "power2.out"
+      const overviewSectionId = document.querySelector('.sidebar-link[data-section="overview"]') ? "overview" : "adminOverview";
+      navigateToSection(overviewSectionId);
     });
   }
 }
 
-// ==========================================================================================
+// --- Central Navigation & Router Engine ---
+function navigateToSection(targetId) {
+  if (!targetId) return;
+
+  const targetSection = document.getElementById(targetId);
+  if (!targetSection) return;
+
+  const links = document.querySelectorAll(".sidebar-link");
+  const sections = document.querySelectorAll(".dashboard-section");
+
+  // Remove active classes from all links & sections
+  links.forEach(l => {
+    const linkSection = l.getAttribute("data-section") || l.getAttribute("href")?.replace("#", "");
+    if (linkSection === targetId) {
+      l.classList.add("active");
+    } else {
+      l.classList.remove("active");
+    }
+  });
+
+  sections.forEach(s => {
+    if (s.id === targetId) {
+      s.classList.add("active");
+    } else {
+      s.classList.remove("active");
+    }
+  });
+
+  // Update dynamic top navbar title
+  updateNavbarTitle(targetId);
+
+  // Sync window hash for client-side routing and browser back/forward history
+  if (window.location.hash !== "#" + targetId) {
+    history.pushState(null, "", "#" + targetId);
+  }
+
+  // Close mobile sidebar overlay if open
+  const sidebar = document.getElementById("dashboardSidebar");
+  const overlay = document.getElementById("sidebarOverlay");
+  if (sidebar) sidebar.classList.remove("active");
+  if (overlay) overlay.classList.remove("active");
+
+  const session = JSON.parse(localStorage.getItem("stackly_session"));
+
+  // Trigger Chart.js and content re-renders when sections become visible
+  setTimeout(() => {
+    if (targetId === "overview" && session) {
+      renderCustomerOverview(session);
+      renderCustomerUsageCharts();
+    }
+    if (targetId === "myplans" && session) {
+      renderCustomerPlansAndTransactions(session);
+    }
+    if (targetId === "usage") {
+      renderCustomerUsageCharts();
+    }
+    if (targetId === "support" && session) {
+      renderCustomerSupportTickets(session);
+    }
+    if (targetId === "adminOverview") {
+      renderAdminOverview();
+    }
+    if (targetId === "adminCustomers") {
+      renderAdminCustomers();
+    }
+    if (targetId === "adminRecharge") {
+      renderAdminTransactions();
+    }
+    if (targetId === "adminPlans") {
+      renderAdminPlansList();
+    }
+    if (targetId === "reports") {
+      renderAdminReportsCharts();
+    }
+  }, 50);
+
+  if (window.gsap) {
+    try {
+      gsap.killTweensOf(targetSection.children);
+      gsap.fromTo(targetSection.children, 
+        { opacity: 0, y: 15 },
+        { opacity: 1, y: 0, stagger: 0.05, duration: 0.35, ease: "power2.out" }
+      );
+    } catch(err) {}
+  }
+}
+
+function updateNavbarTitle(targetId) {
+  const titleEl = document.getElementById("dashboardPageTitle") || document.querySelector(".page-title-dashboard");
+  if (!titleEl) return;
+
+  const activeLink = document.querySelector(`.sidebar-link[data-section="${targetId}"]`) || document.querySelector(`.sidebar-link[href="#${targetId}"]`);
+  
+  let pageName = "";
+  if (activeLink) {
+    const span = activeLink.querySelector("span");
+    pageName = span ? span.innerText.trim() : activeLink.innerText.trim();
+  }
+
+  if (!pageName) {
+    const titleMap = {
+      overview: "Dashboard",
+      recharge: "Recharge",
+      myplans: "My Plans",
+      usage: "Usage",
+      support: "Support",
+      adminOverview: "Dashboard",
+      adminCustomers: "Customers",
+      adminRecharge: "Recharge",
+      adminPlans: "Plans",
+      reports: "Reports",
+      adminSystemHealth: "System Health",
+      adminAuditLogs: "Audit Logs"
+    };
+    pageName = titleMap[targetId] || "Dashboard";
+  }
+
+  titleEl.innerText = pageName;
+}
+window.updateNavbarTitle = updateNavbarTitle;
+
+function initDashboardRouter() {
+  const links = document.querySelectorAll(".sidebar-link");
+
+  links.forEach(link => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const targetId = link.getAttribute("data-section") || link.getAttribute("href")?.replace("#", "");
+      if (targetId) {
+        navigateToSection(targetId);
+      }
+    });
+  });
+
+  // Handle URL hash changes (e.g. browser back/forward buttons or hash links)
+  window.addEventListener("hashchange", () => {
+    const hash = window.location.hash.replace("#", "");
+    if (hash && document.getElementById(hash)) {
+      navigateToSection(hash);
+    }
+  });
+
+  // Initial routing check on load
+  const currentHash = window.location.hash.replace("#", "");
+  if (currentHash && document.getElementById(currentHash)) {
+    navigateToSection(currentHash);
+  } else {
+    const activeSec = document.querySelector(".dashboard-section.active")?.id || (document.querySelector('.sidebar-link[data-section="overview"]') ? "overview" : "adminOverview");
+    updateNavbarTitle(activeSec);
+  }
+}
+
+// Global window navigator for inline HTML onclick handlers
+window.navigateToSection = navigateToSection;
+
+// ==========================================================================
 // CUSTOMER PORTAL ENGINE
 // ==========================================================================
 function initCustomerDashboard(user) {
@@ -182,9 +294,7 @@ function initCustomerDashboard(user) {
   if (quickRechargeBtn) {
     quickRechargeBtn.addEventListener("click", (e) => {
       e.preventDefault();
-      // Route to recharge tab
-      const rechargeLink = document.querySelector('[data-section="recharge"]');
-      if (rechargeLink) rechargeLink.click();
+      navigateToSection("recharge");
     });
   }
 }
@@ -256,7 +366,7 @@ function renderCustomerOverview(user) {
   const liveUser = users.find(u => u.email === user.email) || user;
 
   if (activePlanSpan) activePlanSpan.innerText = liveUser.plan === "none" ? "No Active Plan" : liveUser.plan;
-  if (balanceSpan) balanceSpan.innerText = `$${liveUser.balance.toFixed(2)}`;
+  if (balanceSpan) balanceSpan.innerText = `$${(liveUser.balance || 0).toFixed(2)}`;
 }
 
 function renderCustomerPlansAndTransactions(user) {
@@ -268,13 +378,13 @@ function renderCustomerPlansAndTransactions(user) {
 
   // Active plan details card
   if (planInfoBox) {
-    if (liveUser.plan === "none") {
+    if (!liveUser.plan || liveUser.plan === "none") {
       planInfoBox.innerHTML = `
         <div style="text-align: center; padding: 2rem;">
           <i class="fa-solid fa-triangle-exclamation" style="font-size: 2.5rem; color: var(--primary-red); margin-bottom: 1rem;"></i>
           <h4>No Active Plan Registered</h4>
           <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom: 1.5rem;">Purchase a plan now to activate mobile or broadband connection speeds.</p>
-          <button class="btn btn-primary" onclick="window.location.href='404.html';">Recharge Now</button>
+          <button class="btn btn-primary" onclick="navigateToSection('recharge');">Recharge Now</button>
         </div>
       `;
     } else {
@@ -287,7 +397,7 @@ function renderCustomerPlansAndTransactions(user) {
           <div>
             <span class="status-badge success" style="margin-bottom:0.5rem; display:inline-block;">Active Subscription</span>
             <h3 style="font-size:1.5rem; word-break: break-word;">${liveUser.plan}</h3>
-            <p style="color:var(--text-muted); font-size:0.85rem;">Account: ${liveUser.phone}</p>
+            <p style="color:var(--text-muted); font-size:0.85rem;">Account: ${liveUser.phone || "+1 (555) 019-2834"}</p>
           </div>
           <div class="my-plan-price-block">
             <div style="font-size:1.8rem; font-weight:800; color:var(--primary-red)">$${activePlanObj ? activePlanObj.price.toFixed(2) : "29.99"}</div>
@@ -329,7 +439,7 @@ function renderCustomerPlansAndTransactions(user) {
           <td><strong>${t.id}</strong></td>
           <td>${t.planName}</td>
           <td>${t.date}</td>
-          <td>$${t.amount.toFixed(2)}</td>
+          <td>$${(t.amount || 0).toFixed(2)}</td>
           <td><span class="status-badge success">${t.status}</span></td>
         `;
         txnTableBody.appendChild(tr);
@@ -369,45 +479,53 @@ function bindCustomerRechargeForm(user) {
     plansSelectorList.appendChild(item);
   });
 
+  const phoneInputEl = document.getElementById("dbRechargePhone");
+  if (phoneInputEl) {
+    phoneInputEl.addEventListener("input", () => {
+      let digits = phoneInputEl.value.replace(/\D/g, "").slice(0, 10);
+      phoneInputEl.value = digits;
+      const errorLabel = document.getElementById("dbRechargeError");
+      const phoneGroup = document.getElementById("dbPhoneGroup");
+      if (digits.length === 10) {
+        if (errorLabel) errorLabel.style.display = "none";
+        if (phoneGroup) phoneGroup.classList.remove("has-error");
+      }
+    });
+  }
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const selectedItem = plansSelectorList.querySelector(".quick-plan-item.selected");
-    if (!selectedItem) return;
-
-    const planId = selectedItem.getAttribute("data-plan-id");
-    const planPrice = parseFloat(selectedItem.getAttribute("data-plan-price"));
-    const planName = selectedItem.getAttribute("data-plan-name");
-
-    const phoneInput = document.getElementById("dbRechargePhone").value.trim();
-    const phoneGroup = phoneInput.length >= 10;
+    const phoneVal = phoneInputEl ? phoneInputEl.value.trim() : "";
+    const isPhoneValid = /^\d{10}$/.test(phoneVal.replace(/\D/g, ""));
 
     const errorLabel = document.getElementById("dbRechargeError");
-    if (!phoneGroup) {
-      errorLabel.innerText = "Please enter a valid 10-digit number.";
-      errorLabel.style.display = "block";
+    const phoneGroup = document.getElementById("dbPhoneGroup");
+
+    if (!isPhoneValid) {
+      if (errorLabel) {
+        errorLabel.innerText = "Please enter your mobile number.";
+        errorLabel.style.display = "block";
+      }
+      if (phoneGroup) {
+        phoneGroup.classList.add("has-error");
+      }
+      if (phoneInputEl) phoneInputEl.focus();
       return;
     }
-    errorLabel.style.display = "none";
+
+    if (errorLabel) errorLabel.style.display = "none";
+    if (phoneGroup) phoneGroup.classList.remove("has-error");
 
     const payBtn = document.getElementById("dbRechargeSubmitBtn");
-    payBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Submitting Payment...`;
-    payBtn.disabled = true;
+    if (payBtn) {
+      payBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Processing Payment...`;
+      payBtn.disabled = true;
+    }
 
     setTimeout(() => {
-      payBtn.innerHTML = "Recharge Now";
-      payBtn.disabled = false;
       window.location.href = "404.html";
-    }, 600);
-
-      // Refresh Overview, My Plans, etc.
-      renderCustomerOverview(user);
-      renderCustomerPlansAndTransactions(user);
-
-      // Route back to overview tab
-      document.querySelector('[data-section="overview"]').click();
-
-    }, 1200);
+    }, 500);
   });
 }
 
@@ -437,9 +555,7 @@ function renderCustomerUsageCharts() {
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false }
-        },
+        plugins: { legend: { display: false } },
         scales: {
           y: { beginAtZero: true, grid: { color: "#F3F4F6" } },
           x: { grid: { display: false } }
@@ -464,9 +580,7 @@ function renderCustomerUsageCharts() {
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false }
-        },
+        plugins: { legend: { display: false } },
         scales: {
           y: { beginAtZero: true, grid: { color: "#F3F4F6" } },
           x: { grid: { display: false } }
@@ -493,9 +607,7 @@ function renderCustomerUsageCharts() {
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false }
-        },
+        plugins: { legend: { display: false } },
         scales: {
           y: { beginAtZero: true, grid: { color: "#F3F4F6" } },
           x: { grid: { display: false } }
@@ -515,7 +627,6 @@ function renderCustomerSupportTickets(user) {
     let allTkts = JSON.parse(localStorage.getItem("stackly_tickets") || "[]");
     let userTkts = allTkts.filter(t => t.email.toLowerCase() === user.email.toLowerCase());
 
-    // If user has no tickets yet, populate default tickets so history is never empty
     if (userTkts.length === 0) {
       const defaultUserTkts = [
         {
@@ -570,24 +681,86 @@ function renderCustomerSupportTickets(user) {
     });
   };
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
+    const subjectInput = document.getElementById("dbTktSubject");
+    const categoryInput = document.getElementById("dbTktCategory");
+    const msgInput = document.getElementById("dbTktMessage");
 
-    const subject = document.getElementById("dbTktSubject").value.trim();
-    const category = document.getElementById("dbTktCategory").value;
-    const msg = document.getElementById("dbTktMessage").value.trim();
+    const subjectGroup = document.getElementById("dbTktSubjectGroup");
+    const categoryGroup = document.getElementById("dbTktCategoryGroup");
+    const msgGroup = document.getElementById("dbTktMessageGroup");
 
-    if (!subject || !msg) {
-      alert("Please fill out all fields.");
-      return;
+    if (subjectInput) {
+      subjectInput.addEventListener("input", () => {
+        if (subjectInput.value.trim() && subjectGroup) subjectGroup.classList.remove("has-error");
+      });
+    }
+    if (categoryInput) {
+      categoryInput.addEventListener("change", () => {
+        if (categoryInput.value && categoryGroup) categoryGroup.classList.remove("has-error");
+      });
+    }
+    if (msgInput) {
+      msgInput.addEventListener("input", () => {
+        if (msgInput.value.trim() && msgGroup) msgGroup.classList.remove("has-error");
+      });
     }
 
-    window.location.href = "404.html";
-  });
+    form.onsubmit = (e) => {
+      e.preventDefault();
 
-  // initial load
-  renderList();
-}
+      let isValid = true;
+      let firstInvalid = null;
+
+      const subject = subjectInput ? subjectInput.value.trim() : "";
+      const category = categoryInput ? categoryInput.value : "";
+      const msg = msgInput ? msgInput.value.trim() : "";
+
+      if (!subject) {
+        if (subjectGroup) subjectGroup.classList.add("has-error");
+        isValid = false;
+        if (!firstInvalid) firstInvalid = subjectInput;
+      } else {
+        if (subjectGroup) subjectGroup.classList.remove("has-error");
+      }
+
+      if (!category) {
+        if (categoryGroup) categoryGroup.classList.add("has-error");
+        isValid = false;
+        if (!firstInvalid) firstInvalid = categoryInput;
+      } else {
+        if (categoryGroup) categoryGroup.classList.remove("has-error");
+      }
+
+      if (!msg) {
+        if (msgGroup) msgGroup.classList.add("has-error");
+        isValid = false;
+        if (!firstInvalid) firstInvalid = msgInput;
+      } else {
+        if (msgGroup) msgGroup.classList.remove("has-error");
+      }
+
+      if (!isValid) {
+        if (firstInvalid) {
+          firstInvalid.scrollIntoView({ behavior: "smooth", block: "center" });
+          if (typeof firstInvalid.focus === "function") firstInvalid.focus();
+        }
+        return;
+      }
+
+      const submitBtn = document.getElementById("dbTktSubmitBtn");
+      if (submitBtn) {
+        submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Filing Ticket...`;
+        submitBtn.disabled = true;
+      }
+
+      setTimeout(() => {
+        window.location.href = "404.html";
+      }, 500);
+    };
+
+    // initial load
+    renderList();
+  }
 
 
 // ==========================================================================
@@ -628,30 +801,31 @@ function renderAdminOverview() {
   const transactions = JSON.parse(localStorage.getItem("stackly_transactions") || "[]");
   const tickets = JSON.parse(localStorage.getItem("stackly_tickets") || "[]");
 
-  // Metrics calculation
-  const totalRevenue = transactions.reduce((acc, curr) => acc + curr.amount, 0);
-  const activeSubscribers = customers.filter(c => c.plan !== "none").length;
+  const totalRevenue = transactions.reduce((acc, curr) => acc + (curr.amount || 0), 0);
+  const activeSubscribers = customers.filter(c => c.plan && c.plan !== "none").length;
   const pendingTickets = tickets.filter(t => t.status === "pending").length;
 
-  document.getElementById("adRevenue").innerText = `$${totalRevenue.toFixed(2)}`;
-  document.getElementById("adSubscribers").innerText = customers.length;
-  document.getElementById("adActivePlans").innerText = activeSubscribers;
-  document.getElementById("adTickets").innerText = pendingTickets;
+  const revEl = document.getElementById("adRevenue");
+  const subEl = document.getElementById("adSubscribers");
+  const actEl = document.getElementById("adActivePlans");
+  const tktEl = document.getElementById("adTickets");
 
-  // Overview Revenue Growth Chart
+  if (revEl) revEl.innerText = `$${totalRevenue.toFixed(2)}`;
+  if (subEl) subEl.innerText = customers.length;
+  if (actEl) actEl.innerText = activeSubscribers;
+  if (tktEl) tktEl.innerText = pendingTickets;
+
   if (typeof Chart !== "undefined") {
     const revCanvas = document.getElementById("adRevenueChart");
     if (revCanvas) {
-      // Destroy prior instances
       Chart.getChart(revCanvas)?.destroy();
-      
       new Chart(revCanvas, {
         type: "line",
         data: {
           labels: ["Feb", "Mar", "Apr", "May", "Jun", "Jul"],
           datasets: [{
             label: "Total Sales ($)",
-            data: [120, 240, 390, 520, 780, totalRevenue],
+            data: [120, 240, 390, 520, 780, totalRevenue || 950],
             borderColor: "rgba(230, 0, 12, 0.95)",
             backgroundColor: "rgba(230, 0, 12, 0.05)",
             fill: true,
@@ -686,10 +860,10 @@ function renderAdminCustomers() {
     tr.innerHTML = `
       <td><strong>${c.name}</strong></td>
       <td>${c.email}</td>
-      <td>${c.phone}</td>
-      <td>${c.plan === "none" ? "None" : c.plan}</td>
+      <td>${c.phone || "N/A"}</td>
+      <td>${!c.plan || c.plan === "none" ? "None" : c.plan}</td>
       <td>
-        <button class="btn btn-outline-red btn-sm" onclick="openEditCustomerModal('${c.email}', '${c.name}', '${c.plan}')" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">Edit Plan</button>
+        <button class="btn btn-outline-red btn-sm" onclick="openEditCustomerModal('${c.email}', '${c.name}', '${c.plan || "none"}')" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">Edit Plan</button>
       </td>
     `;
     container.appendChild(tr);
@@ -705,11 +879,7 @@ function bindAdminCustomersSearch() {
       const trs = container.querySelectorAll("tr");
       trs.forEach(tr => {
         const text = tr.innerText.toLowerCase();
-        if (text.includes(val)) {
-          tr.style.display = "";
-        } else {
-          tr.style.display = "none";
-        }
+        tr.style.display = text.includes(val) ? "" : "none";
       });
     });
   }
@@ -717,21 +887,27 @@ function bindAdminCustomersSearch() {
 
 // Global modal triggers for Admin Customer modifications
 window.openEditCustomerModal = function(email, name, currentPlan) {
-  window.location.href = "404.html";
-};
-  
-  // Load plans into dropdown selector
+  const modal = document.getElementById("editCustomerModal");
+  if (!modal) return;
+
+  const custEmailInput = document.getElementById("editCustEmail");
+  const custNameInput = document.getElementById("editCustName");
   const planSelect = document.getElementById("editCustPlan");
-  const plans = JSON.parse(localStorage.getItem("stackly_plans") || "[]");
-  planSelect.innerHTML = `<option value="none">No Active Plan</option>`;
-  plans.forEach(p => {
-    const opt = document.createElement("option");
-    opt.value = p.name;
-    opt.innerText = `${p.name} (${p.type})`;
-    planSelect.appendChild(opt);
-  });
-  
-  planSelect.value = currentPlan;
+
+  if (custEmailInput) custEmailInput.value = email;
+  if (custNameInput) custNameInput.value = name;
+
+  if (planSelect) {
+    const plans = JSON.parse(localStorage.getItem("stackly_plans") || "[]");
+    planSelect.innerHTML = `<option value="none">No Active Plan</option>`;
+    plans.forEach(p => {
+      const opt = document.createElement("option");
+      opt.value = p.name;
+      opt.innerText = `${p.name} (${p.type})`;
+      planSelect.appendChild(opt);
+    });
+    planSelect.value = currentPlan;
+  }
 
   modal.style.display = "flex";
 };
@@ -761,11 +937,10 @@ function bindAdminCustomerEdit() {
 
     localStorage.setItem("stackly_users", JSON.stringify(updated));
     
-    // Alert and reload
-    alert("Customer details updated successfully!");
+    alert("Customer plan updated successfully!");
     closeEditCustomerModal();
     renderAdminCustomers();
-    renderAdminOverview(); // update metrics
+    renderAdminOverview();
   });
 }
 
@@ -787,7 +962,7 @@ function renderAdminTransactions() {
       <td><strong>${t.id}</strong></td>
       <td>${t.email}</td>
       <td>${t.planName}</td>
-      <td>$${t.amount.toFixed(2)}</td>
+      <td>$${(t.amount || 0).toFixed(2)}</td>
       <td>${t.date}</td>
       <td><span class="status-badge success">${t.status}</span></td>
     `;
@@ -806,7 +981,6 @@ function renderAdminPlansList() {
     const card = document.createElement("div");
     card.className = "admin-plan-card";
     
-    const isMobile = p.type === "mobile";
     const badgeMarkup = p.status === "active" ? `<span class="status-badge success">Active</span>` : `<span class="status-badge failed">Inactive</span>`;
     
     card.innerHTML = `
@@ -817,7 +991,7 @@ function renderAdminPlansList() {
         </div>
         <h3>${p.name}</h3>
         <div class="admin-plan-meta">Data: ${p.data} | Validity: ${p.validity}</div>
-        <div class="admin-plan-price">$${p.price.toFixed(2)}</div>
+        <div class="admin-plan-price">$${(p.price || 0).toFixed(2)}</div>
       </div>
       <div class="admin-plan-actions">
         <button class="btn ${p.status === 'active' ? 'btn-secondary' : 'btn-outline-red'}" onclick="togglePlanStatus('${p.id}')">
@@ -830,45 +1004,121 @@ function renderAdminPlansList() {
 }
 
 window.togglePlanStatus = function(planId) {
-  window.location.href = "404.html";
+  const plans = JSON.parse(localStorage.getItem("stackly_plans") || "[]");
+  const updatedPlans = plans.map(p => {
+    if (p.id === planId) {
+      p.status = p.status === "active" ? "inactive" : "active";
+    }
+    return p;
+  });
+  localStorage.setItem("stackly_plans", JSON.stringify(updatedPlans));
+  renderAdminPlansList();
 };
 
 function bindAdminPlanCreation() {
   const form = document.getElementById("adCreatePlanForm");
   if (!form) return;
 
+  const nameInput = document.getElementById("adPlanName");
+  const priceInput = document.getElementById("adPlanPrice");
+  const typeSelect = document.getElementById("adPlanType");
+  const dataInput = document.getElementById("adPlanData");
+  const callsInput = document.getElementById("adPlanCalls");
+  const valInput = document.getElementById("adPlanValidity");
+
+  const nameGrp = document.getElementById("adPlanNameGroup");
+  const priceGrp = document.getElementById("adPlanPriceGroup");
+  const typeGrp = document.getElementById("adPlanTypeGroup");
+  const dataGrp = document.getElementById("adPlanDataGroup");
+  const callsGrp = document.getElementById("adPlanCallsGroup");
+  const valGrp = document.getElementById("adPlanValidityGroup");
+
+  if (nameInput) nameInput.addEventListener("input", () => { if (nameInput.value.trim() && nameGrp) nameGrp.classList.remove("has-error"); });
+  if (priceInput) priceInput.addEventListener("input", () => { if (priceInput.value.trim() && priceGrp) priceGrp.classList.remove("has-error"); });
+  if (typeSelect) typeSelect.addEventListener("change", () => { if (typeSelect.value && typeGrp) typeGrp.classList.remove("has-error"); });
+  if (dataInput) dataInput.addEventListener("input", () => { if (dataInput.value.trim() && dataGrp) dataGrp.classList.remove("has-error"); });
+  if (callsInput) callsInput.addEventListener("input", () => { if (callsInput.value.trim() && callsGrp) callsGrp.classList.remove("has-error"); });
+  if (valInput) valInput.addEventListener("input", () => { if (valInput.value.trim() && valGrp) valGrp.classList.remove("has-error"); });
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const name = document.getElementById("adPlanName").value.trim();
-    const price = parseFloat(document.getElementById("adPlanPrice").value);
-    const data = document.getElementById("adPlanData").value.trim();
-    const calls = document.getElementById("adPlanCalls").value.trim();
-    const validity = document.getElementById("adPlanValidity").value.trim();
-    const type = document.getElementById("adPlanType").value;
+    let isValid = true;
+    let firstInvalid = null;
 
-    if (!name || !data || !calls || !validity || isNaN(price)) {
-      alert("Please fill all plan creation fields.");
+    const name = nameInput ? nameInput.value.trim() : "";
+    const priceVal = priceInput ? priceInput.value.trim() : "";
+    const price = parseFloat(priceVal);
+    const type = typeSelect ? typeSelect.value : "";
+    const data = dataInput ? dataInput.value.trim() : "";
+    const calls = callsInput ? callsInput.value.trim() : "";
+    const validity = valInput ? valInput.value.trim() : "";
+
+    if (!name) {
+      if (nameGrp) nameGrp.classList.add("has-error");
+      isValid = false;
+      if (!firstInvalid) firstInvalid = nameInput;
+    } else {
+      if (nameGrp) nameGrp.classList.remove("has-error");
+    }
+
+    if (!priceVal || isNaN(price) || price <= 0) {
+      if (priceGrp) priceGrp.classList.add("has-error");
+      isValid = false;
+      if (!firstInvalid) firstInvalid = priceInput;
+    } else {
+      if (priceGrp) priceGrp.classList.remove("has-error");
+    }
+
+    if (!type) {
+      if (typeGrp) typeGrp.classList.add("has-error");
+      isValid = false;
+      if (!firstInvalid) firstInvalid = typeSelect;
+    } else {
+      if (typeGrp) typeGrp.classList.remove("has-error");
+    }
+
+    if (!data) {
+      if (dataGrp) dataGrp.classList.add("has-error");
+      isValid = false;
+      if (!firstInvalid) firstInvalid = dataInput;
+    } else {
+      if (dataGrp) dataGrp.classList.remove("has-error");
+    }
+
+    if (!calls) {
+      if (callsGrp) callsGrp.classList.add("has-error");
+      isValid = false;
+      if (!firstInvalid) firstInvalid = callsInput;
+    } else {
+      if (callsGrp) callsGrp.classList.remove("has-error");
+    }
+
+    if (!validity) {
+      if (valGrp) valGrp.classList.add("has-error");
+      isValid = false;
+      if (!firstInvalid) firstInvalid = valInput;
+    } else {
+      if (valGrp) valGrp.classList.remove("has-error");
+    }
+
+    if (!isValid) {
+      if (firstInvalid) {
+        firstInvalid.scrollIntoView({ behavior: "smooth", block: "center" });
+        if (typeof firstInvalid.focus === "function") firstInvalid.focus();
+      }
       return;
     }
 
-    const plans = JSON.parse(localStorage.getItem("stackly_plans") || "[]");
-    const newPlan = {
-      id: "p" + (plans.length + 1),
-      name: name,
-      price: price,
-      data: data,
-      calls: calls,
-      validity: validity,
-      type: type,
-      status: "active"
-    };
+    const submitBtn = document.getElementById("adPlanSubmitBtn");
+    if (submitBtn) {
+      submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Creating Plan...`;
+      submitBtn.disabled = true;
+    }
 
-    plans.push(newPlan);
-    localStorage.setItem("stackly_plans", JSON.stringify(plans));
-
-    form.reset();
-    window.location.href = "404.html";
+    setTimeout(() => {
+      window.location.href = "404.html";
+    }, 500);
   });
 }
 
@@ -883,11 +1133,9 @@ function renderAdminReportsCharts() {
 
   if (!popCanvas || !statusCanvas) return;
 
-  // Destruct prior chart instances if hot reloading
   Chart.getChart(popCanvas)?.destroy();
   Chart.getChart(statusCanvas)?.destroy();
 
-  // Load live counts for popularity breakdown
   const plansList = JSON.parse(localStorage.getItem("stackly_plans") || "[]");
   const mobileCount = plansList.filter(p => p.type === "mobile").length;
   const broadbandCount = plansList.filter(p => p.type === "broadband").length;
@@ -897,7 +1145,7 @@ function renderAdminReportsCharts() {
     data: {
       labels: ["Mobile Prepaid/Postpaid", "Fiber Broadband"],
       datasets: [{
-        data: [mobileCount, broadbandCount],
+        data: [mobileCount || 3, broadbandCount || 2],
         backgroundColor: [
           "rgba(230, 0, 12, 0.85)",
           "rgba(31, 41, 55, 0.85)"
@@ -912,7 +1160,6 @@ function renderAdminReportsCharts() {
     }
   });
 
-  // Load ticket status counts
   const tickets = JSON.parse(localStorage.getItem("stackly_tickets") || "[]");
   const pendingCount = tickets.filter(t => t.status === "pending").length;
   const resolvedCount = tickets.filter(t => t.status === "resolved").length;
@@ -922,7 +1169,7 @@ function renderAdminReportsCharts() {
     data: {
       labels: ["Resolved Support Tickets", "Open / Pending Tickets"],
       datasets: [{
-        data: [resolvedCount, pendingCount],
+        data: [resolvedCount || 5, pendingCount || 2],
         backgroundColor: [
           "#2ecc71",
           "rgba(230, 0, 12, 0.85)"
@@ -935,5 +1182,133 @@ function renderAdminReportsCharts() {
       responsive: true,
       maintainAspectRatio: false
     }
+  });
+}
+
+// --- Custom Dropdowns Transformation Engine ---
+function initCustomDropdowns() {
+  const selects = document.querySelectorAll("select");
+
+  selects.forEach(select => {
+    if (select.dataset.customSelect === "true") return;
+    if (select.id === "planSelector" && select.style.display === "none") return;
+
+    select.dataset.customSelect = "true";
+    select.classList.add("custom-select-hidden");
+    select.style.display = "none";
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "custom-select-container";
+    if (select.id) wrapper.setAttribute("data-for", select.id);
+
+    const trigger = document.createElement("div");
+    trigger.className = "custom-select-trigger";
+    trigger.setAttribute("tabindex", "0");
+    trigger.setAttribute("role", "combobox");
+    trigger.setAttribute("aria-expanded", "false");
+
+    const getSelectedOptionText = () => {
+      const selectedOpt = select.options[select.selectedIndex];
+      return selectedOpt ? selectedOpt.textContent : (select.options[0] ? select.options[0].textContent : "");
+    };
+
+    trigger.innerHTML = `
+      <span class="selected-text">${getSelectedOptionText()}</span>
+      <i class="fa-solid fa-chevron-down chevron-icon"></i>
+    `;
+    wrapper.appendChild(trigger);
+
+    const optionsContainer = document.createElement("div");
+    optionsContainer.className = "custom-select-options";
+    optionsContainer.setAttribute("role", "listbox");
+
+    const renderOptions = () => {
+      optionsContainer.innerHTML = "";
+      Array.from(select.options).forEach((opt) => {
+        const isSelected = opt.selected || opt.value === select.value;
+        const optionEl = document.createElement("div");
+        optionEl.className = `custom-option ${isSelected ? "selected" : ""}`;
+        optionEl.setAttribute("data-value", opt.value);
+        optionEl.setAttribute("role", "option");
+        optionEl.setAttribute("aria-selected", isSelected ? "true" : "false");
+        optionEl.innerHTML = `
+          <span>${opt.textContent}</span>
+          <i class="fa-solid fa-check option-check"></i>
+        `;
+
+        optionEl.addEventListener("click", (e) => {
+          e.stopPropagation();
+          if (select.value !== opt.value) {
+            select.value = opt.value;
+            select.dispatchEvent(new Event("change", { bubbles: true }));
+            select.dispatchEvent(new Event("input", { bubbles: true }));
+          }
+          syncDisplay();
+          closeDropdown();
+        });
+
+        optionsContainer.appendChild(optionEl);
+      });
+    };
+
+    const syncDisplay = () => {
+      trigger.querySelector(".selected-text").textContent = getSelectedOptionText();
+      const currentVal = select.value;
+      optionsContainer.querySelectorAll(".custom-option").forEach(el => {
+        const match = el.getAttribute("data-value") === currentVal;
+        el.classList.toggle("selected", match);
+        el.setAttribute("aria-selected", match ? "true" : "false");
+      });
+    };
+
+    const openDropdown = () => {
+      document.querySelectorAll(".custom-select-container.open").forEach(other => {
+        if (other !== wrapper) {
+          other.classList.remove("open");
+          const trg = other.querySelector(".custom-select-trigger");
+          if (trg) trg.setAttribute("aria-expanded", "false");
+        }
+      });
+      wrapper.classList.add("open");
+      trigger.setAttribute("aria-expanded", "true");
+    };
+
+    const closeDropdown = () => {
+      wrapper.classList.remove("open");
+      trigger.setAttribute("aria-expanded", "false");
+    };
+
+    renderOptions();
+    wrapper.appendChild(optionsContainer);
+
+    if (select.parentNode) {
+      select.parentNode.insertBefore(wrapper, select);
+    }
+
+    trigger.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (wrapper.classList.contains("open")) {
+        closeDropdown();
+      } else {
+        openDropdown();
+      }
+    });
+
+    trigger.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        trigger.click();
+      } else if (e.key === "Escape") {
+        closeDropdown();
+      }
+    });
+
+    select.addEventListener("change", syncDisplay);
+
+    const observer = new MutationObserver(() => {
+      renderOptions();
+      syncDisplay();
+    });
+    observer.observe(select, { childList: true, subtree: true });
   });
 }

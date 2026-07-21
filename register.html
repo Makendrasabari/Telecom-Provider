@@ -24,7 +24,9 @@
       <a href="index.html" class="auth-back-btn" id="regBackHomeBtn"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
       
       <div class="auth-header">
-        <img src="assets/Logo11.webp" alt="Stackly Logo" class="auth-logo">
+        <a href="index.html" style="display: inline-block;">
+          <img src="assets/Logo11.webp" alt="Stackly Logo" class="auth-logo">
+        </a>
         <h2 class="auth-title">Create Account</h2>
         <p class="auth-subtitle">Join Stackly today for next-generation telecom services</p>
       </div>
@@ -80,38 +82,74 @@
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const form = document.getElementById("registerForm");
+      const nameInput = document.getElementById("regName");
+      const emailInput = document.getElementById("regEmail");
+      const phoneInput = document.getElementById("regPhone");
+      const passInput = document.getElementById("regPassword");
+
+      const nameGroup = document.getElementById("regNameGroup");
+      const emailGroup = document.getElementById("regEmailGroup");
+      const phoneGroup = document.getElementById("regPhoneGroup");
+      const passGroup = document.getElementById("regPasswordGroup");
+
+      if (nameInput) {
+        nameInput.addEventListener("input", () => {
+          if (nameInput.value.trim() && nameGroup) nameGroup.classList.remove("has-error");
+        });
+      }
+
+      if (emailInput) {
+        emailInput.addEventListener("input", () => {
+          if (emailInput.value.trim() && emailInput.value.includes("@") && emailGroup) emailGroup.classList.remove("has-error");
+        });
+      }
+
+      if (phoneInput) {
+        phoneInput.addEventListener("input", () => {
+          let digits = phoneInput.value.replace(/\D/g, "").slice(0, 10);
+          phoneInput.value = digits;
+          if (digits.length === 10 && phoneGroup) phoneGroup.classList.remove("has-error");
+        });
+      }
+
+      if (passInput) {
+        passInput.addEventListener("input", () => {
+          if (passInput.value.length >= 2 && passGroup) passGroup.classList.remove("has-error");
+        });
+      }
 
       form.addEventListener("submit", (e) => {
         e.preventDefault();
 
-        const name = document.getElementById("regName").value;
-        const email = document.getElementById("regEmail").value;
-        const phone = document.getElementById("regPhone").value;
-        const password = document.getElementById("regPassword").value;
+        const name = nameInput ? nameInput.value : "";
+        const email = emailInput ? emailInput.value : "";
+        const phone = phoneInput ? phoneInput.value : "";
+        const password = passInput ? passInput.value : "";
         const role = document.getElementById("regRole").value;
 
-        const nameGroup = document.getElementById("regNameGroup");
-        const emailGroup = document.getElementById("regEmailGroup");
-        const phoneGroup = document.getElementById("regPhoneGroup");
-        const passGroup = document.getElementById("regPasswordGroup");
-
         // Reset error formatting
-        nameGroup.classList.remove("has-error");
-        emailGroup.classList.remove("has-error");
-        phoneGroup.classList.remove("has-error");
-        passGroup.classList.remove("has-error");
+        if (nameGroup) nameGroup.classList.remove("has-error");
+        if (emailGroup) emailGroup.classList.remove("has-error");
+        if (phoneGroup) phoneGroup.classList.remove("has-error");
+        if (passGroup) passGroup.classList.remove("has-error");
 
         handleRegistration(name, email, password, phone, role, (field, message) => {
           if (field === "name") {
-            nameGroup.classList.add("has-error");
+            if (nameGroup) nameGroup.classList.add("has-error");
+            if (nameInput) nameInput.focus();
           } else if (field === "email") {
-            emailGroup.classList.add("has-error");
-            document.getElementById("regEmailError").innerText = message;
+            if (emailGroup) emailGroup.classList.add("has-error");
+            const errEl = document.getElementById("regEmailError");
+            if (errEl) errEl.innerText = message;
+            if (emailInput) emailInput.focus();
           } else if (field === "phone") {
-            phoneGroup.classList.add("has-error");
+            if (phoneGroup) phoneGroup.classList.add("has-error");
+            if (phoneInput) phoneInput.focus();
           } else if (field === "password") {
-            passGroup.classList.add("has-error");
-            document.getElementById("regPasswordError").innerText = message;
+            if (passGroup) passGroup.classList.add("has-error");
+            const errEl = document.getElementById("regPasswordError");
+            if (errEl) errEl.innerText = message;
+            if (passInput) passInput.focus();
           }
         });
       });

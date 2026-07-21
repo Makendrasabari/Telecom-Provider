@@ -40,31 +40,31 @@
       
       <ul class="sidebar-menu">
         <li class="sidebar-item">
-          <a href="#" class="sidebar-link active" data-section="overview" id="sbLinkOverview">
+          <a href="#overview" class="sidebar-link active" data-section="overview" id="sbLinkOverview">
             <i class="fa-solid fa-gauge"></i>
             <span>Dashboard</span>
           </a>
         </li>
         <li class="sidebar-item">
-          <a href="#" class="sidebar-link" data-section="recharge" id="sbLinkRecharge">
+          <a href="#recharge" class="sidebar-link" data-section="recharge" id="sbLinkRecharge">
             <i class="fa-solid fa-credit-card"></i>
             <span>Recharge</span>
           </a>
         </li>
         <li class="sidebar-item">
-          <a href="#" class="sidebar-link" data-section="myplans" id="sbLinkMyplans">
+          <a href="#myplans" class="sidebar-link" data-section="myplans" id="sbLinkMyplans">
             <i class="fa-solid fa-receipt"></i>
             <span>My Plans</span>
           </a>
         </li>
         <li class="sidebar-item">
-          <a href="#" class="sidebar-link" data-section="usage" id="sbLinkUsage">
+          <a href="#usage" class="sidebar-link" data-section="usage" id="sbLinkUsage">
             <i class="fa-solid fa-chart-simple"></i>
             <span>Usage</span>
           </a>
         </li>
         <li class="sidebar-item">
-          <a href="#" class="sidebar-link" data-section="support" id="sbLinkSupport">
+          <a href="#support" class="sidebar-link" data-section="support" id="sbLinkSupport">
             <i class="fa-solid fa-headset"></i>
             <span>Support</span>
           </a>
@@ -88,7 +88,7 @@
           <button class="sidebar-toggle" id="sidebarToggleBtn" aria-label="Toggle Sidebar Menu">
             <i class="fa-solid fa-bars"></i>
           </button>
-          <h2 class="page-title-dashboard">Welcome back, <span id="customerHeaderName">User</span></h2>
+          <h2 class="page-title-dashboard" id="dashboardPageTitle">Dashboard</h2>
         </div>
         
         <div class="header-right">
@@ -172,7 +172,7 @@
             <div class="chart-card">
               <div class="card-header-dashboard">
                 <h3 class="card-title-dashboard"><i class="fa-solid fa-chart-line" style="color:var(--primary-red); margin-right:0.5rem;"></i> Data Usage Diagnostics</h3>
-                <a href="#" class="card-action-link" onclick="document.querySelector('[data-section=\\'usage\\']').click();">Full Report</a>
+                <a href="#usage" class="card-action-link" onclick="navigateToSection('usage'); return false;">Full Report</a>
               </div>
               <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1.25rem;">Daily data transfer volumes (GB) tracked for this billing cycle.</p>
 
@@ -280,9 +280,10 @@
               <div id="dbRechargeError" style="background-color: rgba(230,0,18,0.1); color:var(--primary-red); padding:0.75rem; border-radius:4px; font-size:0.85rem; margin-bottom:1rem; display:none;"></div>
               
               <form id="dbRechargeForm">
-                <div class="form-group">
+                <div class="form-group" id="dbPhoneGroup">
                   <label class="form-label" for="dbRechargePhone">Target Mobile / Account Number</label>
-                  <input type="text" id="dbRechargePhone" placeholder="Enter 10-digit number" class="form-input">
+                  <input type="text" id="dbRechargePhone" placeholder="Enter 10-digit number" class="form-input" maxlength="10">
+                  <span class="error-msg" id="dbPhoneInlineError">Please enter a valid 10-digit number.</span>
                 </div>
 
                 <div class="form-group">
@@ -483,26 +484,30 @@
             <div class="chart-card">
               <h3 class="card-title-dashboard" style="margin-bottom:1.5rem;">File Troubleshooting Request</h3>
               <form id="dbSupportForm">
-                <div class="form-group" style="margin-bottom:1rem;">
+                <div class="form-group" id="dbTktSubjectGroup" style="margin-bottom:1rem;">
                   <label class="form-label" for="dbTktSubject">Ticket Subject</label>
                   <input type="text" id="dbTktSubject" placeholder="e.g. WiFi connection drops" class="form-input">
+                  <span class="error-msg" id="dbTktSubjectError">Please enter a subject.</span>
                 </div>
                 
-                <div class="form-group" style="margin-bottom:1rem;">
+                <div class="form-group" id="dbTktCategoryGroup" style="margin-bottom:1rem;">
                   <label class="form-label" for="dbTktCategory">Category</label>
                   <select id="dbTktCategory" class="form-input">
+                    <option value="" disabled selected>Select Category</option>
                     <option value="technical">Technical Support</option>
                     <option value="billing">Billing Inquiry</option>
                     <option value="account">Account Access</option>
                   </select>
+                  <span class="error-msg" id="dbTktCategoryError">Please select an option.</span>
                 </div>
 
-                <div class="form-group" style="margin-bottom:1.5rem;">
+                <div class="form-group" id="dbTktMessageGroup" style="margin-bottom:1.5rem;">
                   <label class="form-label" for="dbTktMessage">Details</label>
                   <textarea id="dbTktMessage" placeholder="Specify error light codes or failure cycles..." class="form-input"></textarea>
+                  <span class="error-msg" id="dbTktMessageError">This field is required.</span>
                 </div>
 
-                <button type="submit" class="btn btn-primary" style="width:100%;">File Ticket</button>
+                <button type="submit" class="btn btn-primary" id="dbTktSubmitBtn" style="width:100%;">File Ticket</button>
               </form>
             </div>
 
@@ -520,9 +525,9 @@
         <footer class="dashboard-footer">
           <div>&copy; 2026 Stackly Telecom. Customer Control Center.</div>
           <div class="dashboard-footer-links">
-            <a href="404.html">Help & Support</a>
-            <a href="404.html">Explore Plans & Recharge</a>
-            <a href="404.html">Contact Us</a>
+            <a href="#support" onclick="navigateToSection('support'); return false;">Help & Support</a>
+            <a href="#recharge" onclick="navigateToSection('recharge'); return false;">Explore Plans & Recharge</a>
+            <a href="contact.html">Contact Us</a>
           </div>
         </footer>
 

@@ -58,11 +58,23 @@ body.dashboard-body {
   transition: var(--transition-smooth);
 }
 
+.sidebar-logo a {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
 .sidebar-logo-img {
   height: 95px;
   width: auto;
   object-fit: contain;
-  transition: var(--transition-smooth);
+  cursor: pointer;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.sidebar-logo-img:hover {
+  transform: scale(1.04);
+  opacity: 0.95;
 }
 
 /* Close (✕) button — only shown on mobile when sidebar is open */

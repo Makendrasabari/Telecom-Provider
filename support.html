@@ -121,20 +121,22 @@
               <span class="error-msg">Subject cannot be empty.</span>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" id="tktCategoryGroup">
               <label class="form-label" for="tktCategory">Category</label>
               <select class="form-input" id="tktCategory">
+                <option value="">Select Category</option>
                 <option value="technical">Technical Support</option>
                 <option value="billing">Billing & Recharge</option>
                 <option value="account">Account Access</option>
               </select>
+              <span class="error-msg">Please select a category.</span>
             </div>
           </div>
 
           <div class="form-group full-width" id="tktMessageGroup" style="margin-bottom: 1.5rem;">
             <label class="form-label" for="tktMessage">Description of Issue</label>
             <textarea id="tktMessage" placeholder="Please write details about your issue so our network engineers can diagnose..." class="form-input"></textarea>
-            <span class="error-msg">Please provide issue descriptions.</span>
+            <span class="error-msg">Please provide issue description.</span>
           </div>
 
           <button type="submit" class="btn btn-primary" id="tktSubmitBtn">Register Support Ticket</button>
@@ -380,82 +382,133 @@
   <script src="js/auth.js"></script>
   <script src="js/main.js"></script>
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
+    function initSupportTicketForm() {
       const form = document.getElementById("ticketSubmitForm");
-      
-      if (form) {
-        form.addEventListener("submit", (e) => {
-          e.preventDefault();
+      if (!form) return;
 
-          let isValid = true;
-          const nameInput = document.getElementById("tktName");
-          const emailInput = document.getElementById("tktEmail");
-          const subjectInput = document.getElementById("tktSubject");
-          const messageInput = document.getElementById("tktMessage");
+      const nameInput = document.getElementById("tktName");
+      const emailInput = document.getElementById("tktEmail");
+      const subjectInput = document.getElementById("tktSubject");
+      const categorySelect = document.getElementById("tktCategory");
+      const messageInput = document.getElementById("tktMessage");
 
-          const nameGroup = document.getElementById("tktNameGroup");
-          const emailGroup = document.getElementById("tktEmailGroup");
-          const subjectGroup = document.getElementById("tktSubjectGroup");
-          const messageGroup = document.getElementById("tktMessageGroup");
+      const nameGroup = document.getElementById("tktNameGroup");
+      const emailGroup = document.getElementById("tktEmailGroup");
+      const subjectGroup = document.getElementById("tktSubjectGroup");
+      const categoryGroup = document.getElementById("tktCategoryGroup");
+      const messageGroup = document.getElementById("tktMessageGroup");
 
-          // Reset errors
-          nameGroup.classList.remove("has-error");
-          emailGroup.classList.remove("has-error");
-          subjectGroup.classList.remove("has-error");
-          messageGroup.classList.remove("has-error");
-
-          if (!nameInput.value.trim()) {
-            nameGroup.classList.add("has-error");
-            isValid = false;
-          }
-
-          // Gmail check (ends with @gmail.com)
-          const gmailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
-          if (!gmailPattern.test(emailInput.value.toLowerCase().trim())) {
-            emailGroup.classList.add("has-error");
-            isValid = false;
-          }
-
-          if (!subjectInput.value.trim()) {
-            subjectGroup.classList.add("has-error");
-            isValid = false;
-          }
-
-          if (!messageInput.value.trim()) {
-            messageGroup.classList.add("has-error");
-            isValid = false;
-          }
-
-          if (!isValid) return;
-
-          // Submit ticket
-          const btn = document.getElementById("tktSubmitBtn");
-          btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Logging Ticket...`;
-          btn.disabled = true;
-
-          setTimeout(() => {
-            btn.innerHTML = "Register Support Ticket";
-            btn.disabled = false;
-            window.location.href = "404.html";
-          }, 600);
-
-            // GSAP Scroll back to top of card smoothly and pulse
-            gsap.to(window, {
-              duration: 0.5,
-              scrollTo: "#ticketFormSection",
-              onComplete: () => {
-                gsap.from(successBox, {
-                  scale: 0.95,
-                  duration: 0.3,
-                  ease: "back.out(1.5)"
-                });
-              }
-            });
-
-          }, 1200);
+      // Real-time error state removal
+      if (nameInput) {
+        nameInput.addEventListener("input", () => {
+          if (nameInput.value.trim()) if (nameGroup) nameGroup.classList.remove("has-error");
         });
       }
-    });
+      if (emailInput) {
+        emailInput.addEventListener("input", () => {
+          if (emailInput.value.trim() && /^[a-zA-Z0-9._%+-]+@gmail\.com$/i.test(emailInput.value.trim())) {
+            if (emailGroup) emailGroup.classList.remove("has-error");
+          }
+        });
+      }
+      if (subjectInput) {
+        subjectInput.addEventListener("input", () => {
+          if (subjectInput.value.trim()) if (subjectGroup) subjectGroup.classList.remove("has-error");
+        });
+      }
+      if (categorySelect) {
+        categorySelect.addEventListener("change", () => {
+          if (categorySelect.value.trim()) if (categoryGroup) categoryGroup.classList.remove("has-error");
+        });
+      }
+      if (messageInput) {
+        messageInput.addEventListener("input", () => {
+          if (messageInput.value.trim()) if (messageGroup) messageGroup.classList.remove("has-error");
+        });
+      }
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        let isValid = true;
+        let firstInvalidElement = null;
+
+        // 1. Full Name Validation
+        if (!nameInput || !nameInput.value.trim()) {
+          if (nameGroup) nameGroup.classList.add("has-error");
+          isValid = false;
+          if (!firstInvalidElement) firstInvalidElement = nameInput;
+        } else {
+          if (nameGroup) nameGroup.classList.remove("has-error");
+        }
+
+        // 2. Gmail Address Validation
+        const gmailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/i;
+        if (!emailInput || !gmailPattern.test(emailInput.value.trim())) {
+          if (emailGroup) emailGroup.classList.add("has-error");
+          isValid = false;
+          if (!firstInvalidElement) firstInvalidElement = emailInput;
+        } else {
+          if (emailGroup) emailGroup.classList.remove("has-error");
+        }
+
+        // 3. Subject Validation
+        if (!subjectInput || !subjectInput.value.trim()) {
+          if (subjectGroup) subjectGroup.classList.add("has-error");
+          isValid = false;
+          if (!firstInvalidElement) firstInvalidElement = subjectInput;
+        } else {
+          if (subjectGroup) subjectGroup.classList.remove("has-error");
+        }
+
+        // 4. Category Validation
+        if (!categorySelect || !categorySelect.value.trim()) {
+          if (categoryGroup) categoryGroup.classList.add("has-error");
+          isValid = false;
+          if (!firstInvalidElement) {
+            const customTrg = categoryGroup ? categoryGroup.querySelector(".custom-select-trigger") : null;
+            firstInvalidElement = customTrg || categorySelect;
+          }
+        } else {
+          if (categoryGroup) categoryGroup.classList.remove("has-error");
+        }
+
+        // 5. Description Validation
+        if (!messageInput || !messageInput.value.trim()) {
+          if (messageGroup) messageGroup.classList.add("has-error");
+          isValid = false;
+          if (!firstInvalidElement) firstInvalidElement = messageInput;
+        } else {
+          if (messageGroup) messageGroup.classList.remove("has-error");
+        }
+
+        // If any mandatory field is missing/invalid, focus and scroll to it
+        if (!isValid) {
+          if (firstInvalidElement) {
+            firstInvalidElement.scrollIntoView({ behavior: "smooth", block: "center" });
+            if (typeof firstInvalidElement.focus === "function") firstInvalidElement.focus();
+          }
+          return;
+        }
+
+        // Submit ticket -> Redirect to 404 page
+        const btn = document.getElementById("tktSubmitBtn");
+        if (btn) {
+          btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Logging Ticket...`;
+          btn.disabled = true;
+        }
+
+        setTimeout(() => {
+          window.location.href = "404.html";
+        }, 500);
+      });
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initSupportTicketForm);
+    } else {
+      initSupportTicketForm();
+    }
   </script>
 </body>
 </html>

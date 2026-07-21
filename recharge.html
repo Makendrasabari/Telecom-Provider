@@ -75,27 +75,31 @@
             </div>
 
             <div class="form-grid">
-              <div class="form-group">
+              <div class="form-group" id="connTypeGroup">
                 <label class="form-label" for="connectionType">Connection Type</label>
                 <select class="form-input" id="connectionType">
+                  <option value="" disabled selected>Select Connection Type</option>
                   <option value="mobile">Mobile Prepaid / Postpaid</option>
                   <option value="broadband">Fiber Broadband Account</option>
                 </select>
+                <span class="error-msg" id="connTypeError">Please select a connection type.</span>
               </div>
 
               <div class="form-group" id="targetFieldGroup">
                 <label class="form-label" for="targetNumber" id="targetLabel">Mobile Number</label>
-                <input type="text" id="targetNumber" placeholder="Enter 10-digit mobile number" class="form-input">
-                <span class="error-msg" id="targetError">Please enter a valid 10-digit mobile number.</span>
+                <input type="text" id="targetNumber" placeholder="Enter 10-digit mobile number" class="form-input" maxlength="10">
+                <span class="error-msg" id="targetError">Please enter your mobile number.</span>
               </div>
 
-              <div class="form-group full-width">
+              <div class="form-group full-width" id="operatorGroup">
                 <label class="form-label" for="operatorCircle">Telecom Operator & Circle</label>
                 <select class="form-input" id="operatorCircle">
+                  <option value="" disabled selected>Select Operator & Circle</option>
                   <option value="Stackly 5G - National">Stackly 5G (Nationwide Network)</option>
                   <option value="Stackly Fiber - Metro">Stackly Ultra Fiber (Metro Circle)</option>
                   <option value="Stackly Enterprise - Regional">Stackly Business & Enterprise</option>
                 </select>
+                <span class="error-msg" id="operatorError">Please select a telecom operator.</span>
               </div>
             </div>
           </div>
@@ -109,12 +113,12 @@
 
             <!-- Category Chips / Tabs -->
             <div class="plan-category-chips-wrapper" id="planChipsWrapper">
-              <button type="button" class="plan-chip active" data-category="popular"><i class="fa-solid fa-fire"></i> Popular</button>
-              <button type="button" class="plan-chip" data-category="unlimited"><i class="fa-solid fa-bolt"></i> 5G Unlimited</button>
-              <button type="button" class="plan-chip" data-category="data"><i class="fa-solid fa-database"></i> Data Boosters</button>
-              <button type="button" class="plan-chip" data-category="topup"><i class="fa-solid fa-phone"></i> Top-Up</button>
-              <button type="button" class="plan-chip" data-category="international"><i class="fa-solid fa-plane"></i> International</button>
-              <button type="button" class="plan-chip" data-category="postpaid"><i class="fa-solid fa-file-invoice-dollar"></i> Postpaid Packs</button>
+              <button type="button" class="plan-chip active" data-category="popular" onclick="switchPlanCategory('popular', this)"><i class="fa-solid fa-fire"></i> Popular</button>
+              <button type="button" class="plan-chip" data-category="unlimited" onclick="switchPlanCategory('unlimited', this)"><i class="fa-solid fa-bolt"></i> 5G Unlimited</button>
+              <button type="button" class="plan-chip" data-category="data" onclick="switchPlanCategory('data', this)"><i class="fa-solid fa-database"></i> Data Boosters</button>
+              <button type="button" class="plan-chip" data-category="topup" onclick="switchPlanCategory('topup', this)"><i class="fa-solid fa-phone"></i> Top-Up</button>
+              <button type="button" class="plan-chip" data-category="international" onclick="switchPlanCategory('international', this)"><i class="fa-solid fa-plane"></i> International</button>
+              <button type="button" class="plan-chip" data-category="postpaid" onclick="switchPlanCategory('postpaid', this)"><i class="fa-solid fa-file-invoice-dollar"></i> Postpaid Packs</button>
             </div>
 
             <!-- Inline Responsive Plan Grid -->
@@ -129,6 +133,8 @@
             <div class="selected-plan-banner" id="selectedPlanDetail">
               <!-- Dynamic plan summary rendered here -->
             </div>
+
+            <span class="error-msg" id="planError" style="margin-top: 0.75rem; text-align: center; display: none;">Please select a recharge plan.</span>
           </div>
 
           <!-- Step 3: Payment Option -->
@@ -138,42 +144,44 @@
               Payment Information
             </div>
             
-            <div class="form-group" style="margin-bottom: 1.5rem;">
+            <div class="form-group" id="payMethodGroup" style="margin-bottom: 1.5rem;">
               <label class="form-label" for="paymentMethod">Payment Method</label>
               <select class="form-input" id="paymentMethod">
+                <option value="" disabled selected>Select Payment Method</option>
                 <option value="Credit Card">Credit Card</option>
                 <option value="Debit Card">Debit Card</option>
                 <option value="UPI">UPI</option>
                 <option value="Net Banking">Net Banking</option>
               </select>
+              <span class="error-msg" id="payMethodError">Please select a payment method.</span>
             </div>
 
             <div id="cardFields">
-              <div class="form-group" style="margin-bottom: 1.25rem;">
+              <div class="form-group" id="cardNumberGroup" style="margin-bottom: 1.25rem;">
                 <label class="form-label" for="cardNumber">Card Number</label>
-                <input type="text" id="cardNumber" placeholder="1234 5678 1234 5678" class="form-input">
-                <span class="error-msg" id="cardError">Invalid card number. Enter 16 digits.</span>
+                <input type="text" id="cardNumber" placeholder="1234 5678 1234 5678" class="form-input" maxlength="19">
+                <span class="error-msg" id="cardError">Please enter your card number.</span>
               </div>
 
               <div class="form-grid" style="margin-bottom: 1.5rem;">
-                <div class="form-group">
+                <div class="form-group" id="cardExpiryGroup">
                   <label class="form-label" for="cardExpiry">Expiry Date</label>
-                  <input type="text" id="cardExpiry" placeholder="MM/YY" class="form-input">
-                  <span class="error-msg" id="expiryError">Required.</span>
+                  <input type="text" id="cardExpiry" placeholder="MM/YY" class="form-input" maxlength="5">
+                  <span class="error-msg" id="expiryError">Please enter the expiry date.</span>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="cardCvvGroup">
                   <label class="form-label" for="cardCvv">CVV</label>
-                  <input type="password" id="cardCvv" placeholder="***" class="form-input">
-                  <span class="error-msg" id="cvvError">Invalid.</span>
+                  <input type="password" id="cardCvv" placeholder="***" class="form-input" maxlength="4">
+                  <span class="error-msg" id="cvvError">Please enter the CVV.</span>
                 </div>
               </div>
             </div>
 
             <div id="upiFields" style="display: none;">
-              <div class="form-group" style="margin-bottom: 1.5rem;">
+              <div class="form-group" id="upiGroup" style="margin-bottom: 1.5rem;">
                 <label class="form-label" for="upiId">UPI Virtual Address (VPA)</label>
                 <input type="text" id="upiId" placeholder="username@upi" class="form-input">
-                <span class="error-msg" id="upiError">Enter a valid UPI ID (e.g. name@bank).</span>
+                <span class="error-msg" id="upiError">Please enter your UPI ID.</span>
               </div>
             </div>
           </div>
@@ -434,12 +442,23 @@
     let activeSelectedPlanId = "p1";
     let activeCategory = "popular";
 
-    document.addEventListener("DOMContentLoaded", () => {
-      // Sync localStorage with plans database if missing or out of date
-      const localPlans = JSON.parse(localStorage.getItem("stackly_plans") || "[]");
-      if (localPlans.length < plansDatabase.length) {
-        localStorage.setItem("stackly_plans", JSON.stringify(plansDatabase));
-      }
+    window.switchPlanCategory = function(category, btnEl) {
+      activeCategory = category;
+      const chipBtns = document.querySelectorAll(".plan-chip");
+      chipBtns.forEach(b => {
+        if (b === btnEl || b.getAttribute("data-category") === category) {
+          b.classList.add("active");
+        } else {
+          b.classList.remove("active");
+        }
+      });
+
+      renderInlinePlans();
+    };
+
+    function initRechargeModule() {
+      // Sync localStorage with plans database
+      localStorage.setItem("stackly_plans", JSON.stringify(plansDatabase));
 
       const connTypeSelect = document.getElementById("connectionType");
       const targetLabel = document.getElementById("targetLabel");
@@ -449,29 +468,30 @@
 
       // Handle category chip click
       chipBtns.forEach(btn => {
-        btn.addEventListener("click", () => {
-          chipBtns.forEach(b => b.classList.remove("active"));
-          btn.classList.add("active");
-          activeCategory = btn.getAttribute("data-category");
-          renderInlinePlans();
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          const cat = btn.getAttribute("data-category");
+          window.switchPlanCategory(cat, btn);
         });
       });
 
       // Handle connection type toggle (Mobile vs Broadband)
-      connTypeSelect.addEventListener("change", () => {
-        if (connTypeSelect.value === "mobile") {
-          targetLabel.innerText = "Mobile Number";
-          targetInput.placeholder = "Enter 10-digit number";
-          chipsWrapper.style.display = "flex";
-          activeSelectedPlanId = "p1";
-        } else {
-          targetLabel.innerText = "Fiber Account ID";
-          targetInput.placeholder = "Enter Fiber Account ID (e.g. STK-12345)";
-          chipsWrapper.style.display = "none";
-          activeSelectedPlanId = "p4";
-        }
-        renderInlinePlans();
-      });
+      if (connTypeSelect) {
+        connTypeSelect.addEventListener("change", () => {
+          if (connTypeSelect.value === "mobile") {
+            if (targetLabel) targetLabel.innerText = "Mobile Number";
+            if (targetInput) targetInput.placeholder = "Enter 10-digit mobile number";
+            if (chipsWrapper) chipsWrapper.style.display = "flex";
+            activeSelectedPlanId = "p1";
+          } else {
+            if (targetLabel) targetLabel.innerText = "Fiber Account ID";
+            if (targetInput) targetInput.placeholder = "Enter Fiber Account ID (e.g. STK-12345)";
+            if (chipsWrapper) chipsWrapper.style.display = "none";
+            activeSelectedPlanId = "p4";
+          }
+          renderInlinePlans();
+        });
+      }
 
       // Parse plan from URL query string if present
       const urlParams = new URLSearchParams(window.location.search);
@@ -481,8 +501,10 @@
         if (found) {
           activeSelectedPlanId = queryPlanId;
           if (found.type === "broadband") {
-            connTypeSelect.value = "broadband";
-            connTypeSelect.dispatchEvent(new Event("change"));
+            if (connTypeSelect) {
+              connTypeSelect.value = "broadband";
+              connTypeSelect.dispatchEvent(new Event("change"));
+            }
           } else {
             activeCategory = found.category || "popular";
             chipBtns.forEach(b => {
@@ -498,176 +520,283 @@
 
       // Initial render
       renderInlinePlans();
+    }
 
-      // Handle Payment Option toggles
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initRechargeModule);
+    } else {
+      initRechargeModule();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("rechargeForm");
+      const connTypeSelect = document.getElementById("connectionType");
+      const connTypeGroup = document.getElementById("connTypeGroup");
+      const targetInput = document.getElementById("targetNumber");
+      const targetGroup = document.getElementById("targetFieldGroup");
+      const targetError = document.getElementById("targetError");
+      const opSelect = document.getElementById("operatorCircle");
+      const opGroup = document.getElementById("operatorGroup");
+      const plansSection = document.getElementById("plansSection");
+      const planError = document.getElementById("planError");
       const payMethod = document.getElementById("paymentMethod");
+      const payGroup = document.getElementById("payMethodGroup");
       const cardFields = document.getElementById("cardFields");
       const upiFields = document.getElementById("upiFields");
 
-      payMethod.addEventListener("change", () => {
-        if (payMethod.value === "UPI") {
-          cardFields.style.display = "none";
-          upiFields.style.display = "block";
-        } else if (payMethod.value === "Net Banking") {
-          cardFields.style.display = "none";
-          upiFields.style.display = "none";
-        } else {
-          cardFields.style.display = "block";
-          upiFields.style.display = "none";
-        }
-      });
+      const cardNumInput = document.getElementById("cardNumber");
+      const cardNumGroup = document.getElementById("cardNumberGroup");
+      const expiryInput = document.getElementById("cardExpiry");
+      const expiryGroup = document.getElementById("cardExpiryGroup");
+      const cvvInput = document.getElementById("cardCvv");
+      const cvvGroup = document.getElementById("cardCvvGroup");
+      const upiInput = document.getElementById("upiId");
+      const upiGroup = document.getElementById("upiGroup");
 
-      // Form Submission
-      const form = document.getElementById("rechargeForm");
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        
-        let isValid = true;
-        const targetVal = targetInput.value.trim();
-        const targetError = document.getElementById("targetError");
-        const groupTarget = document.getElementById("targetFieldGroup");
-
-        if (connTypeSelect.value === "mobile") {
-          const numPattern = /^\d{10}$/;
-          if (!numPattern.test(targetVal)) {
-            groupTarget.classList.add("has-error");
-            isValid = false;
+      // Handle Payment Option toggles
+      if (payMethod) {
+        payMethod.addEventListener("change", () => {
+          if (payGroup) payGroup.classList.remove("has-error");
+          if (payMethod.value === "UPI") {
+            if (cardFields) cardFields.style.display = "none";
+            if (upiFields) upiFields.style.display = "block";
+          } else if (payMethod.value === "Net Banking") {
+            if (cardFields) cardFields.style.display = "none";
+            if (upiFields) upiFields.style.display = "none";
           } else {
-            groupTarget.classList.remove("has-error");
+            if (cardFields) cardFields.style.display = "block";
+            if (upiFields) upiFields.style.display = "none";
           }
-        } else {
-          if (!targetVal || targetVal.length < 4) {
-            groupTarget.classList.add("has-error");
-            targetError.innerText = "Please enter a valid Fiber account ID.";
-            isValid = false;
+        });
+      }
+
+      // Real-time input listeners to remove error state automatically
+      if (connTypeSelect) {
+        connTypeSelect.addEventListener("change", () => {
+          if (connTypeGroup) connTypeGroup.classList.remove("has-error");
+        });
+      }
+
+      if (opSelect) {
+        opSelect.addEventListener("change", () => {
+          if (opGroup) opGroup.classList.remove("has-error");
+        });
+      }
+
+      if (targetInput) {
+        targetInput.addEventListener("input", () => {
+          const isMobile = !connTypeSelect || connTypeSelect.value === "mobile" || connTypeSelect.value === "";
+          const val = targetInput.value.trim();
+          if (isMobile) {
+            targetInput.value = val.replace(/\D/g, "").slice(0, 10);
+            if (/^\d{10}$/.test(targetInput.value)) {
+              if (targetGroup) targetGroup.classList.remove("has-error");
+            }
           } else {
-            groupTarget.classList.remove("has-error");
+            if (val.length >= 4) {
+              if (targetGroup) targetGroup.classList.remove("has-error");
+            }
           }
-        }
+        });
+      }
 
-        // Validate Card / UPI fields
-        if (payMethod.value === "Credit Card" || payMethod.value === "Debit Card") {
-          const cardNum = document.getElementById("cardNumber").value.trim().replace(/\s/g, '');
-          const expiry = document.getElementById("cardExpiry").value.trim();
-          const cvv = document.getElementById("cardCvv").value.trim();
+      // Card Number formatting & real-time error removal
+      if (cardNumInput) {
+        cardNumInput.addEventListener("input", () => {
+          let digits = cardNumInput.value.replace(/\D/g, "").slice(0, 16);
+          let formatted = digits.match(/.{1,4}/g)?.join(" ") || "";
+          cardNumInput.value = formatted;
+          if (digits.length === 16) {
+            if (cardNumGroup) cardNumGroup.classList.remove("has-error");
+          }
+        });
+      }
 
-          const cardError = document.getElementById("cardError");
-          const expiryError = document.getElementById("expiryError");
-          const cvvError = document.getElementById("cardCvv").nextElementSibling;
+      // Expiry Date formatting & real-time error removal
+      if (expiryInput) {
+        expiryInput.addEventListener("input", () => {
+          let digits = expiryInput.value.replace(/\D/g, "").slice(0, 4);
+          let formatted = digits;
+          if (digits.length >= 3) {
+            formatted = digits.slice(0, 2) + "/" + digits.slice(2);
+          }
+          expiryInput.value = formatted;
+          if (/^(0[1-9]|1[0-2])\/\d{2}$/.test(formatted)) {
+            if (expiryGroup) expiryGroup.classList.remove("has-error");
+          }
+        });
+      }
 
-          if (!/^\d{16}$/.test(cardNum)) {
-            cardError.parentElement.classList.add("has-error");
+      // CVV formatting & real-time error removal
+      if (cvvInput) {
+        cvvInput.addEventListener("input", () => {
+          let digits = cvvInput.value.replace(/\D/g, "").slice(0, 4);
+          cvvInput.value = digits;
+          if (digits.length >= 3) {
+            if (cvvGroup) cvvGroup.classList.remove("has-error");
+          }
+        });
+      }
+
+      // UPI ID real-time error removal
+      if (upiInput) {
+        upiInput.addEventListener("input", () => {
+          const val = upiInput.value.trim();
+          if (/^[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}$/.test(val)) {
+            if (upiGroup) upiGroup.classList.remove("has-error");
+          }
+        });
+      }
+
+      // Form submission validation
+      if (form) {
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+
+          let isValid = true;
+          let firstInvalidElement = null;
+
+          // 1. Connection Type
+          if (!connTypeSelect || !connTypeSelect.value) {
+            if (connTypeGroup) connTypeGroup.classList.add("has-error");
             isValid = false;
+            if (!firstInvalidElement) firstInvalidElement = connTypeSelect;
           } else {
-            cardError.parentElement.classList.remove("has-error");
+            if (connTypeGroup) connTypeGroup.classList.remove("has-error");
           }
 
-          if (!/^\d{2}\/\d{2}$/.test(expiry)) {
-            expiryError.parentElement.parentElement.classList.add("has-error");
+          // 2. Mobile Number / Fiber Account ID
+          const targetVal = targetInput ? targetInput.value.trim() : "";
+          const isMobile = !connTypeSelect || connTypeSelect.value === "mobile" || connTypeSelect.value === "";
+
+          if (isMobile) {
+            if (!/^\d{10}$/.test(targetVal)) {
+              if (targetGroup) targetGroup.classList.add("has-error");
+              if (targetError) targetError.innerText = "Please enter your mobile number.";
+              isValid = false;
+              if (!firstInvalidElement) firstInvalidElement = targetInput;
+            } else {
+              if (targetGroup) targetGroup.classList.remove("has-error");
+            }
+          } else {
+            if (!targetVal || targetVal.length < 4) {
+              if (targetGroup) targetGroup.classList.add("has-error");
+              if (targetError) targetError.innerText = "Please enter your fiber account ID.";
+              isValid = false;
+              if (!firstInvalidElement) firstInvalidElement = targetInput;
+            } else {
+              if (targetGroup) targetGroup.classList.remove("has-error");
+            }
+          }
+
+          // 3. Telecom Operator & Circle
+          if (!opSelect || !opSelect.value) {
+            if (opGroup) opGroup.classList.add("has-error");
             isValid = false;
+            if (!firstInvalidElement) firstInvalidElement = opSelect;
           } else {
-            expiryError.parentElement.parentElement.classList.remove("has-error");
+            if (opGroup) opGroup.classList.remove("has-error");
           }
 
-          if (!/^\d{3}$/.test(cvv)) {
-            cvvError.parentElement.parentElement.classList.add("has-error");
+          // 4. Recharge Plan Selection
+          if (!activeSelectedPlanId) {
+            if (plansSection) plansSection.classList.add("has-error");
+            if (planError) planError.style.display = "block";
             isValid = false;
+            if (!firstInvalidElement) firstInvalidElement = plansSection;
           } else {
-            cvvError.parentElement.parentElement.classList.remove("has-error");
+            if (plansSection) plansSection.classList.remove("has-error");
+            if (planError) planError.style.display = "none";
           }
-        } else if (payMethod.value === "UPI") {
-          const upiId = document.getElementById("upiId").value.trim();
-          const upiError = document.getElementById("upiError");
 
-          if (!/^[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}$/.test(upiId)) {
-            upiError.parentElement.classList.add("has-error");
+          // 5. Payment Method
+          if (!payMethod || !payMethod.value) {
+            if (payGroup) payGroup.classList.add("has-error");
             isValid = false;
+            if (!firstInvalidElement) firstInvalidElement = payMethod;
           } else {
-            upiError.parentElement.classList.remove("has-error");
+            if (payGroup) payGroup.classList.remove("has-error");
           }
-        }
 
-        if (!isValid) return;
+          // 6. Payment details (Card vs UPI)
+          if (payMethod && (payMethod.value === "Credit Card" || payMethod.value === "Debit Card")) {
+            const cardNum = cardNumInput ? cardNumInput.value.replace(/\s/g, "") : "";
+            const exp = expiryInput ? expiryInput.value.trim() : "";
+            const cvv = cvvInput ? cvvInput.value.trim() : "";
 
-        const currentPlans = JSON.parse(localStorage.getItem("stackly_plans") || "[]");
-        const activePlan = currentPlans.find(p => p.id === activeSelectedPlanId) || plansDatabase.find(p => p.id === activeSelectedPlanId) || plansDatabase[0];
+            if (!/^\d{16}$/.test(cardNum)) {
+              if (cardNumGroup) cardNumGroup.classList.add("has-error");
+              isValid = false;
+              if (!firstInvalidElement) firstInvalidElement = cardNumInput;
+            } else {
+              if (cardNumGroup) cardNumGroup.classList.remove("has-error");
+            }
 
-        // Submit Process
-        const submitBtn = document.getElementById("submitRechargeBtn");
-        submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Settle Payment...`;
-        submitBtn.disabled = true;
+            if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(exp)) {
+              if (expiryGroup) expiryGroup.classList.add("has-error");
+              isValid = false;
+              if (!firstInvalidElement) firstInvalidElement = expiryInput;
+            } else {
+              if (expiryGroup) expiryGroup.classList.remove("has-error");
+            }
 
-        setTimeout(() => {
-          window.location.href = "404.html";
-        }, 600);
-                return u;
+            if (!/^\d{3,4}$/.test(cvv)) {
+              if (cvvGroup) cvvGroup.classList.add("has-error");
+              isValid = false;
+              if (!firstInvalidElement) firstInvalidElement = cvvInput;
+            } else {
+              if (cvvGroup) cvvGroup.classList.remove("has-error");
+            }
+          } else if (payMethod && payMethod.value === "UPI") {
+            const upiVal = upiInput ? upiInput.value.trim() : "";
+            if (!/^[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}$/.test(upiVal)) {
+              if (upiGroup) upiGroup.classList.add("has-error");
+              isValid = false;
+              if (!firstInvalidElement) firstInvalidElement = upiInput;
+            } else {
+              if (upiGroup) upiGroup.classList.remove("has-error");
+            }
+          }
+
+          if (!isValid) {
+            if (firstInvalidElement) {
+              firstInvalidElement.scrollIntoView({ behavior: "smooth", block: "center" });
+              if (typeof firstInvalidElement.focus === "function") {
+                firstInvalidElement.focus();
               }
-              return u;
-            });
-            localStorage.setItem("stackly_users", JSON.stringify(updatedUsers));
-            session.plan = activePlan.name;
-            localStorage.setItem("stackly_session", JSON.stringify(session));
-            document.getElementById("successDashboardBtn").style.display = "inline-flex";
+            }
+            return;
           }
 
-          // Populate success card
-          const summary = document.getElementById("rechargeSummary");
-          summary.innerHTML = `
-            <div class="summary-row">
-              <span class="summary-label">Transaction ID</span>
-              <span class="summary-value">${txnId}</span>
-            </div>
-            <div class="summary-row">
-              <span class="summary-label">Target Account / Number</span>
-              <span class="summary-value">${targetVal}</span>
-            </div>
-            <div class="summary-row">
-              <span class="summary-label">Selected Plan</span>
-              <span class="summary-value">${activePlan.name}</span>
-            </div>
-            <div class="summary-row">
-              <span class="summary-label">Recharge Amount</span>
-              <span class="summary-value" style="color:var(--primary-red); font-weight:800;">$${activePlan.price.toFixed(2)}</span>
-            </div>
-            <div class="summary-row">
-              <span class="summary-label">Payment Method</span>
-              <span class="summary-value">${payMethod.value}</span>
-            </div>
-          `;
-
-          document.getElementById("rechargeFormCard").style.display = "none";
-          const successCard = document.getElementById("rechargeSuccessCard");
-          successCard.style.display = "block";
-
-          if (window.gsap) {
-            gsap.from(successCard, {
-              opacity: 0,
-              y: 45,
-              duration: 0.5,
-              ease: "back.out(1.2)"
-            });
+          // Navigate to 404 page only when all required fields are valid
+          const submitBtn = document.getElementById("submitRechargeBtn");
+          if (submitBtn) {
+            submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Processing Payment...`;
+            submitBtn.disabled = true;
           }
-        }, 1200);
-      });
+
+          setTimeout(() => {
+            window.location.href = "404.html";
+          }, 500);
+        });
+      }
     });
 
     function renderInlinePlans() {
-      const connType = document.getElementById("connectionType").value;
+      const connTypeSelect = document.getElementById("connectionType");
+      const connType = connTypeSelect ? connTypeSelect.value : "mobile";
       const grid = document.getElementById("inlinePlansGrid");
       const selector = document.getElementById("planSelector");
 
-      let currentPlans = JSON.parse(localStorage.getItem("stackly_plans") || "[]");
-      if (currentPlans.length < plansDatabase.length) {
-        currentPlans = plansDatabase;
-      }
+      let currentPlans = plansDatabase;
 
       let filtered = currentPlans.filter(p => {
-        if (p.type !== connType) return false;
+        if (connType && p.type !== connType) return false;
         if (connType === "broadband") return true;
         return p.category === activeCategory || activeCategory === "all";
       });
 
-      if (filtered.length === 0) {
+      if (filtered.length === 0 && connType) {
         filtered = currentPlans.filter(p => p.type === connType);
       }
 
@@ -681,7 +810,7 @@
       });
 
       if (!filtered.some(p => p.id === activeSelectedPlanId)) {
-        activeSelectedPlanId = filtered[0] ? filtered[0].id : "p1";
+        activeSelectedPlanId = filtered[0] ? filtered[0].id : null;
       }
 
       grid.innerHTML = "";
@@ -708,7 +837,7 @@
         `;
 
         card.addEventListener("click", () => {
-          window.location.href = "404.html";
+          selectPlanInline(plan.id);
         });
 
         grid.appendChild(card);
@@ -719,6 +848,10 @@
 
     function selectPlanInline(planId) {
       activeSelectedPlanId = planId;
+      const plansSec = document.getElementById("plansSection");
+      const planErr = document.getElementById("planError");
+      if (plansSec) plansSec.classList.remove("has-error");
+      if (planErr) planErr.style.display = "none";
 
       document.querySelectorAll(".inline-plan-card").forEach(c => {
         if (c.getAttribute("data-id") === planId) {
@@ -760,6 +893,11 @@
 
         if (submitBtn) {
           submitBtn.innerHTML = `Proceed to Pay $${plan.price.toFixed(2)} <i class="fa-solid fa-lock" style="margin-left:0.5rem;"></i>`;
+        }
+      } else if (detailsBox) {
+        detailsBox.style.display = "none";
+        if (submitBtn) {
+          submitBtn.innerHTML = `Proceed to Pay <i class="fa-solid fa-lock" style="margin-left:0.5rem;"></i>`;
         }
       }
     }

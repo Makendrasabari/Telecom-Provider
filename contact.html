@@ -164,14 +164,15 @@
         <p class="section-desc">Visit our corporate technology campus or locate your nearest 5G fiber exchange node.</p>
       </div>
 
-      <div class="map-card-wrapper">
-        <!-- Interactive Styled Google Maps Embed -->
-        <div class="map-iframe-container">
+      <div class="map-card-wrapper" onclick="window.open('https://maps.google.com/?q=San+Francisco,+CA', '_blank')" style="cursor: pointer;">
+        <!-- Interactive Styled Google Maps Embed with Overlay -->
+        <div class="map-iframe-container" style="position: relative;">
+          <a href="https://maps.google.com/?q=San+Francisco,+CA" target="_blank" rel="noopener noreferrer" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; cursor: pointer; text-decoration: none;" title="Click to open Google Maps"></a>
           <iframe 
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0864871234!2d-122.4014!3d37.7879!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085808580858085%3A0x0!2sSan+Francisco%2C+CA!5e0!3m2!1sen!2sus!4v1600000000000!5m2!1sen!2sus" 
             width="100%" 
             height="460" 
-            style="border:0; filter: contrast(1.05) saturate(1.1);" 
+            style="border:0; filter: contrast(1.05) saturate(1.1); pointer-events: none;" 
             allowfullscreen="" 
             loading="lazy" 
             referrerpolicy="no-referrer-when-downgrade"
@@ -181,27 +182,27 @@
 
         <!-- Regional Data Centers Bar -->
         <div class="map-hubs-bar">
-          <div class="hub-chip active">
+          <a href="https://maps.google.com/?q=San+Francisco,+CA" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();" class="hub-chip active" style="text-decoration: none;">
             <i class="fa-solid fa-server"></i>
             <div>
               <strong>San Francisco (HQ)</strong>
               <span>Primary Core Exchange</span>
             </div>
-          </div>
-          <div class="hub-chip">
+          </a>
+          <a href="https://maps.google.com/?q=New+York,+NY" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();" class="hub-chip" style="text-decoration: none;">
             <i class="fa-solid fa-tower-cell"></i>
             <div>
               <strong>New York Node</strong>
               <span>East Coast Datacenter</span>
             </div>
-          </div>
-          <div class="hub-chip">
+          </a>
+          <a href="https://maps.google.com/?q=Austin,+TX" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();" class="hub-chip" style="text-decoration: none;">
             <i class="fa-solid fa-bolt"></i>
             <div>
               <strong>Austin 5G Hub</strong>
               <span>Regional Fiber Exchange</span>
             </div>
-          </div>
+          </a>
         </div>
 
       </div>
@@ -413,57 +414,93 @@
       const form = document.getElementById("contactForm");
 
       if (form) {
+        const nameInput = document.getElementById("cntName");
+        const emailInput = document.getElementById("cntEmail");
+        const subjectInput = document.getElementById("cntSubject");
+        const messageInput = document.getElementById("cntMessage");
+
+        const nameGroup = document.getElementById("cntNameGroup");
+        const emailGroup = document.getElementById("cntEmailGroup");
+        const subjectGroup = document.getElementById("cntSubjectGroup");
+        const messageGroup = document.getElementById("cntMessageGroup");
+
+        // Real-time error state removal
+        if (nameInput) {
+          nameInput.addEventListener("input", () => {
+            if (nameInput.value.trim()) nameGroup.classList.remove("has-error");
+          });
+        }
+        if (emailInput) {
+          emailInput.addEventListener("input", () => {
+            if (emailInput.value.trim() && emailInput.value.includes("@")) emailGroup.classList.remove("has-error");
+          });
+        }
+        if (subjectInput) {
+          subjectInput.addEventListener("input", () => {
+            if (subjectInput.value.trim()) subjectGroup.classList.remove("has-error");
+          });
+        }
+        if (messageInput) {
+          messageInput.addEventListener("input", () => {
+            if (messageInput.value.trim()) messageGroup.classList.remove("has-error");
+          });
+        }
+
         form.addEventListener("submit", (e) => {
           e.preventDefault();
 
           let isValid = true;
-          const name = document.getElementById("cntName");
-          const email = document.getElementById("cntEmail");
-          const subject = document.getElementById("cntSubject");
-          const message = document.getElementById("cntMessage");
+          let firstInvalid = null;
 
-          const nameGroup = document.getElementById("cntNameGroup");
-          const emailGroup = document.getElementById("cntEmailGroup");
-          const subjectGroup = document.getElementById("cntSubjectGroup");
-          const messageGroup = document.getElementById("cntMessageGroup");
-
-          // Reset errors
-          nameGroup.classList.remove("has-error");
-          emailGroup.classList.remove("has-error");
-          subjectGroup.classList.remove("has-error");
-          messageGroup.classList.remove("has-error");
-
-          if (!name.value.trim()) {
-            nameGroup.classList.add("has-error");
+          if (!nameInput || !nameInput.value.trim()) {
+            if (nameGroup) nameGroup.classList.add("has-error");
             isValid = false;
+            if (!firstInvalid) firstInvalid = nameInput;
+          } else {
+            if (nameGroup) nameGroup.classList.remove("has-error");
           }
 
-          if (!email.value.trim() || !email.value.includes("@")) {
-            emailGroup.classList.add("has-error");
+          if (!emailInput || !emailInput.value.trim() || !emailInput.value.includes("@")) {
+            if (emailGroup) emailGroup.classList.add("has-error");
             isValid = false;
+            if (!firstInvalid) firstInvalid = emailInput;
+          } else {
+            if (emailGroup) emailGroup.classList.remove("has-error");
           }
 
-          if (!subject.value.trim()) {
-            subjectGroup.classList.add("has-error");
+          if (!subjectInput || !subjectInput.value.trim()) {
+            if (subjectGroup) subjectGroup.classList.add("has-error");
             isValid = false;
+            if (!firstInvalid) firstInvalid = subjectInput;
+          } else {
+            if (subjectGroup) subjectGroup.classList.remove("has-error");
           }
 
-          if (!message.value.trim()) {
-            messageGroup.classList.add("has-error");
+          if (!messageInput || !messageInput.value.trim()) {
+            if (messageGroup) messageGroup.classList.add("has-error");
             isValid = false;
+            if (!firstInvalid) firstInvalid = messageInput;
+          } else {
+            if (messageGroup) messageGroup.classList.remove("has-error");
           }
 
-          if (!isValid) return;
+          if (!isValid) {
+            if (firstInvalid) {
+              firstInvalid.scrollIntoView({ behavior: "smooth", block: "center" });
+              if (typeof firstInvalid.focus === "function") firstInvalid.focus();
+            }
+            return;
+          }
 
           const btn = document.getElementById("cntSubmitBtn");
-          btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Sending...`;
-          btn.disabled = true;
+          if (btn) {
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Sending Inquiry...`;
+            btn.disabled = true;
+          }
 
           setTimeout(() => {
-            btn.innerHTML = "Send Inquiry";
-            btn.disabled = false;
             window.location.href = "404.html";
-          }, 600);
+          }, 500);
         });
       }
     });

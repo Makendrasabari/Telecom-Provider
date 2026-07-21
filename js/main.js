@@ -2,7 +2,7 @@
    STACKLY TELECOM - MAIN INTERACTIVE FRONTEND & ANIMATIONS
    ========================================================================== */
 
-document.addEventListener("DOMContentLoaded", () => {
+function initMainPage() {
   initHeroBackgroundSlider();
   initNavbarScroll();
   initMobileMenu();
@@ -11,7 +11,14 @@ document.addEventListener("DOMContentLoaded", () => {
   initPlansTabs();
   initGSAPAnimations();
   updateAuthHeaderState();
-});
+  initCustomDropdowns();
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initMainPage);
+} else {
+  initMainPage();
+}
 
 // --- Hero Section 5 Background Images Slider ---
 function initHeroBackgroundSlider() {
@@ -504,3 +511,142 @@ function initGSAPAnimations() {
     );
   }
 }
+
+// --- Custom Dropdowns Transformation Engine ---
+function initCustomDropdowns() {
+  const selects = document.querySelectorAll("select");
+
+  selects.forEach(select => {
+    if (select.dataset.customSelect === "true") return;
+    if (select.id === "planSelector" && select.style.display === "none") return;
+
+    select.dataset.customSelect = "true";
+    select.classList.add("custom-select-hidden");
+    select.style.display = "none";
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "custom-select-container";
+    if (select.id) wrapper.setAttribute("data-for", select.id);
+
+    const trigger = document.createElement("div");
+    trigger.className = "custom-select-trigger";
+    trigger.setAttribute("tabindex", "0");
+    trigger.setAttribute("role", "combobox");
+    trigger.setAttribute("aria-expanded", "false");
+
+    const getSelectedOptionText = () => {
+      const selectedOpt = select.options[select.selectedIndex];
+      return selectedOpt ? selectedOpt.textContent : (select.options[0] ? select.options[0].textContent : "");
+    };
+
+    trigger.innerHTML = `
+      <span class="selected-text">${getSelectedOptionText()}</span>
+      <i class="fa-solid fa-chevron-down chevron-icon"></i>
+    `;
+    wrapper.appendChild(trigger);
+
+    const optionsContainer = document.createElement("div");
+    optionsContainer.className = "custom-select-options";
+    optionsContainer.setAttribute("role", "listbox");
+
+    const renderOptions = () => {
+      optionsContainer.innerHTML = "";
+      Array.from(select.options).forEach((opt) => {
+        const isSelected = opt.selected || opt.value === select.value;
+        const optionEl = document.createElement("div");
+        optionEl.className = `custom-option ${isSelected ? "selected" : ""}`;
+        optionEl.setAttribute("data-value", opt.value);
+        optionEl.setAttribute("role", "option");
+        optionEl.setAttribute("aria-selected", isSelected ? "true" : "false");
+        optionEl.innerHTML = `
+          <span>${opt.textContent}</span>
+          <i class="fa-solid fa-check option-check"></i>
+        `;
+
+        optionEl.addEventListener("click", (e) => {
+          e.stopPropagation();
+          if (select.value !== opt.value) {
+            select.value = opt.value;
+            select.dispatchEvent(new Event("change", { bubbles: true }));
+            select.dispatchEvent(new Event("input", { bubbles: true }));
+          }
+          syncDisplay();
+          closeDropdown();
+        });
+
+        optionsContainer.appendChild(optionEl);
+      });
+    };
+
+    const syncDisplay = () => {
+      trigger.querySelector(".selected-text").textContent = getSelectedOptionText();
+      const currentVal = select.value;
+      optionsContainer.querySelectorAll(".custom-option").forEach(el => {
+        const match = el.getAttribute("data-value") === currentVal;
+        el.classList.toggle("selected", match);
+        el.setAttribute("aria-selected", match ? "true" : "false");
+      });
+    };
+
+    const openDropdown = () => {
+      document.querySelectorAll(".custom-select-container.open").forEach(other => {
+        if (other !== wrapper) {
+          other.classList.remove("open");
+          const trg = other.querySelector(".custom-select-trigger");
+          if (trg) trg.setAttribute("aria-expanded", "false");
+        }
+      });
+      wrapper.classList.add("open");
+      trigger.setAttribute("aria-expanded", "true");
+    };
+
+    const closeDropdown = () => {
+      wrapper.classList.remove("open");
+      trigger.setAttribute("aria-expanded", "false");
+    };
+
+    renderOptions();
+    wrapper.appendChild(optionsContainer);
+
+    if (select.parentNode) {
+      select.parentNode.insertBefore(wrapper, select);
+    }
+
+    trigger.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (wrapper.classList.contains("open")) {
+        closeDropdown();
+      } else {
+        openDropdown();
+      }
+    });
+
+    trigger.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        trigger.click();
+      } else if (e.key === "Escape") {
+        closeDropdown();
+      }
+    });
+
+    select.addEventListener("change", syncDisplay);
+
+    const observer = new MutationObserver(() => {
+      renderOptions();
+      syncDisplay();
+    });
+    observer.observe(select, { childList: true, subtree: true });
+  });
+}
+
+document.addEventListener("click", (e) => {
+  if (!e.target.closest(".custom-select-container")) {
+    document.querySelectorAll(".custom-select-container.open").forEach(container => {
+      container.classList.remove("open");
+      const trg = container.querySelector(".custom-select-trigger");
+      if (trg) trg.setAttribute("aria-expanded", "false");
+    });
+  }
+});
+

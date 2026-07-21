@@ -69,45 +69,33 @@
       
       <ul class="sidebar-menu">
         <li class="sidebar-item">
-          <a href="#" class="sidebar-link active" data-section="adminOverview" id="sbLinkAdminOverview">
+          <a href="#adminOverview" class="sidebar-link active" data-section="adminOverview" id="sbLinkAdminOverview">
             <i class="fa-solid fa-chart-line"></i>
             <span>Dashboard</span>
           </a>
         </li>
         <li class="sidebar-item">
-          <a href="#" class="sidebar-link" data-section="adminCustomers" id="sbLinkAdminCustomers">
+          <a href="#adminCustomers" class="sidebar-link" data-section="adminCustomers" id="sbLinkAdminCustomers">
             <i class="fa-solid fa-users"></i>
             <span>Customers</span>
           </a>
         </li>
         <li class="sidebar-item">
-          <a href="#" class="sidebar-link" data-section="adminRecharge" id="sbLinkAdminRecharge">
+          <a href="#adminRecharge" class="sidebar-link" data-section="adminRecharge" id="sbLinkAdminRecharge">
             <i class="fa-solid fa-credit-card"></i>
             <span>Recharge</span>
           </a>
         </li>
         <li class="sidebar-item">
-          <a href="#" class="sidebar-link" data-section="adminPlans" id="sbLinkAdminPlans">
+          <a href="#adminPlans" class="sidebar-link" data-section="adminPlans" id="sbLinkAdminPlans">
             <i class="fa-solid fa-receipt"></i>
             <span>Plans</span>
           </a>
         </li>
         <li class="sidebar-item">
-          <a href="#" class="sidebar-link" data-section="reports" id="sbLinkReports">
+          <a href="#reports" class="sidebar-link" data-section="reports" id="sbLinkReports">
             <i class="fa-solid fa-chart-pie"></i>
             <span>Reports</span>
-          </a>
-        </li>
-        <li class="sidebar-item">
-          <a href="#" class="sidebar-link" data-section="adminSystemHealth" id="sbLinkAdminHealth">
-            <i class="fa-solid fa-server"></i>
-            <span>System Health</span>
-          </a>
-        </li>
-        <li class="sidebar-item">
-          <a href="#" class="sidebar-link" data-section="adminAuditLogs" id="sbLinkAdminLogs">
-            <i class="fa-solid fa-shield-halved"></i>
-            <span>Audit Logs</span>
           </a>
         </li>
       </ul>
@@ -129,7 +117,7 @@
           <button class="sidebar-toggle" id="sidebarToggleBtn" aria-label="Toggle Sidebar Menu">
             <i class="fa-solid fa-bars"></i>
           </button>
-          <h2 class="page-title-dashboard">Admin Portal</h2>
+          <h2 class="page-title-dashboard" id="dashboardPageTitle">Dashboard</h2>
         </div>
         
         <div class="header-right">
@@ -217,6 +205,94 @@
               </div>
             </div>
           </div>
+
+          <!-- System Network Diagnostics Widget -->
+          <div class="chart-card" style="margin-top: 1.5rem;">
+            <div class="card-header-dashboard" style="margin-bottom: 1rem;">
+              <h3 class="card-title-dashboard"><i class="fa-solid fa-server" style="color: var(--primary-red); margin-right: 0.5rem;"></i> Live Network Operational Diagnostics</h3>
+              <span class="status-badge success" style="font-size: 0.75rem;"><i class="fa-solid fa-circle-check"></i> 99.98% Uptime</span>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem;">
+              <div style="background: var(--bg-light); padding: 1rem; border-radius: var(--border-radius-sm); border: 1px solid var(--border-color);">
+                <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Active 5G Towers</div>
+                <div style="font-size: 1.3rem; font-weight: 800; color: var(--text-dark); margin-top: 0.25rem;">1,482 / 1,500 <span style="font-size: 0.75rem; color: #2ecc71; font-weight: 600;">(98.8% Active)</span></div>
+                <div style="width: 100%; height: 6px; background: var(--border-color); border-radius: 4px; margin-top: 0.5rem; overflow: hidden;">
+                  <div style="width: 98.8%; height: 100%; background: #2ecc71;"></div>
+                </div>
+              </div>
+
+              <div style="background: var(--bg-light); padding: 1rem; border-radius: var(--border-radius-sm); border: 1px solid var(--border-color);">
+                <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Fiber Bandwidth Load</div>
+                <div style="font-size: 1.3rem; font-weight: 800; color: var(--text-dark); margin-top: 0.25rem;">64.2 Gbps / 100 Gbps</div>
+                <div style="width: 100%; height: 6px; background: var(--border-color); border-radius: 4px; margin-top: 0.5rem; overflow: hidden;">
+                  <div style="width: 64.2%; height: 100%; background: var(--primary-red);"></div>
+                </div>
+              </div>
+
+              <div style="background: var(--bg-light); padding: 1rem; border-radius: var(--border-radius-sm); border: 1px solid var(--border-color);">
+                <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Core Edge Latency</div>
+                <div style="font-size: 1.3rem; font-weight: 800; color: #2ecc71; margin-top: 0.25rem;">4.2 ms <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 400;">(Ultra Low)</span></div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;"><i class="fa-solid fa-bolt" style="color: var(--primary-red);"></i> Optimized for 5G VoLTE & Gaming</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Admin Dashboard Sub-Grid: Recent Activity Log & Quick Operations -->
+          <div class="dashboard-grid-2" style="margin-top: 1.5rem;">
+            
+            <div class="chart-card">
+              <h3 class="card-title-dashboard" style="margin-bottom: 1.25rem;"><i class="fa-solid fa-clock-rotate-left" style="color: var(--primary-red); margin-right: 0.5rem;"></i> System Activity Feed</h3>
+              <div style="display: flex; flex-direction: column; gap: 0.85rem;">
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.75rem; background: var(--bg-light); border-radius: var(--border-radius-sm);">
+                  <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <i class="fa-solid fa-credit-card" style="color: #2ecc71; font-size: 1.1rem;"></i>
+                    <div>
+                      <strong style="font-size: 0.85rem; display: block; color: var(--text-dark);">Customer Recharge Completed</strong>
+                      <span style="font-size: 0.75rem; color: var(--text-muted);">customer@gmail.com • Premium 5G Unlimited ($29.99)</span>
+                    </div>
+                  </div>
+                  <span style="font-size: 0.7rem; color: var(--text-muted);">2 mins ago</span>
+                </div>
+
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.75rem; background: var(--bg-light); border-radius: var(--border-radius-sm);">
+                  <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <i class="fa-solid fa-ticket" style="color: var(--primary-red); font-size: 1.1rem;"></i>
+                    <div>
+                      <strong style="font-size: 0.85rem; display: block; color: var(--text-dark);">New Support Ticket Filed</strong>
+                      <span style="font-size: 0.75rem; color: var(--text-muted);">TKT8891 • 5G Speed Verification & Optimization</span>
+                    </div>
+                  </div>
+                  <span style="font-size: 0.7rem; color: var(--text-muted);">15 mins ago</span>
+                </div>
+
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.75rem; background: var(--bg-light); border-radius: var(--border-radius-sm);">
+                  <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <i class="fa-solid fa-shield-halved" style="color: #3b82f6; font-size: 1.1rem;"></i>
+                    <div>
+                      <strong style="font-size: 0.85rem; display: block; color: var(--text-dark);">Automated Security Backup</strong>
+                      <span style="font-size: 0.75rem; color: var(--text-muted);">Database snapshots synced to encrypted vault</span>
+                    </div>
+                  </div>
+                  <span style="font-size: 0.7rem; color: var(--text-muted);">1 hour ago</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="list-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <h3 class="card-title-dashboard" style="margin-bottom: 1.25rem;"><i class="fa-solid fa-sliders" style="color: var(--primary-red); margin-right: 0.5rem;"></i> Quick Operations</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">Perform one-click management actions across user subscriptions and gateway settings.</p>
+              </div>
+
+              <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <button class="btn btn-outline-red" style="width: 100%; justify-content: center;" onclick="navigateToSection('adminCustomers')"><i class="fa-solid fa-users"></i> Manage Registered Customers</button>
+                <button class="btn btn-outline-red" style="width: 100%; justify-content: center;" onclick="navigateToSection('adminPlans')"><i class="fa-solid fa-plus"></i> Configure New Billing Plan</button>
+                <button class="btn btn-secondary" style="width: 100%; justify-content: center;" onclick="navigateToSection('reports')"><i class="fa-solid fa-chart-pie"></i> View Analytics & Reports</button>
+              </div>
+            </div>
+
+          </div>
         </section>
 
         <!-- SECTION 2: CUSTOMERS -->
@@ -284,42 +360,49 @@
             <div class="chart-card">
               <h3 class="card-title-dashboard" style="margin-bottom:1.5rem;">Configure New Plan</h3>
               <form id="adCreatePlanForm">
-                <div class="form-group" style="margin-bottom:1rem">
+                <div class="form-group" id="adPlanNameGroup" style="margin-bottom:1rem">
                   <label class="form-label" for="adPlanName">Plan Name</label>
                   <input type="text" id="adPlanName" placeholder="e.g. Fiber Starter 50" class="form-input">
+                  <span class="error-msg" id="adPlanNameError">This field is required.</span>
                 </div>
 
                 <div class="form-grid" style="margin-bottom:1rem">
-                  <div class="form-group">
+                  <div class="form-group" id="adPlanPriceGroup">
                     <label class="form-label" for="adPlanPrice">Price ($)</label>
                     <input type="number" step="0.01" id="adPlanPrice" placeholder="29.99" class="form-input">
+                    <span class="error-msg" id="adPlanPriceError">This field is required.</span>
                   </div>
-                  <div class="form-group">
+                  <div class="form-group" id="adPlanTypeGroup">
                     <label class="form-label" for="adPlanType">Plan Type</label>
                     <select id="adPlanType" class="form-input">
+                      <option value="" disabled selected>Select Plan Type</option>
                       <option value="mobile">Mobile Package</option>
                       <option value="broadband">Fiber Broadband</option>
                     </select>
+                    <span class="error-msg" id="adPlanTypeError">Please select an option.</span>
                   </div>
                 </div>
 
                 <div class="form-grid" style="margin-bottom:1rem">
-                  <div class="form-group">
+                  <div class="form-group" id="adPlanDataGroup">
                     <label class="form-label" for="adPlanData">Data Quota</label>
                     <input type="text" id="adPlanData" placeholder="e.g. 100 GB" class="form-input">
+                    <span class="error-msg" id="adPlanDataError">This field is required.</span>
                   </div>
-                  <div class="form-group">
+                  <div class="form-group" id="adPlanCallsGroup">
                     <label class="form-label" for="adPlanCalls">Calls Quota</label>
                     <input type="text" id="adPlanCalls" placeholder="e.g. Unlimited" class="form-input">
+                    <span class="error-msg" id="adPlanCallsError">This field is required.</span>
                   </div>
                 </div>
 
-                <div class="form-group" style="margin-bottom:1.5rem">
+                <div class="form-group" id="adPlanValidityGroup" style="margin-bottom:1.5rem">
                   <label class="form-label" for="adPlanValidity">Validity Cycle</label>
                   <input type="text" id="adPlanValidity" placeholder="e.g. 28 Days, Month" class="form-input">
+                  <span class="error-msg" id="adPlanValidityError">This field is required.</span>
                 </div>
 
-                <button type="submit" class="btn btn-primary" style="width:100%">Create Active Plan</button>
+                <button type="submit" class="btn btn-primary" id="adPlanSubmitBtn" style="width:100%">Create Active Plan</button>
               </form>
             </div>
 
@@ -336,6 +419,54 @@
 
         <!-- SECTION 5: REPORTS -->
         <section class="dashboard-section" id="reports">
+          
+          <!-- Reports Executive Metrics Grid -->
+          <div class="metrics-grid" style="margin-bottom: 1.5rem;">
+            <div class="metric-card">
+              <div class="metric-info">
+                <h4>Average Revenue / User (ARPU)</h4>
+                <div class="metric-value" style="color: #2ecc71;">$34.80</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;"><i class="fa-solid fa-arrow-trend-up" style="color: #2ecc71;"></i> +8.4% vs last cycle</div>
+              </div>
+              <div class="metric-icon-box">
+                <i class="fa-solid fa-sack-dollar"></i>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-info">
+                <h4>Subscriber Churn Rate</h4>
+                <div class="metric-value">1.18%</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;"><i class="fa-solid fa-arrow-trend-down" style="color: #2ecc71;"></i> -0.4% improvement</div>
+              </div>
+              <div class="metric-icon-box">
+                <i class="fa-solid fa-user-minus"></i>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-info">
+                <h4>Daily Traffic Transfer</h4>
+                <div class="metric-value">4.85 PB</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;"><i class="fa-solid fa-bolt" style="color: var(--primary-red);"></i> 5G Peak Load Included</div>
+              </div>
+              <div class="metric-icon-box">
+                <i class="fa-solid fa-network-wired"></i>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-info">
+                <h4>Resolution Efficiency</h4>
+                <div class="metric-value" style="color: #3b82f6;">94.6%</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;"><i class="fa-solid fa-clock"></i> Avg resolution &lt; 4 hrs</div>
+              </div>
+              <div class="metric-icon-box">
+                <i class="fa-solid fa-circle-check"></i>
+              </div>
+            </div>
+          </div>
+
           <div class="dashboard-grid-2 equal">
             
             <div class="chart-card">
@@ -359,119 +490,69 @@
             </div>
 
           </div>
-        </section>
 
-        <!-- SECTION 6: SYSTEM HEALTH -->
-        <section class="dashboard-section" id="adminSystemHealth">
-          <div class="dashboard-grid-2">
-            <div class="chart-card">
-              <h3 class="card-title-dashboard" style="margin-bottom: 1rem;"><i class="fa-solid fa-microchip" style="color: var(--primary-red); margin-right: 0.5rem;"></i> Server Cluster Status</h3>
-              <div style="display: flex; flex-direction: column; gap: 1rem;">
-                <div>
-                  <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.25rem;">
-                    <span>CPU Core Utilization</span>
-                    <span style="font-weight: 700; color: #2ecc71;">24% (Optimal)</span>
-                  </div>
-                  <div style="height: 8px; background: var(--bg-light); border-radius: 4px; overflow: hidden;">
-                    <div style="width: 24%; height: 100%; background: #2ecc71;"></div>
-                  </div>
-                </div>
-
-                <div>
-                  <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.25rem;">
-                    <span>Memory Allocation (RAM)</span>
-                    <span style="font-weight: 700; color: #3b82f6;">42% (Normal)</span>
-                  </div>
-                  <div style="height: 8px; background: var(--bg-light); border-radius: 4px; overflow: hidden;">
-                    <div style="width: 42%; height: 100%; background: #3b82f6;"></div>
-                  </div>
-                </div>
-
-                <div>
-                  <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.25rem;">
-                    <span>Optical Fiber Throughput</span>
-                    <span style="font-weight: 700; color: var(--primary-red);">78% (High Demand)</span>
-                  </div>
-                  <div style="height: 8px; background: var(--bg-light); border-radius: 4px; overflow: hidden;">
-                    <div style="width: 78%; height: 100%; background: var(--primary-red);"></div>
-                  </div>
-                </div>
-              </div>
+          <!-- Regional Analytical Breakdown Table -->
+          <div class="chart-card" style="margin-top: 1.5rem;">
+            <div class="card-header-dashboard">
+              <h3 class="card-title-dashboard"><i class="fa-solid fa-earth-americas" style="color: var(--primary-red); margin-right: 0.5rem;"></i> Regional Telecom Performance Summary</h3>
+              <button class="btn btn-secondary btn-sm" onclick="alert('Exporting analytical report to CSV...')"><i class="fa-solid fa-download"></i> Export Analytics</button>
             </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">Consolidated performance metrics broken down across national service circles.</p>
 
-            <div class="chart-card">
-              <h3 class="card-title-dashboard" style="margin-bottom: 1rem;"><i class="fa-solid fa-tower-cell" style="color: var(--primary-red); margin-right: 0.5rem;"></i> Regional Gateway Nodes</h3>
-              <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: var(--bg-light); border-radius: 4px;">
-                  <div>
-                    <strong style="font-size: 0.9rem;">San Francisco Core Exchange</strong>
-                    <div style="font-size: 0.75rem; color: var(--text-muted);">Uptime: 99.998% • Latency 2ms</div>
-                  </div>
-                  <span class="status-badge success" style="font-size: 0.7rem;">Online</span>
-                </div>
-
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: var(--bg-light); border-radius: 4px;">
-                  <div>
-                    <strong style="font-size: 0.9rem;">New York Data Hub</strong>
-                    <div style="font-size: 0.75rem; color: var(--text-muted);">Uptime: 99.995% • Latency 5ms</div>
-                  </div>
-                  <span class="status-badge success" style="font-size: 0.7rem;">Online</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- SECTION 7: AUDIT LOGS -->
-        <section class="dashboard-section" id="adminAuditLogs">
-          <div class="chart-card">
-            <h3 class="card-title-dashboard" style="margin-bottom: 1rem;"><i class="fa-solid fa-clock-rotate-left" style="color: var(--primary-red); margin-right: 0.5rem;"></i> System Administrative Audit Logs</h3>
             <div class="table-wrapper">
               <table class="dashboard-table">
                 <thead>
                   <tr>
-                    <th>Timestamp</th>
-                    <th>Admin User</th>
-                    <th>Action Executed</th>
-                    <th>IP Address</th>
-                    <th>Status</th>
+                    <th>Service Circle / Region</th>
+                    <th>Active Subscribers</th>
+                    <th>5G Data Transfer</th>
+                    <th>Monthly Revenue</th>
+                    <th>Network Health</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>2026-07-20 15:30:12</td>
-                    <td>admin@stackly.com</td>
-                    <td>Updated Fiber 500 Plan Pricing</td>
-                    <td>192.168.1.45</td>
-                    <td><span class="status-badge success">Success</span></td>
+                    <td><strong>West Coast Metro (San Francisco & LA)</strong></td>
+                    <td>428,500</td>
+                    <td>1.92 PB</td>
+                    <td>$14,290,000.00</td>
+                    <td><span class="status-badge success">Optimal</span></td>
                   </tr>
                   <tr>
-                    <td>2026-07-20 14:15:00</td>
-                    <td>admin@stackly.com</td>
-                    <td>Resolved Ticket TKT9412</td>
-                    <td>192.168.1.45</td>
-                    <td><span class="status-badge success">Success</span></td>
+                    <td><strong>East Coast Hub (New York & Boston)</strong></td>
+                    <td>389,120</td>
+                    <td>1.64 PB</td>
+                    <td>$12,850,000.00</td>
+                    <td><span class="status-badge success">Optimal</span></td>
                   </tr>
                   <tr>
-                    <td>2026-07-20 11:05:44</td>
-                    <td>system_bot</td>
-                    <td>Automated Database Backup</td>
-                    <td>127.0.0.1</td>
-                    <td><span class="status-badge success">Completed</span></td>
+                    <td><strong>Central Division (Chicago & Texas)</strong></td>
+                    <td>215,400</td>
+                    <td>0.89 PB</td>
+                    <td>$6,940,000.00</td>
+                    <td><span class="status-badge success">Optimal</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Southern Region (Florida & Atlanta)</strong></td>
+                    <td>184,300</td>
+                    <td>0.40 PB</td>
+                    <td>$5,120,000.00</td>
+                    <td><span class="status-badge success">Optimal</span></td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
+
         </section>
 
         <!-- Dashboard Footer -->
         <footer class="dashboard-footer">
           <div>&copy; 2026 Stackly Telecom. Admin Management System.</div>
           <div class="dashboard-footer-links">
-            <a href="404.html">Main Site</a>
-            <a href="404.html">System Support</a>
-            <a href="404.html">Contact Operations</a>
+            <a href="index.html">Main Site</a>
+            <a href="contact.html">System Support</a>
+            <a href="contact.html">Contact Operations</a>
           </div>
         </footer>
 
