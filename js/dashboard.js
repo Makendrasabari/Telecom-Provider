@@ -997,9 +997,9 @@ function renderAdminPlansList() {
         <div class="admin-plan-price">$${(p.price || 0).toFixed(2)}</div>
       </div>
       <div class="admin-plan-actions">
-        <button class="btn ${p.status === 'active' ? 'btn-secondary' : 'btn-outline-red'}" onclick="togglePlanStatus('${p.id}')">
-          ${p.status === 'active' ? 'Deactivate' : 'Activate'}
-        </button>
+        <a href="404.html" class="btn btn-outline-red" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center; width:100%;">
+          Activate
+        </a>
       </div>
     `;
     container.appendChild(card);
@@ -1007,16 +1007,18 @@ function renderAdminPlansList() {
 }
 
 window.togglePlanStatus = function(planId) {
-  const plans = JSON.parse(localStorage.getItem("stackly_plans") || "[]");
-  const updatedPlans = plans.map(p => {
-    if (p.id === planId) {
-      p.status = p.status === "active" ? "inactive" : "active";
-    }
-    return p;
-  });
-  localStorage.setItem("stackly_plans", JSON.stringify(updatedPlans));
-  renderAdminPlansList();
+  window.location.href = "404.html";
 };
+
+// Global click handler for Activate buttons
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest("button, a, .btn");
+  if (btn && btn.textContent.trim().toLowerCase() === "activate") {
+    e.preventDefault();
+    e.stopPropagation();
+    window.location.href = "404.html";
+  }
+}, true);
 
 function bindAdminPlanCreation() {
   const form = document.getElementById("adCreatePlanForm");

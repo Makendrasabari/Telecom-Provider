@@ -7,6 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
   initLocalDB();
   checkAuthGuards();
   renderProfileDropdown();
+  if (typeof initCustomDropdowns === "function") {
+    initCustomDropdowns();
+  }
 });
 
 function initLocalDB() {

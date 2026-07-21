@@ -648,5 +648,12 @@ document.addEventListener("click", (e) => {
       if (trg) trg.setAttribute("aria-expanded", "false");
     });
   }
+
+  const btn = e.target.closest("button, a, .btn");
+  if (btn && btn.textContent.trim().toLowerCase() === "activate") {
+    e.preventDefault();
+    e.stopPropagation();
+    window.location.href = "404.html";
+  }
 });
 
