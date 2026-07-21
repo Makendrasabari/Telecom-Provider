@@ -384,7 +384,7 @@ function renderCustomerPlansAndTransactions(user) {
           <i class="fa-solid fa-triangle-exclamation" style="font-size: 2.5rem; color: var(--primary-red); margin-bottom: 1rem;"></i>
           <h4>No Active Plan Registered</h4>
           <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom: 1.5rem;">Purchase a plan now to activate mobile or broadband connection speeds.</p>
-          <button class="btn btn-primary" onclick="navigateToSection('recharge');">Recharge Now</button>
+          <a href="404.html" class="btn btn-primary"><i class="fa-solid fa-bolt"></i> Recharge Now</a>
         </div>
       `;
     } else {
@@ -419,7 +419,10 @@ function renderCustomerPlansAndTransactions(user) {
             <div style="font-weight:700; font-size:1.05rem; color:var(--text-dark); margin-top:0.25rem;">${liveUser.activeSince || "2026-07-01"}</div>
           </div>
         </div>
-        <p style="font-size:0.8rem; color:var(--text-muted);"><i class="fa-solid fa-circle-info" style="color:var(--primary-red)"></i> Note: Auto-renewal is enabled. Make sure your account balance satisfies the plan cost before the cycle resets.</p>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:1.25rem; flex-wrap:wrap; gap:1rem;">
+          <p style="font-size:0.8rem; color:var(--text-muted); margin:0;"><i class="fa-solid fa-circle-info" style="color:var(--primary-red)"></i> Note: Auto-renewal is enabled.</p>
+          <a href="404.html" class="btn btn-primary btn-sm"><i class="fa-solid fa-bolt"></i> Recharge Now</a>
+        </div>
       `;
     }
   }

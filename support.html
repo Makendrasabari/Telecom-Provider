@@ -114,32 +114,30 @@
             </div>
           </div>
 
-          <div class="form-grid">
-            <div class="form-group" id="tktSubjectGroup">
-              <label class="form-label" for="tktSubject">Subject</label>
-              <input type="text" id="tktSubject" placeholder="e.g. Red blinking light on router" class="form-input">
-              <span class="error-msg">Subject cannot be empty.</span>
-            </div>
+          <div class="form-group full-width" id="tktSubjectGroup" style="margin-bottom: 1.25rem;">
+            <label class="form-label" for="tktSubject">Subject</label>
+            <input type="text" id="tktSubject" placeholder="e.g. Red blinking light on router" class="form-input">
+            <span class="error-msg">Please enter a subject.</span>
+          </div>
 
-            <div class="form-group" id="tktCategoryGroup">
-              <label class="form-label" for="tktCategory">Category</label>
-              <select class="form-input" id="tktCategory">
-                <option value="">Select Category</option>
-                <option value="technical">Technical Support</option>
-                <option value="billing">Billing & Recharge</option>
-                <option value="account">Account Access</option>
-              </select>
-              <span class="error-msg">Please select a category.</span>
-            </div>
+          <div class="form-group full-width" id="tktCategoryGroup" style="margin-bottom: 1.25rem;">
+            <label class="form-label" for="tktCategory">Category</label>
+            <select class="form-input" id="tktCategory">
+              <option value="" disabled selected>Select Category</option>
+              <option value="technical">Technical Support</option>
+              <option value="billing">Billing & Recharge</option>
+              <option value="account">Account Access</option>
+            </select>
+            <span class="error-msg">Please select an option.</span>
           </div>
 
           <div class="form-group full-width" id="tktMessageGroup" style="margin-bottom: 1.5rem;">
             <label class="form-label" for="tktMessage">Description of Issue</label>
             <textarea id="tktMessage" placeholder="Please write details about your issue so our network engineers can diagnose..." class="form-input"></textarea>
-            <span class="error-msg">Please provide issue description.</span>
+            <span class="error-msg">This field is required.</span>
           </div>
 
-          <button type="submit" class="btn btn-primary" id="tktSubmitBtn">Register Support Ticket</button>
+          <button type="submit" class="btn btn-primary" id="tktSubmitBtn" style="width: 100%;">Register Support Ticket</button>
         </form>
       </div>
 
@@ -203,29 +201,38 @@
       <p class="section-desc">Real-time operational status across our regional fiber exchanges and 5G cellular towers.</p>
     </div>
 
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem;">
-      <div style="background: var(--bg-light); border: 1px solid var(--border-color); border-radius: var(--border-radius-md); padding: 1.25rem; display: flex; align-items: center; justify-content: space-between;">
-        <div>
-          <strong style="font-size: 0.95rem; display: block;">SF Bay Area Fiber Core</strong>
-          <span style="font-size: 0.75rem; color: var(--text-muted);">Ping: 3ms • Latency 0% Loss</span>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem;">
+      <div style="background: var(--bg-light); border: 1px solid var(--border-color); border-radius: var(--border-radius-md); padding: 1.25rem; display: flex; flex-direction: column; gap: 0.6rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+          <strong style="font-size: 0.95rem; color: var(--text-dark);">SF Bay Area Fiber Core</strong>
+          <span class="status-badge success" style="font-size: 0.75rem; padding: 0.25rem 0.6rem; flex-shrink: 0;"><i class="fa-solid fa-circle"></i> 100% Operational</span>
         </div>
-        <span class="status-badge success" style="font-size: 0.75rem; padding: 0.25rem 0.6rem;"><i class="fa-solid fa-circle"></i> 100% Operational</span>
+        <div style="font-size: 0.78rem; color: var(--text-muted); display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+          <span><i class="fa-solid fa-gauge-high" style="color: var(--primary-red); margin-right: 0.35rem;"></i> Ping: 3ms</span>
+          <span><i class="fa-solid fa-signal" style="color: #2ecc71; margin-right: 0.35rem;"></i> 0% Packet Loss</span>
+        </div>
       </div>
 
-      <div style="background: var(--bg-light); border: 1px solid var(--border-color); border-radius: var(--border-radius-md); padding: 1.25rem; display: flex; align-items: center; justify-content: space-between;">
-        <div>
-          <strong style="font-size: 0.95rem; display: block;">New York Metro Exchange</strong>
-          <span style="font-size: 0.75rem; color: var(--text-muted);">Ping: 5ms • Latency 0% Loss</span>
+      <div style="background: var(--bg-light); border: 1px solid var(--border-color); border-radius: var(--border-radius-md); padding: 1.25rem; display: flex; flex-direction: column; gap: 0.6rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+          <strong style="font-size: 0.95rem; color: var(--text-dark);">New York Metro Exchange</strong>
+          <span class="status-badge success" style="font-size: 0.75rem; padding: 0.25rem 0.6rem; flex-shrink: 0;"><i class="fa-solid fa-circle"></i> 100% Operational</span>
         </div>
-        <span class="status-badge success" style="font-size: 0.75rem; padding: 0.25rem 0.6rem;"><i class="fa-solid fa-circle"></i> 100% Operational</span>
+        <div style="font-size: 0.78rem; color: var(--text-muted); display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+          <span><i class="fa-solid fa-gauge-high" style="color: var(--primary-red); margin-right: 0.35rem;"></i> Ping: 5ms</span>
+          <span><i class="fa-solid fa-signal" style="color: #2ecc71; margin-right: 0.35rem;"></i> 0% Packet Loss</span>
+        </div>
       </div>
 
-      <div style="background: var(--bg-light); border: 1px solid var(--border-color); border-radius: var(--border-radius-md); padding: 1.25rem; display: flex; align-items: center; justify-content: space-between;">
-        <div>
-          <strong style="font-size: 0.95rem; display: block;">Texas & Central 5G Core</strong>
-          <span style="font-size: 0.75rem; color: var(--text-muted);">Ping: 4ms • Latency 0% Loss</span>
+      <div style="background: var(--bg-light); border: 1px solid var(--border-color); border-radius: var(--border-radius-md); padding: 1.25rem; display: flex; flex-direction: column; gap: 0.6rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+          <strong style="font-size: 0.95rem; color: var(--text-dark);">Texas & Central 5G Core</strong>
+          <span class="status-badge success" style="font-size: 0.75rem; padding: 0.25rem 0.6rem; flex-shrink: 0;"><i class="fa-solid fa-circle"></i> 100% Operational</span>
         </div>
-        <span class="status-badge success" style="font-size: 0.75rem; padding: 0.25rem 0.6rem;"><i class="fa-solid fa-circle"></i> 100% Operational</span>
+        <div style="font-size: 0.78rem; color: var(--text-muted); display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+          <span><i class="fa-solid fa-gauge-high" style="color: var(--primary-red); margin-right: 0.35rem;"></i> Ping: 4ms</span>
+          <span><i class="fa-solid fa-signal" style="color: #2ecc71; margin-right: 0.35rem;"></i> 0% Packet Loss</span>
+        </div>
       </div>
     </div>
   </section>
@@ -268,24 +275,28 @@
   </section>
 
   <!-- Section 7: Technician Dispatch SLA Guarantee -->
-  <section class="container" style="padding: 4.5rem 0; background-color: var(--bg-white);">
-    <div class="showcase-row">
-      <div class="showcase-content">
-        <span class="showcase-tag">Field Operations</span>
-        <h2 class="showcase-title">Guaranteed Onsite Dispatch SLA</h2>
-        <p class="showcase-desc">If remote diagnostics cannot resolve your line fault, our certified optical engineer arrives at your doorstep with replacement ONT gear.</p>
-        <div class="showcase-features">
-          <div class="showcase-feature-item">
-            <i class="fa-solid fa-clock" style="color: var(--primary-red);"></i> Guaranteed 2-Hour Arrival Window for Priority SLA
+  <section style="padding: 4.5rem 0; background-color: var(--bg-white);">
+    <div class="container">
+      <div class="showcase-row">
+        <div class="showcase-content">
+          <span class="showcase-tag">Field Operations</span>
+          <h2 class="showcase-title">Guaranteed Onsite Dispatch SLA</h2>
+          <p class="showcase-desc">If remote diagnostics cannot resolve your line fault, our certified optical engineer arrives at your doorstep with replacement ONT gear.</p>
+          <div class="showcase-features">
+            <div class="showcase-feature-item">
+              <i class="fa-solid fa-clock" style="color: var(--primary-red); flex-shrink: 0; font-size: 1.1rem;"></i>
+              <span>Guaranteed 2-Hour Arrival Window for Priority SLA</span>
+            </div>
+            <div class="showcase-feature-item">
+              <i class="fa-solid fa-screwdriver-wrench" style="color: var(--primary-red); flex-shrink: 0; font-size: 1.1rem;"></i>
+              <span>100% Free Replacement Hardware & Router Swap</span>
+            </div>
           </div>
-          <div class="showcase-feature-item">
-            <i class="fa-solid fa-screwdriver-wrench" style="color: var(--primary-red);"></i> 100% Free Replacement Hardware & Router Swap
-          </div>
+          <a href="404.html" class="btn btn-primary" style="margin-top: 1.25rem;">View SLA Terms</a>
         </div>
-        <a href="404.html" class="btn btn-primary" style="margin-top: 1.25rem;">View SLA Terms</a>
-      </div>
-      <div class="showcase-image-wrapper">
-        <img src="assets/support_hero.webp" alt="Field Technician Service" class="showcase-img" style="border-radius: var(--border-radius-lg);">
+        <div class="showcase-image-wrapper">
+          <img src="assets/support_hero.webp" alt="Field Technician Service" class="showcase-img" style="border-radius: var(--border-radius-lg);">
+        </div>
       </div>
     </div>
   </section>
