@@ -129,16 +129,19 @@ function initLocalDB() {
 
 // --- Auth Utilities ---
 function getSession() {
-  const session = localStorage.getItem("stackly_session");
+  localStorage.removeItem("stackly_session");
+  const session = sessionStorage.getItem("stackly_session");
   return session ? JSON.parse(session) : null;
 }
 
 function setSession(user) {
-  localStorage.setItem("stackly_session", JSON.stringify(user));
+  localStorage.removeItem("stackly_session");
+  sessionStorage.setItem("stackly_session", JSON.stringify(user));
 }
 
 function clearSession() {
   localStorage.removeItem("stackly_session");
+  sessionStorage.removeItem("stackly_session");
 }
 
 function getUsers() {
@@ -271,75 +274,16 @@ function handleRegistration(name, email, password, phone, role, errorCallback) {
 
 // --- Profile Icon Render & Actions ---
 function renderProfileDropdown() {
-  const session = getSession();
+  localStorage.removeItem("stackly_session");
+
   const wrapper = document.getElementById("profile-dropdown-wrapper");
   const mobileWrapper = document.querySelector(".nav-actions-mobile");
 
   if (mobileWrapper) {
-    if (!session) {
-      mobileWrapper.innerHTML = `<a href="login.html" class="btn btn-primary" style="width: 100%; gap: 0.5rem;"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>`;
-    } else {
-      mobileWrapper.innerHTML = `<button class="btn btn-primary" id="logoutBtnMobile" style="width: 100%; gap: 0.5rem;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout (${session.name.split(" ")[0]})</button>`;
-      const logoutMobile = document.getElementById("logoutBtnMobile");
-      if (logoutMobile) {
-        logoutMobile.addEventListener("click", () => {
-          clearSession();
-          window.location.href = "login.html";
-        });
-      }
-    }
+    mobileWrapper.innerHTML = `<a href="login.html" class="btn btn-primary" style="width: 100%; gap: 0.5rem;"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>`;
   }
 
-  if (!wrapper) return;
-
-  if (!session) {
-    // If not logged in, show login link
+  if (wrapper) {
     wrapper.innerHTML = `<a href="login.html" class="btn btn-nav-login" id="loginBtnNav"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>`;
-    return;
-  }
-
-  // If logged in, render the profile icon and dynamic dropdown container
-  const firstLetter = session.name ? session.name.charAt(0).toUpperCase() : "U";
-
-  wrapper.innerHTML = `
-    <button class="profile-trigger" id="profileTriggerBtn">
-      <div class="profile-avatar-placeholder">${firstLetter}</div>
-      <span class="profile-trigger-name">${session.name.split(" ")[0]}</span>
-      <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem; color: var(--text-muted);"></i>
-    </button>
-    <div class="profile-dropdown" id="profileDropdownMenu">
-      <div class="profile-info-header">
-        <div class="profile-info-name">${session.name}</div>
-        <div class="profile-info-email">${session.email}</div>
-        <div class="profile-info-role">${session.role}</div>
-      </div>
-      <button class="profile-dropdown-btn" id="logoutBtn">
-        <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
-      </button>
-    </div>
-  `;
-
-  // Profile click dropdown trigger
-  const trigger = document.getElementById("profileTriggerBtn");
-  const dropdown = document.getElementById("profileDropdownMenu");
-
-  if (trigger && dropdown) {
-    trigger.addEventListener("click", (e) => {
-      e.stopPropagation();
-      dropdown.classList.toggle("active");
-    });
-
-    document.addEventListener("click", () => {
-      dropdown.classList.remove("active");
-    });
-  }
-
-  // Logout button trigger
-  const logout = document.getElementById("logoutBtn");
-  if (logout) {
-    logout.addEventListener("click", () => {
-      clearSession();
-      window.location.href = "login.html";
-    });
   }
 }

@@ -7,29 +7,26 @@ function initDashboardPage() {
     initLocalDB();
   }
 
-  let session = JSON.parse(localStorage.getItem("stackly_session"));
+  localStorage.removeItem("stackly_session");
+  let session = JSON.parse(sessionStorage.getItem("stackly_session"));
 
   const isCustomerPage = window.location.pathname.includes("customer-dashboard.html");
   const isAdminPage = window.location.pathname.includes("admin-dashboard.html");
 
-  // Fallback demo session if user opens dashboard directly
   if (!session) {
-    if (isCustomerPage) {
-      session = { email: "customer@gmail.com", name: "Sarah Connor", role: "customer", balance: 24.50, plan: "Premium 5G Unlimited" };
-      localStorage.setItem("stackly_session", JSON.stringify(session));
-    } else if (isAdminPage) {
-      session = { email: "admin@gmail.com", name: "Chief Executive", role: "admin" };
-      localStorage.setItem("stackly_session", JSON.stringify(session));
+    if (isCustomerPage || isAdminPage) {
+      window.location.href = "login.html";
+      return;
     }
   }
 
   if (isCustomerPage && session && session.role !== "customer") {
     session.role = "customer";
-    localStorage.setItem("stackly_session", JSON.stringify(session));
+    sessionStorage.setItem("stackly_session", JSON.stringify(session));
   }
   if (isAdminPage && session && session.role !== "admin") {
     session.role = "admin";
-    localStorage.setItem("stackly_session", JSON.stringify(session));
+    sessionStorage.setItem("stackly_session", JSON.stringify(session));
   }
 
   initSidebarControls();
@@ -106,6 +103,7 @@ function initSidebarControls() {
   if (sidebarLogout) {
     sidebarLogout.addEventListener("click", (e) => {
       e.preventDefault();
+      sessionStorage.removeItem("stackly_session");
       localStorage.removeItem("stackly_session");
       window.location.href = "login.html";
     });
@@ -164,7 +162,7 @@ function navigateToSection(targetId) {
   if (sidebar) sidebar.classList.remove("active");
   if (overlay) overlay.classList.remove("active");
 
-  const session = JSON.parse(localStorage.getItem("stackly_session"));
+  const session = JSON.parse(sessionStorage.getItem("stackly_session"));
 
   // Trigger Chart.js and content re-renders when sections become visible
   setTimeout(() => {
@@ -322,6 +320,7 @@ function initProfileDropdown() {
   if (logoutBtn) {
     logoutBtn.addEventListener("click", (e) => {
       e.preventDefault();
+      sessionStorage.removeItem("stackly_session");
       localStorage.removeItem("stackly_session");
       window.location.href = "login.html";
     });
@@ -782,7 +781,7 @@ function renderCustomerSupportTickets(user) {
 // ADMIN PORTAL ENGINE
 // ==========================================================================
 function initAdminDashboard() {
-  const session = JSON.parse(localStorage.getItem("stackly_session"));
+  const session = JSON.parse(sessionStorage.getItem("stackly_session"));
   if (session) {
     const displayName = session.name && session.name !== "undefined" ? session.name : "System Administrator";
     const displayEmail = session.email || "admin@stackly.com";
