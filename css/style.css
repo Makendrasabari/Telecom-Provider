@@ -1540,6 +1540,10 @@ textarea.form-input {
   font-family: inherit;
 }
 
+.custom-select-container.open {
+  z-index: 1000 !important;
+}
+
 .custom-select-trigger {
   display: flex;
   align-items: center;
@@ -1573,6 +1577,8 @@ textarea.form-input {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  flex: 1;
+  min-width: 0;
 }
 
 .custom-select-trigger .chevron-icon {
@@ -2578,7 +2584,7 @@ textarea.form-input {
     padding: 1.5rem 1rem;
     width: 100%;
     box-sizing: border-box;
-    overflow: hidden;
+    overflow: visible !important;
   }
 
   .contact-info-block h3 {
@@ -2593,10 +2599,16 @@ textarea.form-input {
   }
 
   .recharge-step-box {
-    padding: 1.25rem 0.85rem;
+    padding: 1.25rem 1rem;
     width: 100%;
     box-sizing: border-box;
-    overflow: hidden;
+    overflow: visible !important;
+    position: relative;
+  }
+
+  .custom-select-trigger {
+    padding: 0.75rem 0.85rem;
+    font-size: 0.9rem;
   }
 
   .step-heading {

@@ -527,8 +527,20 @@ function bindCustomerRechargeForm(user) {
     }
 
     setTimeout(() => {
+      if (payBtn) {
+        payBtn.innerHTML = `<i class="fa-solid fa-bolt"></i> Complete Recharge`;
+        payBtn.disabled = false;
+      }
       window.location.href = "404.html";
     }, 500);
+  });
+
+  window.addEventListener("pageshow", () => {
+    const payBtn = document.getElementById("dbRechargeSubmitBtn");
+    if (payBtn) {
+      payBtn.innerHTML = `<i class="fa-solid fa-bolt"></i> Complete Recharge`;
+      payBtn.disabled = false;
+    }
   });
 }
 
@@ -866,7 +878,7 @@ function renderAdminCustomers() {
       <td>${c.phone || "N/A"}</td>
       <td>${!c.plan || c.plan === "none" ? "None" : c.plan}</td>
       <td>
-        <button class="btn btn-outline-red btn-sm" onclick="openEditCustomerModal('${c.email}', '${c.name}', '${c.plan || "none"}')" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">Edit Plan</button>
+        <a href="404.html" class="btn btn-outline-red btn-sm" style="padding: 0.35rem 0.75rem; font-size: 0.8rem; text-decoration: none; display: inline-block;">Edit Plan</a>
       </td>
     `;
     container.appendChild(tr);
@@ -890,29 +902,7 @@ function bindAdminCustomersSearch() {
 
 // Global modal triggers for Admin Customer modifications
 window.openEditCustomerModal = function(email, name, currentPlan) {
-  const modal = document.getElementById("editCustomerModal");
-  if (!modal) return;
-
-  const custEmailInput = document.getElementById("editCustEmail");
-  const custNameInput = document.getElementById("editCustName");
-  const planSelect = document.getElementById("editCustPlan");
-
-  if (custEmailInput) custEmailInput.value = email;
-  if (custNameInput) custNameInput.value = name;
-
-  if (planSelect) {
-    const plans = JSON.parse(localStorage.getItem("stackly_plans") || "[]");
-    planSelect.innerHTML = `<option value="none">No Active Plan</option>`;
-    plans.forEach(p => {
-      const opt = document.createElement("option");
-      opt.value = p.name;
-      opt.innerText = `${p.name} (${p.type})`;
-      planSelect.appendChild(opt);
-    });
-    planSelect.value = currentPlan;
-  }
-
-  modal.style.display = "flex";
+  window.location.href = "404.html";
 };
 
 window.closeEditCustomerModal = function() {
@@ -1010,13 +1000,16 @@ window.togglePlanStatus = function(planId) {
   window.location.href = "404.html";
 };
 
-// Global click handler for Activate buttons
+// Global click handler for Activate and Edit Plan buttons
 document.addEventListener("click", (e) => {
   const btn = e.target.closest("button, a, .btn");
-  if (btn && btn.textContent.trim().toLowerCase() === "activate") {
-    e.preventDefault();
-    e.stopPropagation();
-    window.location.href = "404.html";
+  if (btn) {
+    const txt = btn.textContent.trim().toLowerCase();
+    if (txt === "activate" || txt === "edit plan" || txt === "edit") {
+      e.preventDefault();
+      e.stopPropagation();
+      window.location.href = "404.html";
+    }
   }
 }, true);
 

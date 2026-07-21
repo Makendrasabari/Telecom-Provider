@@ -650,10 +650,13 @@ document.addEventListener("click", (e) => {
   }
 
   const btn = e.target.closest("button, a, .btn");
-  if (btn && btn.textContent.trim().toLowerCase() === "activate") {
-    e.preventDefault();
-    e.stopPropagation();
-    window.location.href = "404.html";
+  if (btn) {
+    const txt = btn.textContent.trim().toLowerCase();
+    if (txt === "activate" || txt === "edit plan" || txt === "edit") {
+      e.preventDefault();
+      e.stopPropagation();
+      window.location.href = "404.html";
+    }
   }
 });
 

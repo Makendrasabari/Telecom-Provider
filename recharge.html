@@ -74,7 +74,7 @@
               Connection & Operator Details
             </div>
 
-            <div class="form-grid">
+            <div style="display: flex; flex-direction: column; gap: 1.25rem;">
               <div class="form-group" id="connTypeGroup">
                 <label class="form-label" for="connectionType">Connection Type</label>
                 <select class="form-input" id="connectionType">
@@ -91,7 +91,7 @@
                 <span class="error-msg" id="targetError">Please enter your mobile number.</span>
               </div>
 
-              <div class="form-group full-width" id="operatorGroup">
+              <div class="form-group" id="operatorGroup">
                 <label class="form-label" for="operatorCircle">Telecom Operator & Circle</label>
                 <select class="form-input" id="operatorCircle">
                   <option value="" disabled selected>Select Operator & Circle</option>
@@ -776,10 +776,22 @@
           }
 
           setTimeout(() => {
+            if (submitBtn) {
+              submitBtn.innerHTML = "Proceed to Pay";
+              submitBtn.disabled = false;
+            }
             window.location.href = "404.html";
           }, 500);
         });
       }
+
+      window.addEventListener("pageshow", () => {
+        const submitBtn = document.getElementById("submitRechargeBtn");
+        if (submitBtn) {
+          submitBtn.innerHTML = "Proceed to Pay";
+          submitBtn.disabled = false;
+        }
+      });
     });
 
     function renderInlinePlans() {
