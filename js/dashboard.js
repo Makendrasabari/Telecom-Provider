@@ -6,6 +6,9 @@ function initDashboardPage() {
   if (typeof initLocalDB === "function") {
     initLocalDB();
   }
+  if (typeof initPreloader === "function") {
+    initPreloader();
+  }
 
   localStorage.removeItem("stackly_session");
   let session = JSON.parse(sessionStorage.getItem("stackly_session"));

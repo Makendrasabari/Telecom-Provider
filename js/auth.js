@@ -2,6 +2,53 @@
    STACKLY TELECOM - AUTHENTICATION & STATE MANAGEMENT
    ========================================================================== */
 
+// --- Global Preloader Engine ---
+function initPreloader() {
+  const preloader = document.getElementById("stackly-preloader");
+  if (!preloader) return;
+
+  let hasHidden = false;
+
+  const hidePreloader = () => {
+    if (hasHidden) return;
+    hasHidden = true;
+
+    if (typeof gsap !== "undefined") {
+      gsap.to(preloader, {
+        opacity: 0,
+        duration: 0.35,
+        ease: "power2.out",
+        onComplete: () => {
+          preloader.classList.add("loaded");
+          preloader.style.display = "none";
+        }
+      });
+    } else {
+      preloader.classList.add("loaded");
+      setTimeout(() => {
+        preloader.style.display = "none";
+      }, 350);
+    }
+  };
+
+  if (document.readyState === "complete") {
+    setTimeout(hidePreloader, 150);
+  } else {
+    window.addEventListener("load", () => {
+      setTimeout(hidePreloader, 150);
+    });
+  }
+
+  // Safety fallback
+  setTimeout(hidePreloader, 600);
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initPreloader);
+} else {
+  initPreloader();
+}
+
 // --- Initializing Local Database ---
 document.addEventListener("DOMContentLoaded", () => {
   initLocalDB();
@@ -10,6 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (typeof initCustomDropdowns === "function") {
     initCustomDropdowns();
   }
+  initPreloader();
 });
 
 function initLocalDB() {

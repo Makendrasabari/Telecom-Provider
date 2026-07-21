@@ -3051,3 +3051,118 @@ textarea.form-input {
     gap: 0.75rem;
   }
 }
+
+/* ==========================================================================
+   GLOBAL PROFESSIONAL PRELOADER
+   ========================================================================== */
+.stackly-preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at 50% 40%, #1E293B 0%, #0F172A 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.45s ease, visibility 0.45s ease;
+  user-select: none;
+  pointer-events: all;
+}
+
+.stackly-preloader.loaded {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.preloader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+.preloader-logo-wrapper {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.preloader-logo {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 12px rgba(230, 0, 18, 0.4));
+  animation: preloaderPulse 1.8s ease-in-out infinite alternate;
+  z-index: 2;
+}
+
+.preloader-spinner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 3px solid rgba(230, 0, 18, 0.12);
+  border-top: 3px solid var(--primary-red, #E60012);
+  border-right: 3px solid rgba(230, 0, 18, 0.6);
+  border-radius: 50%;
+  animation: preloaderSpin 1s linear infinite;
+  box-shadow: 0 0 15px rgba(230, 0, 18, 0.2);
+  box-sizing: border-box;
+}
+
+.preloader-brand-title {
+  font-family: var(--font-family-primary, 'Outfit', sans-serif);
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: #FFFFFF;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  opacity: 0.9;
+}
+
+.preloader-bar-container {
+  width: 160px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.preloader-bar-fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #E60012, #FF5252);
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(230, 0, 18, 0.8);
+  animation: preloaderBar 1.2s ease-in-out infinite;
+}
+
+@keyframes preloaderSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes preloaderPulse {
+  0% { transform: scale(0.95); opacity: 0.85; }
+  100% { transform: scale(1.05); opacity: 1; }
+}
+
+@keyframes preloaderBar {
+  0% { width: 0%; left: 0%; }
+  50% { width: 70%; left: 15%; }
+  100% { width: 100%; left: 0%; }
+}
